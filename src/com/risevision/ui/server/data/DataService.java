@@ -26,22 +26,7 @@ public class DataService {
 	}
 		
 	public PersistentConfigurationInfo getConfig() {
-		CacheHandler cache = CacheHandler.getInstance();
-		
-		PersistentConfigurationInfo config = (PersistentConfigurationInfo) cache.findInCache(PersistentConfigurationInfo.ENTITY_KEY);
-		
-		if (config == null) {
-			config = persistentHandler.getConfig();
-			
-			if (config == null) {
-				config = new PersistentConfigurationInfo();
-				persistentHandler.saveConfig(config);
-			}
-			
-			cache.putInCache(PersistentConfigurationInfo.ENTITY_KEY, config);
-		}
-		
-		return config;
+		return new PersistentConfigurationInfo();
 	}
 		
 	public void saveOAuth(PersistentOAuthInfo oAuth) {
