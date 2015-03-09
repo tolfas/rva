@@ -27,7 +27,7 @@ public class PlayerErrorInfo implements Serializable {
 				),
 		STATUS_BLOCK(1, 
 				"This display has been blocked and the block can last up to 3 hours.",
-				"http://www.risevision.com/display-block-help/"
+				"http://help.risevision.com/#/user/display/unblock-a-display"
 				),
 		STATUS_1001(1001, 
 				"Rise Vision Player does not have sufficient privileges to complete it's upgrade.",
