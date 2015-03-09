@@ -27,7 +27,6 @@ public interface UserService extends RemoteService  {
     public PrerequisitesInfo getCurrent(String requestUrl) throws ServiceFailedException;
     
 	public void sendEmail(EmailInfo email);
-	public String getLogoutURL(String URL);
 //	public String getLoginURL(String URL);
 
 }

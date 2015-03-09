@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.risevision.common.client.utils.RiseUtils;
 import com.risevision.ui.client.common.ContentId;
+import com.risevision.ui.client.common.controller.CommonHeaderController;
 import com.risevision.ui.client.common.controller.PrerequisitesController;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.info.HistoryTokenInfo;
@@ -79,6 +80,10 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		uiControlBinder.setContentContainer(contentPanel);
 		RootPanel.get("main").add(uiControlBinder);
 		
+		CommonHeaderController.init();
+	}
+	
+	public void loadPrerequisites() {
 		PrerequisitesController prereqController = PrerequisitesController.getInstance();
 		Command cmdPrerequisiteLoaded = new Command() {
 			public void execute() {

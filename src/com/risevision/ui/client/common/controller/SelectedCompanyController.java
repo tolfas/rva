@@ -4,12 +4,11 @@
 
 package com.risevision.ui.client.common.controller;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.risevision.ui.client.common.info.CompanyInfo;
-import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 
 public class SelectedCompanyController {
 	private static SelectedCompanyController instance;
@@ -17,7 +16,7 @@ public class SelectedCompanyController {
 	private CompanyInfo selectedCompany; //company selected in Company Selector
 	private CompanyInfo userCompany; //company of the logged in user
 
-	private final CompanyServiceAsync companyService = GWT.create(CompanyService.class);
+	private final CompanyServiceAsync companyService = OAuth2ServiceWrapper.getCompanyService();;
 	private RpcCallBackHandler rpcCallBackHandler = new RpcCallBackHandler();
 
 	private Command cmdDataLoadedCallBack;

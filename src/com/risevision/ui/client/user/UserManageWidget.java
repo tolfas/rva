@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.user;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -26,8 +25,8 @@ import com.risevision.ui.client.common.info.FormValidatorInfo;
 import com.risevision.ui.client.common.info.HistoryTokenInfo;
 import com.risevision.ui.client.common.info.RpcResultInfo;
 import com.risevision.ui.client.common.info.UserInfo;
-import com.risevision.ui.client.common.service.UserService;
 import com.risevision.ui.client.common.service.UserServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.ConfirmDialogWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
@@ -37,7 +36,7 @@ import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 import com.risevision.ui.client.common.widgets.grid.FormGridWidget;
 
 public class UserManageWidget extends Composite {
-	private UserServiceAsync userService = (UserServiceAsync) GWT.create(UserService.class); 
+	private UserServiceAsync userService = OAuth2ServiceWrapper.getUserService(); 
 //	private CompanyServiceAsync companyService = GWT.create(CompanyService.class);
 
 	private RpcGetUserCallBackHandler rpcGetUserCallBackHandler = new RpcGetUserCallBackHandler();

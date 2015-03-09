@@ -9,23 +9,21 @@ import java.util.Date;
 import com.google.gwt.http.client.URL;
 import com.risevision.ui.client.common.controller.ConfigurationController;
 import com.risevision.ui.client.common.data.DataControllerBase.DataResponseBase;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 
 public class DataAccessController {
 	private static ConfigurationController configController = ConfigurationController.getInstance();
 		
 	public static void getData(String urlToken, String method, String tq, DataResponseBase response) {
-
-		String consumerSecret = configController.getOAuth().getConsumerSecret();
-		String tokenSecret = configController.getUserOAuth().getUserTokenSecret();
 		
 		String action = configController.getConfiguration().getServerURL() + "/v2" + urlToken;
 		String callback = "callback" + (int)(Math.random() * 1000000) + "_" + new Date().getTime();
 		String tqx = "responseHandler:" + callback;
 		
-		String oauth_token = configController.getUserOAuth().getUserToken();
-		String oauth_consumer_key = configController.getOAuth().getConsumerKey();
-		
-		String url = createURLNative(consumerSecret, tokenSecret, action, method, tqx, tq, oauth_consumer_key, oauth_token);
+		String url = action +
+				"?tq=" + tq +
+				"&tqx=" + tqx +
+				"&access_token=" + OAuth2ServiceWrapper.getAccessToken();
 		getDataNative(url, callback, response);
 		
 	}
@@ -57,14 +55,6 @@ public class DataAccessController {
 //			parseData(jsoModel.getObject("table"));
 //		}
 //	}
-	
-	public static void correctTimestamp(long timestamp) {
-		correctTimestamp((int) (timestamp / 1000));
-	}
-	
-	private static native void correctTimestamp (int seconds) /*-{
-		$wnd.OAuth.correctTimestamp(seconds);
-	}-*/;	
 	
 	private static native String createURLNative(String consumerSecret, String tokenSecret, String action, String method, 
 			String tqx, String tq, String oauth_consumer_key, String oauth_token) /*-{

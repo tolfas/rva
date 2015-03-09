@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 
 public class UserLoginHelpWidget extends PopupPanel {
@@ -65,11 +64,11 @@ public class UserLoginHelpWidget extends PopupPanel {
 			}
 		};
 		
-		Command cmdConfirm = new Command() {
-			public void execute() {
-				doActionConfirm();
-			}
-		};
+//		Command cmdConfirm = new Command() {
+//			public void execute() {
+//				doActionConfirm();
+//			}
+//		};
 
 		Command cmdCancel = new Command() {
 			public void execute() {
@@ -77,14 +76,14 @@ public class UserLoginHelpWidget extends PopupPanel {
 			}
 		};		
 		
-		actionWidget.addAction("Okay", cmdConfirm);
+//		actionWidget.addAction("Okay", cmdConfirm);
 		actionWidget.addAction("Cancel", cmdCancel);
 		actionWidget.addAction("Help", cmdHelp);
 	}
 	
-	private void doActionConfirm() {
-		RiseAsyncCallback.reAuthenticateUser();
-	}
+//	private void doActionConfirm() {
+//		RiseAsyncCallback.reAuthenticateUser();
+//	}
 	
 	private void doActionCancel() {
 		UserAccountWidget.getInstance().logoutUser();

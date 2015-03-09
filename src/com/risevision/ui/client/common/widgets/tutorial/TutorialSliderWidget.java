@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.common.widgets.tutorial;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Overflow;
@@ -26,8 +25,8 @@ import com.risevision.ui.client.UiEntryPoint;
 import com.risevision.ui.client.common.controller.UserAccountController;
 import com.risevision.ui.client.common.info.RpcResultInfo;
 import com.risevision.ui.client.common.info.UserInfo;
-import com.risevision.ui.client.common.service.UserService;
 import com.risevision.ui.client.common.service.UserServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 
 public class TutorialSliderWidget extends PopupPanel {
 //	private static final String OVERVIEW_VIDEO = "NlrH1dp1W2o";
@@ -45,7 +44,7 @@ public class TutorialSliderWidget extends PopupPanel {
 //	private HTML tutorialButton = new HTML("<span style='cursor:pointer;font-size:16px;font-weight:bolder;' class='sideways-text'>" +
 //		"Tutorial</span>");
 	private CheckBox dontShowCheckbox = new CheckBox("I'm now a genius, don't show me this anymore.");
-	private UserServiceAsync userService = GWT.create(UserService.class);
+	private UserServiceAsync userService = OAuth2ServiceWrapper.getUserService();
 	
 //	private JavaScriptObject playerObject;
 

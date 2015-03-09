@@ -24,7 +24,6 @@ public interface UserServiceAsync {
 	void getCurrent(String requestUrl, AsyncCallback<PrerequisitesInfo> callback);
 	
 	void sendEmail(EmailInfo email, AsyncCallback<Void> callback);
-	void getLogoutURL(String URL, AsyncCallback<String> callback);
 //	void getLoginURL(String URL, AsyncCallback<String> callback);
 
 }

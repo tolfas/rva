@@ -39,9 +39,6 @@ import com.risevision.ui.client.common.service.UserService;
 import com.risevision.ui.server.RiseRemoteServiceServlet;
 import com.risevision.ui.server.data.DataService;
 import com.risevision.ui.server.data.PersistentConfigurationInfo;
-import com.risevision.ui.server.data.PersistentOAuthInfo;
-import com.risevision.ui.server.data.PersistentUserInfo;
-import com.risevision.ui.server.data.PersistentOAuthInfo.OAuthType;
 import com.risevision.ui.server.utils.ServerUtils;
 
 /**
@@ -54,13 +51,8 @@ public class UserServiceImpl extends RiseRemoteServiceServlet implements
 	public PrerequisitesInfo getCurrent(String requestUrl) throws ServiceFailedException {
 		PrerequisitesInfo prereqInfo = new PrerequisitesInfo();
 		PersistentConfigurationInfo pConfig = DataService.getInstance().getConfig();
-		PersistentOAuthInfo pOAuth = DataService.getInstance().getOAuth(OAuthType.user);
-		PersistentUserInfo pUser = ServerUtils.getPersistentUser();
 		
 		prereqInfo.setConfiguration(pConfig.getConfigurationInfo());
-		prereqInfo.setOAuth(pOAuth.getOAuthInfo());
-		prereqInfo.setUserOAuth(pUser.getUserOAuthInfo());
-		prereqInfo.setServerTimestamp(new Date().getTime());
 		
 //		if (!ServerUtils.isUserLoggedIn()) {
 //			prereqInfo.setLoginUrl(ServerUtils.getLoginURL(requestUrl + (requestUrl.contains("#") ? "/" : "#") + "register"));
@@ -111,8 +103,8 @@ public class UserServiceImpl extends RiseRemoteServiceServlet implements
 			}
 			else { // unregistered user
 				prereqInfo.setCurrentUser(new UserInfo());
-				prereqInfo.getCurrentUser().setUserName(ServerUtils.getGoogleUsername());
-				prereqInfo.getCurrentUser().setEmail(ServerUtils.getGoogleUsername());
+//				prereqInfo.getCurrentUser().setUserName(ServerUtils.getGoogleUsername());
+//				prereqInfo.getCurrentUser().setEmail(ServerUtils.getGoogleUsername());
 				
 				if (prereqInfo.getCurrentUserStatus() == PrerequisitesInfo.STATUS_OK) {
 					prereqInfo.setCurrentUserStatus(PrerequisitesInfo.STATUS_NEW);
@@ -128,7 +120,7 @@ public class UserServiceImpl extends RiseRemoteServiceServlet implements
 	}
 	
 	private void login(PrerequisitesInfo prereqInfo) throws ServiceFailedException {		
-		String url = createLoginResource(ServerUtils.getGoogleUsername());
+		String url = createLoginResource();
 		Document d;
 
 		d = get(url);
@@ -336,22 +328,20 @@ public class UserServiceImpl extends RiseRemoteServiceServlet implements
 			e.printStackTrace();
         }
 	}
-	
-	public String getLogoutURL(String URL) {
-		return ServerUtils.getLogoutURL(URL);
-	}
 
 //	public String getLoginURL(String URL) {
 //		return ServerUtils.getLoginURL(URL);
 //	}
 	
-	private String createLoginResource(String username) {
+	private String createLoginResource() {
 		// /users/login/?username=userName
 
-		if (username != null) {
-			return "/users/login?username=" + username;
-		}
-		else return "/users/login";
+//		if (username != null) {
+//			return "/users/login?username=" + username;
+//		}
+//		else 
+		
+		return "/users/login";
 	}	
 	
 //	private String createLookupUserResource(String username) {

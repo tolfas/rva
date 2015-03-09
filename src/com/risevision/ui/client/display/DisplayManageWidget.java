@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.display;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -33,8 +32,8 @@ import com.risevision.ui.client.common.info.DisplayInfo;
 import com.risevision.ui.client.common.info.FormValidatorInfo;
 import com.risevision.ui.client.common.info.HistoryTokenInfo;
 import com.risevision.ui.client.common.info.RpcResultInfo;
-import com.risevision.ui.client.common.service.DisplayService;
 import com.risevision.ui.client.common.service.DisplayServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.AddressWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
@@ -56,7 +55,7 @@ public class DisplayManageWidget extends Composite {
 	private DisplayInfo displayInfo;
 	private String displayId;
 	//RPC
-	private final DisplayServiceAsync displayService = GWT.create(DisplayService.class);
+	private final DisplayServiceAsync displayService = OAuth2ServiceWrapper.getDisplayService();
 	//UI pieces
 	private ActionsWidget actionsWidget = ActionsWidget.getInstance();
 	private VerticalPanel mainPanel = new VerticalPanel();

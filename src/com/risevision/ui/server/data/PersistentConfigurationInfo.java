@@ -11,7 +11,6 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.risevision.ui.client.common.info.ConfigurationInfo;
-import com.risevision.ui.server.utils.ServerUtils;
 
 @SuppressWarnings("serial")
 @PersistenceCapable
@@ -23,10 +22,6 @@ public class PersistentConfigurationInfo implements Serializable {
 	
 	private static final String STORE_API_URL = "https://store-dot-rvaserver2.appspot.com";
 	
-	private static final String REQUEST_TOKEN_URL = SERVER_URL + "/_ah/OAuthGetRequestToken";
-	private static final String AUTHORIZE_TOKEN_URL = SERVER_URL + "/_ah/OAuthAuthorizeToken";
-	private static final String ACCESS_TOKEN_URL = SERVER_URL + "/_ah/OAuthGetAccessToken";
-
 	// URL of the Viewer (used for Preview functionality)
 //	private static final String VIEWER_URL = "http://rvaviewer-test.appspot.com/";
 //	private static final String VIEWER_URL = "http://rvashow2.appspot.com/";
@@ -55,10 +50,6 @@ public class PersistentConfigurationInfo implements Serializable {
 //	private static final String TERMS_URL = "RiseVisionTermsofServiceandPrivacy.html";
 //	private static final String TERMS_URL = "http://www.risevision.com/TermsOfServiceAndPrivacy/";
 	private static final String TERMS_URL = "http://www.risevision.com/terms-service-privacy/";
-	
-	// Account associated with these keys has been deactivated
-    public static final String AWS_ACCESS_KEY_ID = "";
-    public static final String AWS_SECRET_ACCESS_KEY = "";
     
     public static final String GCS_ACCOUNT_EMAIL = "";
     
@@ -91,20 +82,6 @@ public class PersistentConfigurationInfo implements Serializable {
 	private String logoutURL;
 	@Persistent
 	private String termsURL;
-	@Persistent
-	private String requestTokenURL;
-	@Persistent
-	private String authorizeTokenURL;
-	@Persistent
-	private String accessTokenURL;
-	
-//	@Persistent
-	private String awsAccessKeyId;
-//	@Persistent
-	private String awsSecretAccessKey;
-	
-	@Persistent
-	private String gcsAccountEmail;
 	
 	@Persistent
 	private String financialServerURL;
@@ -129,12 +106,6 @@ public class PersistentConfigurationInfo implements Serializable {
 		installerURL = INSTALLER_URL;
 		logoutURL = LOGOUT_URL;
 		termsURL = TERMS_URL;
-		requestTokenURL = REQUEST_TOKEN_URL;
-		authorizeTokenURL = AUTHORIZE_TOKEN_URL;
-		accessTokenURL = ACCESS_TOKEN_URL;
-		awsAccessKeyId = AWS_ACCESS_KEY_ID;
-		awsSecretAccessKey = AWS_SECRET_ACCESS_KEY;
-		gcsAccountEmail = GCS_ACCOUNT_EMAIL;
 		financialServerURL = FINANCIAL_SERVER_URL;
 		storeURL = STORE_URL;
 		storeApiURL = STORE_API_URL;
@@ -224,54 +195,6 @@ public class PersistentConfigurationInfo implements Serializable {
 		this.termsURL = termsURL;
 	}
 	
-	public String getRequestTokenURL() {
-		return requestTokenURL;
-	}
-
-	public void setRequestTokenURL(String requestTokenURL) {
-		this.requestTokenURL = requestTokenURL;
-	}
-	
-	public String getAuthorizeTokenURL() {
-		return authorizeTokenURL;
-	}
-
-	public void setAuthorizeTokenURL(String authorizeTokenURL) {
-		this.authorizeTokenURL = authorizeTokenURL;
-	}
-	
-	public String getAccessTokenURL() {
-		return accessTokenURL;
-	}
-
-	public void setAccessTokenURL(String accessTokenURL) {
-		this.accessTokenURL = accessTokenURL;
-	}
-	
-	public String getAwsAccessKeyId() {
-		return awsAccessKeyId;
-	}
-
-	public void setAwsAccessKeyId(String awsAccessKeyId) {
-		this.awsAccessKeyId = awsAccessKeyId;
-	}
-
-	public String getAwsSecretAccessKey() {
-		return awsSecretAccessKey;
-	}
-
-	public void setAwsSecretAccessKey(String awsSecretAccessKey) {
-		this.awsSecretAccessKey = awsSecretAccessKey;
-	}
-	
-	public String getGcsAccountEmail() {
-		return gcsAccountEmail;
-	}
-	
-	public void setGcsAccountEmail(String gcsAccountEmail) {
-		this.gcsAccountEmail = gcsAccountEmail;
-	}
-	
 	public String getFinancialServerURL() {
 		return financialServerURL;
 	}
@@ -299,19 +222,9 @@ public class PersistentConfigurationInfo implements Serializable {
 		config.setLinuxInstallerURL(this.getLinuxInstallerURL());
 		config.setMacInstallerURL(this.getMacInstallerURL());
 		config.setInstallerURL(this.getInstallerURL());
-		config.setRedirectURL(this.getLogoutURL());
-		config.setLogoutURL(ServerUtils.getLogoutURL(this.getLogoutURL()));
+		config.setLogoutURL(this.getLogoutURL());
 		config.setTermsURL(this.getTermsURL());	
-		config.setRequestTokenURL(this.getRequestTokenURL());	
-		config.setAuthorizeTokenURL(this.getAuthorizeTokenURL());	
-		config.setAccessTokenURL(this.getAccessTokenURL());	
 		config.setStoreApiURL(this.getStoreApiURL());	
-		
-//		config.setAwsAccessKeyId(this.getAwsAccessKeyId());
-		// Secret Access Key is not sent to the Client Side
-//		config.setAwsSecretAccessKey(this.getAwsSecretAccessKey());
-		
-		config.setGcsAccountEmail(this.getGcsAccountEmail());
 		
 		config.setFinancialServerURL(this.getFinancialServerURL());
 		config.setStoreURL(this.getStoreURL());

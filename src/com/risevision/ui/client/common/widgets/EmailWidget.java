@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.common.widgets;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -19,14 +18,14 @@ import com.risevision.ui.client.common.controller.UserAccountController;
 import com.risevision.ui.client.common.info.CompanyInfo;
 import com.risevision.ui.client.common.info.EmailInfo;
 import com.risevision.ui.client.common.info.UserInfo;
-import com.risevision.ui.client.common.service.UserService;
 import com.risevision.ui.client.common.service.UserServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 
 public class EmailWidget extends PopupPanel{
 	private static EmailWidget instance;
 	private String toAddressString;
 	
-	private UserServiceAsync userService = (UserServiceAsync) GWT.create(UserService.class); 
+	private UserServiceAsync userService = OAuth2ServiceWrapper.getUserService();; 
 	private RpcSendFeedbackCallBackHandler rpcSendFeedbackCallBackHandler = new RpcSendFeedbackCallBackHandler();
 	
 	//UI pieces

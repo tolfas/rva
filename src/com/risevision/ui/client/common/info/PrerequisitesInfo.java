@@ -21,9 +21,6 @@ public class PrerequisitesInfo implements Serializable  {
 	private CompanyInfo currentUserCompany;
 	private int currentUserStatus = STATUS_OK;
 	private ConfigurationInfo configuration;
-	private OAuthInfo oAuth;
-	private UserOAuthInfo userOAuth;
-	private long serverTimestamp;
 	
 	private List<SystemMessageInfo> systemMessages;
 	
@@ -73,30 +70,6 @@ public class PrerequisitesInfo implements Serializable  {
 	
 	public void setConfiguration(ConfigurationInfo configuration) {
 		this.configuration = configuration;
-	}
-	
-	public OAuthInfo getOAuth() {
-		return oAuth;
-	}
-	
-	public void setOAuth(OAuthInfo oAuth) {
-		this.oAuth = oAuth;
-	}
-
-	public UserOAuthInfo getUserOAuth() {
-		return userOAuth;
-	}
-
-	public void setUserOAuth(UserOAuthInfo userOAuth) {
-		this.userOAuth = userOAuth;
-	}
-
-	public long getServerTimestamp() {
-		return serverTimestamp;
-	}
-
-	public void setServerTimestamp(long serverTimestamp) {
-		this.serverTimestamp = serverTimestamp;
 	}
 
 	public List<SystemMessageInfo> getSystemMessages() {

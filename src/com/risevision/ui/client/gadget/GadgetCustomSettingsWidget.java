@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.gadget;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
@@ -26,8 +25,8 @@ import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.info.FormValidatorInfo;
 import com.risevision.ui.client.common.info.GadgetInfo;
-import com.risevision.ui.client.common.service.GadgetService;
 import com.risevision.ui.client.common.service.GadgetServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
 import com.risevision.ui.client.common.widgets.RiseListBox;
 import com.risevision.ui.client.common.widgets.colorPicker.ColorPickerTextBox;
@@ -43,7 +42,7 @@ import com.risevision.ui.client.presentation.placeholder.PlaylistItemManageWidge
 public class GadgetCustomSettingsWidget {
 	//private static GadgetCustomSettingsWidget instance;
 //	private String gadgetUrl;
-	private final GadgetServiceAsync gadgetService = GWT.create(GadgetService.class);
+	private final GadgetServiceAsync gadgetService = OAuth2ServiceWrapper.getGadgetService();
 	private GadgetXmlRpcCallBackHandler rpcCallBackHandler = new GadgetXmlRpcCallBackHandler();
 	private GadgetRpcCallBackHandler gadgetRpcCallbackHandler = new GadgetRpcCallBackHandler();
 //	private ArrayList<GadgetXml> gadgets = new ArrayList<GadgetXml>();

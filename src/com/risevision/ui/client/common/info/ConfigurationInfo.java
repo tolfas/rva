@@ -18,16 +18,8 @@ public class ConfigurationInfo implements Serializable  {
 	private String macInstallerURL;
 	private String installerURL;
 
-	private String redirectURL;
 	private String logoutURL;
 	private String termsURL;
-	private String requestTokenURL;
-	private String authorizeTokenURL;
-	private String accessTokenURL;
-	
-	private String awsAccessKeyId;
-	
-	private String gcsAccountEmail;
 	
 	private String financialServerURL;
 
@@ -97,14 +89,6 @@ public class ConfigurationInfo implements Serializable  {
 		this.installerURL = installerURL;
 	}
 	
-	public String getRedirectURL() {
-		return redirectURL;
-	}
-
-	public void setRedirectURL(String redirectURL) {
-		this.redirectURL = redirectURL;
-	}
-	
 	public String getLogoutURL() {
 		return logoutURL;
 	}
@@ -120,47 +104,7 @@ public class ConfigurationInfo implements Serializable  {
 	public void setTermsURL(String termsURL) {
 		this.termsURL = termsURL;
 	}
-	
-	public String getRequestTokenURL() {
-		return requestTokenURL;
-	}
 
-	public void setRequestTokenURL(String requestTokenURL) {
-		this.requestTokenURL = requestTokenURL;
-	}
-	
-	public String getAuthorizeTokenURL() {
-		return authorizeTokenURL;
-	}
-
-	public void setAuthorizeTokenURL(String authorizeTokenURL) {
-		this.authorizeTokenURL = authorizeTokenURL;
-	}
-	
-	public String getAccessTokenURL() {
-		return accessTokenURL;
-	}
-
-	public void setAccessTokenURL(String accessTokenURL) {
-		this.accessTokenURL = accessTokenURL;
-	}
-
-	public String getAwsAccessKeyId() {
-		return awsAccessKeyId;
-	}
-
-	public void setAwsAccessKeyId(String awsAccessKeyId) {
-		this.awsAccessKeyId = awsAccessKeyId;
-	}
-
-	public String getGcsAccountEmail() {
-		return gcsAccountEmail;
-	}
-
-	public void setGcsAccountEmail(String gcsAccountEmail) {
-		this.gcsAccountEmail = gcsAccountEmail;
-	}
-	
 	public String getFinancialServerURL() {
 		return financialServerURL;
 	}

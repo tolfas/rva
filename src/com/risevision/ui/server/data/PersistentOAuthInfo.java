@@ -10,8 +10,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.risevision.ui.client.common.info.OAuthInfo;
-
 @SuppressWarnings("serial")
 @PersistenceCapable
 public class PersistentOAuthInfo implements Serializable {
@@ -28,9 +26,6 @@ public class PersistentOAuthInfo implements Serializable {
 	private String consumerSecret;
 	
 	public enum OAuthType {
-		user("OAuth", 
-				"xx", 
-				"xx"),
 		twitter("TwitterOAuth", 
 				"xx",
 				"xx");
@@ -84,13 +79,4 @@ public class PersistentOAuthInfo implements Serializable {
 		this.consumerSecret = consumerSecret;
 	}
 	
-	public OAuthInfo getOAuthInfo() {
-		OAuthInfo oAuth = new OAuthInfo();
-		
-		oAuth.setConsumerKey(this.getConsumerKey());
-		oAuth.setConsumerSecret(this.getConsumerSecret());
-		
-		return oAuth;
-	}
-
 }

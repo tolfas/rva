@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.gadget;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.Command;
@@ -25,8 +24,8 @@ import com.risevision.ui.client.common.info.FormValidatorInfo;
 import com.risevision.ui.client.common.info.GadgetInfo;
 import com.risevision.ui.client.common.info.HistoryTokenInfo;
 import com.risevision.ui.client.common.info.RpcResultInfo;
-import com.risevision.ui.client.common.service.GadgetService;
 import com.risevision.ui.client.common.service.GadgetServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
 import com.risevision.ui.client.common.widgets.LastModifiedWidget;
@@ -41,7 +40,7 @@ public class GadgetManageWidget extends Composite {
 	private GadgetInfo gadgetInfo;
 	private String gadgetId;
 	//RPC
-	private final GadgetServiceAsync gadgetService = GWT.create(GadgetService.class);
+	private final GadgetServiceAsync gadgetService = OAuth2ServiceWrapper.getGadgetService();
 	private RpcGetGadgetCallBackHandler rpcGetGadgetCallBackHandler = new RpcGetGadgetCallBackHandler();
 	private RpcPutGadgetCallBackHandler rpcPutGadgetCallBackHandler = new RpcPutGadgetCallBackHandler();
 	private RpcDeleteGadgetCallBackHandler rpcDeleteGadgetCallBackHandler = new RpcDeleteGadgetCallBackHandler();

@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.presentation.common;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
@@ -16,8 +15,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.risevision.common.client.info.PresentationInfo;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.exception.ServiceFailedException;
-import com.risevision.ui.client.common.service.PresentationService;
 import com.risevision.ui.client.common.service.PresentationServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.SpacerWidget;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 import com.risevision.ui.client.presentation.PresentationSelectPopupWidget;
@@ -30,7 +29,7 @@ public class PresentationSelectorWidget extends HorizontalPanel {
 	private boolean enableDefault;
 	
 	//RPC
-	private final PresentationServiceAsync presentationService = GWT.create(PresentationService.class);
+	private final PresentationServiceAsync presentationService = OAuth2ServiceWrapper.getPresentationService();
 	// UI Pieces
 	private StatusBoxWidget statusBox = StatusBoxWidget.getInstance();
 	private Label presentationLabel = new Label();
