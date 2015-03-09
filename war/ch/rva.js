@@ -164,6 +164,6 @@ angular.module('risevision.rva', [
 ]) //ctr
 angular.module("risevision.common.i18n.config", [])
   .constant("LOCALES_PREFIX", "ch/locales/translation_")
-  .constant("LOCALES_SUFIX", ".json");
-//.value('CORE_URL', 'https://rvacore-test.appspot.com/_ah/api'); // override default core value
+  .constant("LOCALES_SUFIX", ".json")
+  .value('CORE_URL', 'https://rvacore-test.appspot.com/_ah/api'); // override default core value
 ;
