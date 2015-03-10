@@ -41,8 +41,7 @@ public class DataService {
 			cache.putInCache(PersistentConfigurationInfo.ENTITY_KEY, config);
 		}
 		
-		return new PersistentConfigurationInfo();
-//		return config;
+		return config;
 	}
 		
 	public void saveOAuth(PersistentOAuthInfo oAuth) {

@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.risevision.ui.client.common.ContentId;
-import com.risevision.ui.client.common.controller.ConfigurationController;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.controller.UserAccountController;
 
@@ -46,15 +45,15 @@ public class MenuWidget extends FlowPanel {
 		boolean canViewDisplay = UserAccountController.getInstance().userHasRoleDisplayAdministrator();
 		boolean canViewUser = UserAccountController.getInstance().userHasRoleUserAdministrator();
 		
-		String storeUrl = "", storageUrl = "";
-		if (ConfigurationController.getInstance().getConfiguration() != null) {
-			String urlParam = "#/?cid=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
-
-			storeUrl = ConfigurationController.getInstance().getConfiguration().getStoreURL() + urlParam;
-//			storeUrl = "https://store.risevision.com/";
-			storageUrl = ConfigurationController.getInstance().getConfiguration().getMediaLibraryURL() + urlParam;
-//			storageUrl = "https://storage.risevision.com/";
-		}
+//		String storeUrl = "", storageUrl = "";
+//		if (ConfigurationController.getInstance().getConfiguration() != null) {
+//			String urlParam = "#/?cid=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
+//
+//			storeUrl = ConfigurationController.getInstance().getConfiguration().getStoreURL() + urlParam;
+////			storeUrl = "https://store.risevision.com/";
+//			storageUrl = ConfigurationController.getInstance().getConfiguration().getMediaLibraryURL() + urlParam;
+////			storageUrl = "https://storage.risevision.com/";
+//		}
 		clear();
 		linkMap.clear();
 
@@ -68,9 +67,9 @@ public class MenuWidget extends FlowPanel {
 		if (canPublishContent) {
 			addAction("Gadgets", ContentId.GADGETS);
 		}
-		if (canEditContent || canPublishContent) {
-			addAnchor("Storage", storageUrl);
-		}
+//		if (canEditContent || canPublishContent) {
+//			addAnchor("Storage", storageUrl);
+//		}
 		if (canViewDisplay)
 			addAction("Displays", ContentId.DISPLAYS);
 //		if (canViewContent)
@@ -80,12 +79,12 @@ public class MenuWidget extends FlowPanel {
 		addDivider();
 		if (canViewUser) {
 			addAction("Settings", ContentId.COMPANY_MANAGE);
-			addAction("Users", ContentId.USERS);
+//			addAction("Users", ContentId.USERS);
 		}
 		menuItemNetwork = addAction("Network", ContentId.MANAGE_PORTAL);
 		//add Store link
-		addDivider();
-		addAnchor("Store", storeUrl); 
+//		addDivider();
+//		addAnchor("Store", storeUrl); 
 	}
 	
 	private Anchor addAction(String text, String contentId) {
@@ -99,7 +98,8 @@ public class MenuWidget extends FlowPanel {
 		
 		return newLink;
 	}
-	
+
+	@SuppressWarnings("unused")
 	private Anchor addAnchor(String text, String url) {
 		Anchor newLink = new Anchor(text);
 		newLink.setTabIndex(-1);

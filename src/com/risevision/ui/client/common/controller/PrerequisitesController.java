@@ -100,8 +100,17 @@ public class PrerequisitesController {
 	}
 	
 	private void load() {
-		userService.getCurrent(Location.getHref(), new RpcGetPrereqCallBackHandler());
+		userService.getCurrent(new RpcGetPrereqCallBackHandler());
 		//userService.getCurrent(Globals.LOGOUT_URL, new RpcGetUserInfoCallBackHandler());		
+	}
+	
+	public void clear() {
+		SelectedCompanyController.getInstance().clear();
+		UserAccountController.getInstance().clear();
+		
+		showProgressBar();
+		
+		loaded = false;
 	}
 	
 	private void processPrereqInfo(PrerequisitesInfo result) {
@@ -381,12 +390,12 @@ public class PrerequisitesController {
 	}
 	
 	public void showProgressBar() {
-		RootPanel.get("progress").getElement().getStyle().setProperty("display","inline");
+//		RootPanel.get("progress").getElement().getStyle().setProperty("display","inline");
 		RootPanel.get("main").getElement().getStyle().setProperty("display","none");
 	}
 
 	public void hideProgressBar() {
-		RootPanel.get("progress").getElement().getStyle().setProperty("display","none");
+//		RootPanel.get("progress").getElement().getStyle().setProperty("display","none");
 		RootPanel.get("main").getElement().getStyle().setProperty("display","inline");
 	}
 	

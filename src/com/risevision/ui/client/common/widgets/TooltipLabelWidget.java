@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.risevision.common.client.utils.RiseUtils;
 
 public class TooltipLabelWidget extends HTML {
-	private static String TOOLTIP_HTML = "<div class='tooltip' href='#'>%label%" +
+	private static String TOOLTIP_HTML = "<div class='rva-tooltip' href='#'>%label%" +
 			"<span>%tooltip%</span></div>";
 	
 	public TooltipLabelWidget() {

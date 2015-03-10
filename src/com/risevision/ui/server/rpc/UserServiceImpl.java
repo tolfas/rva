@@ -48,7 +48,7 @@ import com.risevision.ui.server.utils.ServerUtils;
 public class UserServiceImpl extends RiseRemoteServiceServlet implements
 		UserService {
 
-	public PrerequisitesInfo getCurrent(String requestUrl) throws ServiceFailedException {
+	public PrerequisitesInfo getCurrent() throws ServiceFailedException {
 		PrerequisitesInfo prereqInfo = new PrerequisitesInfo();
 		PersistentConfigurationInfo pConfig = DataService.getInstance().getConfig();
 		

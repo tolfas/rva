@@ -413,6 +413,7 @@ table td {
   border: 3px solid #C3D9FF;
   padding: 3px;
   background: white;
+  z-index: 1001;
 }
 
 .gwt-DecoratedPopupPanel .popupContent {
@@ -1195,6 +1196,7 @@ td.datePickerMonth {
 	color: #222222;
 /*	font-size: 12px;*/
 	height: 20px;
+	line-height: normal;
 }
 
 .rdn-MultiSelectBoxLong,
@@ -1231,7 +1233,11 @@ td.datePickerMonth {
 }
 
 .rdn-CheckBox label {
+	font-weight: normal;
+}
 
+.gwt-RadioButton label {
+	font-weight: normal;
 }
 
 .rdn-Button {
@@ -1252,7 +1258,7 @@ td.datePickerMonth {
 .rdn-TableShort {
 }
 .rdn-TableShort td {
-  line-height: 15px;
+  line-height: 20px;
 }
 .rdn-ColumnShort {
 	width: 85px;
@@ -1617,7 +1623,7 @@ A:hover {
 }
 
 /* Tooltips */
-.tooltip
+.rva-tooltip
 {
     position: relative;
     cursor: help;
@@ -1627,7 +1633,7 @@ A:hover {
     outline: none;
     white-space: no-wrap;
 }
-.tooltip span
+.rva-tooltip span
 {
     visibility: hidden;
     position: absolute;
@@ -1651,11 +1657,11 @@ A:hover {
     text-shadow: 0 1px 0 rgba(255,255,255,.4);
     white-space: normal;
 }
-.tooltip:hover span
+.rva-tooltip:hover span
 {
     visibility: visible;
 }
-a.tooltip:link, a.tooltip:visited, a.tooltip:hover, a.tooltip:active {
+a.rva-tooltip:link, a.rva-tooltip:visited, a.rva-tooltip:hover, a.rva-tooltip:active {
     color: #333;
 }
 

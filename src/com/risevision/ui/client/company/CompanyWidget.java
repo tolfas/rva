@@ -126,8 +126,8 @@ public class CompanyWidget extends Composite {
 		linksPanel.add(addCompanyPanel);
 		linksPanel.add(switchCompanyLink);
 		
-		namePanel.add(linksPanel);
-		namePanel.setCellHeight(linksPanel, "24px");
+//		namePanel.add(linksPanel);
+//		namePanel.setCellHeight(linksPanel, "24px");
 		
 		mainPanel.add(namePanel);
 		mainPanel.add(topGrid);

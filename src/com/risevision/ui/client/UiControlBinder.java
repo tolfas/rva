@@ -88,7 +88,7 @@ public class UiControlBinder extends Composite implements ClickHandler {
 	@UiField TableCellElement lastModifiedContainer; 
 	@UiField SimplePanel actionContainer; 
 	
-	@UiField TableCellElement statusContainer;
+	@UiField DivElement statusContainer;
 	@UiField DeckPanel contentDeckPanel;
 	@UiField Frame startFrame;
 	@UiField SimplePanel contentContainer;

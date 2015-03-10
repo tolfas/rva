@@ -30,6 +30,7 @@ import com.risevision.common.client.info.PresentationInfo;
 import com.risevision.common.client.info.PlaceholderInfo;
 import com.risevision.common.client.utils.PresentationParser;
 import com.risevision.common.client.utils.RiseUtils;
+import com.risevision.ui.client.common.controller.CommonHeaderController;
 import com.risevision.ui.client.common.dnd.ResizeDragController;
 import com.risevision.ui.client.common.dnd.WindowController;
 import com.risevision.ui.client.common.dnd.WindowPanel;
@@ -226,7 +227,7 @@ public class PresentationLayoutWidget extends AbsolutePanel {
 			@Override
 			public void onResize(ResizeEvent event) {
 			    getElement().getParentElement().getStyle().setPropertyPx("width", (int)(Window.getClientWidth() - 31));
-				getElement().getParentElement().getStyle().setPropertyPx("height", (int)(Window.getClientHeight() - 206));
+				getElement().getParentElement().getStyle().setPropertyPx("height", CommonHeaderController.getContentHeight() - 50);
 				
 				resizeCanvas();
 			}
@@ -256,7 +257,7 @@ public class PresentationLayoutWidget extends AbsolutePanel {
 
 		getElement().getParentElement().setPropertyString("className", "rdn-DeckPanel");
 	    getElement().getParentElement().getStyle().setPropertyPx("width", (int)(Window.getClientWidth() - 31));
-		getElement().getParentElement().getStyle().setPropertyPx("height", (int)(Window.getClientHeight() - 206));
+		getElement().getParentElement().getStyle().setPropertyPx("height", (int)(CommonHeaderController.getContentHeight() - 50));
 		getElement().getParentElement().getStyle().setBackgroundColor("#DDDDDD");
 		getElement().getParentElement().getStyle().setOverflow(Overflow.AUTO);
 				

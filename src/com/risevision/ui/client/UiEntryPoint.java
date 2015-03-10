@@ -263,7 +263,7 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 			uiControlBinder.showStartContainer(true);
 		}
 		
-		AdsenseBannerWidget.getInstance().updateBanner();
+//		AdsenseBannerWidget.getInstance().updateBanner();
 	}
 
     private void initHistoryState(){

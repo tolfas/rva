@@ -23,8 +23,6 @@ public class ContentId {
 	public static String GADGET_MANAGE = "GADGET_MANAGE";
 	//MANAGE
 	public static String MANAGE_PORTAL = "MANAGE_PORTAL";
-	public static String MANAGE_TERMS = "MANAGE_TERMS";
-	public static String MANAGE_SECURITY = "MANAGE_SECURITY";
 	//DISPLAYS
 	public static String DISPLAYS = "DISPLAYS";
 	public static String DISPLAY_MANAGE = "DISPLAY_MANAGE";

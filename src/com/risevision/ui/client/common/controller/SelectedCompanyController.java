@@ -77,6 +77,11 @@ public class SelectedCompanyController {
 		bindData();
 	}
 	
+	public void clear() {
+		this.selectedCompany = null;
+		this.userCompany = null;
+	}
+	
 	public void bindData() {
 		if (cmdDataLoadedCallBack != null)
 			cmdDataLoadedCallBack.execute();
