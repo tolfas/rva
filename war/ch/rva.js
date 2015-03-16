@@ -118,4 +118,5 @@ angular.module('risevision.rva', [
 
   }
 ]) //ctr
-.value('CORE_URL', 'https://rvacore-test.appspot.com/_ah/api'); // override default core value
+//.value('CORE_URL', 'https://rvacore-test.appspot.com/_ah/api'); // override default core value
+;

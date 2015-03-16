@@ -41,7 +41,7 @@ import com.risevision.ui.client.user.UsersWidget;
  */
 public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 	private static final String HASH_PARAM_ID = "id";
-	private static final String HASH_PARAM_COMPANY = "company";
+	private static final String HASH_PARAM_COMPANY = "cid";
 	public static final String HASH_PARAM_FROM_COMPANY_ID = "fromCompanyId";
 	private static final String HASH_PARAM_BOOKMARK = "bookmark";
 	
@@ -101,13 +101,13 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		
 	public void reloadContent() {
 		String historyToken = History.getToken();
-    	String[] tokens = historyToken.split("/");
+    	String[] tokens = historyToken.split("[/\\?]");
     	String companyId = "";
 
 		for (String token: tokens) {
     		String[] keyValuePair = token.split("=");
     		
-    		if (keyValuePair.length == 2 && keyValuePair[0].equals("company")) {
+    		if (keyValuePair.length == 2 && keyValuePair[0].equals(HASH_PARAM_COMPANY)) {
     			companyId = keyValuePair[1];
     		}
 		}
@@ -145,9 +145,17 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 	}
 
 	public static void loadContentStatic(HistoryTokenInfo tokenInfo) {
-		String historyToken = tokenInfo.getContentId();
+		String historyToken = "/" + tokenInfo.getContentId();
 		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getId())) {
 			historyToken += "/" + HASH_PARAM_ID + "=" + tokenInfo.getId();
+		}
+		
+		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getFromCompanyId())) {
+			historyToken += "/" + HASH_PARAM_FROM_COMPANY_ID + "=" + tokenInfo.getFromCompanyId();
+		}
+		
+		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getBookmark())) {
+			historyToken += "/" + HASH_PARAM_BOOKMARK + "=" + tokenInfo.getBookmark();
 		}
 		
 		String companyId;
@@ -157,15 +165,7 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		else {
 			companyId = SelectedCompanyController.getInstance().getSelectedCompanyId();
 		}
-		historyToken += "/" + HASH_PARAM_COMPANY + "=" + companyId;
-		
-		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getFromCompanyId())) {
-			historyToken += "/" + HASH_PARAM_FROM_COMPANY_ID + "=" + tokenInfo.getFromCompanyId();
-		}
-		
-		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getBookmark())) {
-			historyToken += "/" + HASH_PARAM_BOOKMARK + "=" + tokenInfo.getBookmark();
-		}
+		historyToken += "?" + HASH_PARAM_COMPANY + "=" + companyId;
 		
 		History.newItem(historyToken, true);
 	}
@@ -280,7 +280,8 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
     }
 
     private void onHistoryChange(String token){
-    	String[] tokens = token.split("/");
+    	String[] tokens = token.split("[/\\?]");
+    	
     	String companyId = "";
     	HistoryTokenInfo historyToken = new HistoryTokenInfo();
     	
@@ -308,30 +309,6 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 	    		}
 			}
     	}
-    	
-//    	String contentId = "", companyId = "";
-//    	String[] params = {"", ""};
-//    	
-//    	for (String param: tokens) {
-//    		if (!param.contains("=")) {
-//    			contentId = param;
-//    		} 
-//    		else {
-//        		String[] keyValuePair = param.split("=");
-//
-//        		if (keyValuePair.length == 2) {
-//        			if (keyValuePair[0].toLowerCase().equals(HASH_PARAM_COMPANY)) {
-//            			companyId = keyValuePair[1];
-//        			}
-//        			else if (keyValuePair[0].toLowerCase().equals(HASH_PARAM_ID)) {
-//            			params[0] = keyValuePair[1];
-//        			}
-//        			else if (keyValuePair[0].toLowerCase().equals(HASH_PARAM_FROM_COMPANY_ID.toLowerCase())) {
-//            			params[1] = keyValuePair[1];
-//        			}
-//        		}
-//    		}
-//    	}
     	
     	if (!companyId.isEmpty() && !companyId.equals(SelectedCompanyController.getInstance().getSelectedCompanyId())) {
     		SelectedCompanyController.getInstance().setSelectedCompany(companyId);

@@ -65,7 +65,7 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 	private ResizeHandler resizeHandler = new ResizeHandler() {	
 		@Override
 		public void onResize(ResizeEvent event) {
-			scrollingBodyPanel.getElement().getStyle().setHeight(Math.max(CommonHeaderController.getContentHeight() - 60, 400), Unit.PX);
+			resize();
 		}
 	};
 
@@ -175,10 +175,11 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 //		bodyFlexTable.getElement().getStyle().setTableLayout(TableLayout.FIXED);
 //		bodyFlexTable.getElement().getStyle().setWidth(100, Unit.PCT);
 		
-		scrollingBodyPanel.getElement().getStyle().setHeight(Math.max(CommonHeaderController.getContentHeight() - 60, 400), Unit.PX);
 		scrollingBodyPanel.getElement().getStyle().setOverflow(Overflow.AUTO);
 		scrollingBodyPanel.setAlwaysShowScrollBars(false);
 		scrollingBodyPanel.addStyleName("jfk-scrollbar");
+		
+		resize();
 		
 //		scrollingBodyPanel.getElement().getParentElement().getStyle().setHeight(100, Unit.PCT);
 	}
@@ -262,6 +263,10 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 		});
 	}
 	
+	private void resize() {
+		scrollingBodyPanel.getElement().getStyle().setHeight(Math.max(CommonHeaderController.getContentHeight() - 60, 400), Unit.PX);
+	}
+	
 	protected void onAttach() {
 		mainPanel.getElement().getParentElement().getStyle().setProperty("maxWidth", "1200px");
 		
@@ -273,6 +278,8 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 		super.onLoad();
 
 		if (resizeHandler != null) {
+			resize();
+			
 			handlerRegistration = Window.addResizeHandler(resizeHandler);
 		}
 	}
@@ -373,7 +380,7 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 	
 	public void setHyperlink(int row, int column, String text, String contentId, String id, String companyId) {
 		Anchor actionHyperlink = new Anchor(text);
-		actionHyperlink.setHref("#" + contentId + "/id=" + id + "/company=" + companyId);
+		actionHyperlink.setHref("#" + contentId + "/id=" + id + "?cid=" + companyId);
 
 		setWidget(row, column, actionHyperlink);
 	}
