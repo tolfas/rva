@@ -16,12 +16,6 @@ public class CommonHeaderController {
 		
 		$wnd.rva__reportUserLoggedOut =
 		$entry(@com.risevision.ui.client.common.controller.CommonHeaderController::reportUserLoggedOut());
-		
-		$wnd.rva__reportCompanyId =
-		$entry(@com.risevision.ui.client.common.controller.CommonHeaderController::reportCompanyId(Ljava/lang/String;));
-		
-		$wnd.rva__resetCompany =
-		$entry(@com.risevision.ui.client.common.controller.CommonHeaderController::resetCompany());
 	}-*/;
 	
 	private static void reportUserLoggedIn() {
@@ -32,16 +26,16 @@ public class CommonHeaderController {
 		PrerequisitesController.getInstance().clear();
 	}
 	
-	private static void reportCompanyId(String companyId) {
-		SelectedCompanyController.getInstance().setSelectedCompany(companyId);
-	}
-	
-	private static void resetCompany() {
-		SelectedCompanyController.getInstance().reset();
+	public static void updateCompanyId(String companyId) {
+		updateCompanyIdNative(companyId);
 	}
 	
 	public static int getContentHeight() {
 		return Window.getClientHeight() - (31 +
 		RootPanel.get("commonHeaderContainer").getElement().getClientHeight());
 	}
+	
+	private static native void updateCompanyIdNative(String companyId) /*-{
+		$wnd.angular.element($wnd.document.getElementsByTagName("common-header")).scope().updateCompanyId(companyId);
+	}-*/;
 }

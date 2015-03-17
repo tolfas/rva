@@ -67,10 +67,8 @@ public class StockSelectorWidget extends PopupPanel {
 		titleLabel.setStyleName("rdn-Head");
 		
 		this.getElement().getStyle().setProperty("padding", "10px");
-		getElement().getStyle().setZIndex(1001);
 
-		actionsWidget.addStyleName("rdn-VerticalSpacer");
-	
+		actionsWidget.addStyleName("rdn-VerticalSpacer");	
 	}
 	
 	private void initActions() {	

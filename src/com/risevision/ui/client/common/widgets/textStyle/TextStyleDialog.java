@@ -150,7 +150,6 @@ public class TextStyleDialog extends PopupPanel implements ChangeHandler {
 		cssTextBox.setStyleName("rdn-TextBoxLong");
 		
 		getElement().getStyle().setProperty("padding", "10px");
-		getElement().getStyle().setZIndex(1000);
 	
         buttonPanel.addStyleName("rdn-VerticalSpacer");
     }

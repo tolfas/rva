@@ -146,7 +146,6 @@ public class ColorPickerDialog extends PopupPanel {
         middleTable.setWidget(5, 2, alphaTextBox);
         
         middleTable.setWidget(6, 0, buttonPanel);
-
         
         setWidget(middleTable);
         
@@ -158,7 +157,6 @@ public class ColorPickerDialog extends PopupPanel {
     
     private void styleControls() {
 		getElement().getStyle().setProperty("padding", "10px");
-		getElement().getStyle().setZIndex(1000);
 
 		colorTextBox.setStyleName("rdn-TextBoxMedium");
 		alphaTextBox.setStyleName("rdn-TextBoxShort");

@@ -148,7 +148,6 @@ public class InstrumentListWidget extends PopupPanel implements ClickHandler {
 		titleLabel.setStyleName("rdn-Head");
 		
 		this.getElement().getStyle().setProperty("padding", "10px");
-		getElement().getStyle().setZIndex(1000);
 
 		actionsWidget.addStyleName("rdn-VerticalSpacer");
 	}

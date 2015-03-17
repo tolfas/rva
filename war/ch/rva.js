@@ -40,6 +40,26 @@ angular.module('risevision.rva', [
     $scope.navOptions = [];
     $scope.navSelected = 'root.common.start';
     
+    var updateNavOptions = function() {
+      var visibleOptions = [];
+      for (var i = 0; i < navOptions.length; i++) {
+        if (navOptions[i].title === 'Presentations' && (userState.hasRole('ce') || userState.hasRole('cp'))) {
+          visibleOptions.push(navOptions[i]);
+        }
+        else if ((navOptions[i].title === 'Gadgets' || navOptions[i].title === 'Schedules') && userState.hasRole('cp')) {
+          visibleOptions.push(navOptions[i]);
+        }
+        else if (navOptions[i].title === 'Displays' && userState.hasRole('da')) {
+          visibleOptions.push(navOptions[i]);
+        }
+        else if ((navOptions[i].title === 'Settings' || navOptions[i].title === 'Network') && userState.hasRole('ua')) {
+          visibleOptions.push(navOptions[i]);
+        }
+      }
+      
+      $scope.navOptions = visibleOptions;
+    }
+    
     $scope.$watch(function () {
         return userState.isRiseVisionUser();
       }, function(value) {
@@ -57,16 +77,30 @@ angular.module('risevision.rva', [
       }
     });
     
+    var updateLinkCompanyId = function(companyId) {
+      for (var i = 0; i < navOptions.length; i++) {
+        var index = navOptions[i].link.indexOf("?cid=")
+        if (index > -1) {
+          navOptions[i].link = navOptions[i].link.substring(0, index + 5) + companyId;
+        }
+        else {
+          navOptions[i].link = navOptions[i].link + "?cid=" + companyId;
+        }
+      }
+    }
+    
     $scope.$watch(function () {
         return userState.getSelectedCompanyId();
       }, function(value) {
       if (value) {
-        if (userState.isSubcompanySelected()) {
-          $window.rva__reportCompanyId(value);
-        }
-        else {
-          $window.rva__resetCompany();
-        }
+        updateLinkCompanyId(userState.getSelectedCompanyId());
+
+        // if (userState.isSubcompanySelected()) {
+        //   $window.rva__reportCompanyId(value);
+        // }
+        // else {
+        //   $window.rva__resetCompany();
+        // }
       }
     });
     
@@ -96,24 +130,19 @@ angular.module('risevision.rva', [
       }
     });
 
-    var updateNavOptions = function() {
-      var visibleOptions = [];
-      for (var i = 0; i < navOptions.length; i++) {
-        if (navOptions[i].title === 'Presentations' && (userState.hasRole('ce') || userState.hasRole('cp'))) {
-          visibleOptions.push(navOptions[i]);
+    // RVA calls this:
+    // the RVA highjacks the route change handlers from the CH
+    // so it sends notificatios for those events
+    $scope.updateCompanyId = function(companyId) {
+      if (companyId && companyId !== userState.getSelectedCompanyId()) {
+        if (companyId !== userState.getUserCompanyId()) {
+          userState.switchCompany(companyId);
         }
-        else if ((navOptions[i].title === 'Gadgets' || navOptions[i].title === 'Schedules') && userState.hasRole('cp')) {
-          visibleOptions.push(navOptions[i]);
-        }
-        else if (navOptions[i].title === 'Displays' && userState.hasRole('da')) {
-          visibleOptions.push(navOptions[i]);
-        }
-        else if ((navOptions[i].title === 'Settings' || navOptions[i].title === 'Network') && userState.hasRole('ua')) {
-          visibleOptions.push(navOptions[i]);
+        else {
+          userState.resetCompany();
+          $scope.$digest();
         }
       }
-      
-      $scope.navOptions = visibleOptions;
     }
 
   }

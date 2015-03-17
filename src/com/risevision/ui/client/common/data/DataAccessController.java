@@ -21,7 +21,7 @@ public class DataAccessController {
 		String tqx = "responseHandler:" + callback;
 		
 		String url = action +
-				"?tq=" + tq +
+				"?tq=" + URL.encodeQueryString(tq) +
 				"&tqx=" + tqx +
 				"&access_token=" + OAuth2ServiceWrapper.getAccessToken();
 		getDataNative(url, callback, response);

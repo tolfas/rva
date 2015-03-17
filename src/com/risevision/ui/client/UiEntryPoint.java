@@ -125,15 +125,8 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		onHistoryChange(historyToken);
 	}
 	
-	public static void loadContentStatic(HistoryTokenInfo tokenInfo, boolean triggerEvent) {
-		if (triggerEvent || instance.handler == null) {
-			loadContentStatic(tokenInfo);
-		}
-		else {
-			instance.handler.removeHandler();
-			loadContentStatic(tokenInfo);
-			instance.handler = History.addValueChangeHandler(instance);
-		}
+	public static void loadContentStatic(HistoryTokenInfo tokenInfo) {
+		loadContentStatic(tokenInfo, true);
 	}
 	
 	public static void loadContentStatic(String contentId) {
@@ -141,10 +134,10 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		
 		tokenInfo.setContentId(contentId);
 		
-		loadContentStatic(tokenInfo);
+		loadContentStatic(tokenInfo, true);
 	}
 
-	public static void loadContentStatic(HistoryTokenInfo tokenInfo) {
+	public static void loadContentStatic(HistoryTokenInfo tokenInfo, boolean triggerEvent) {
 		String historyToken = "/" + tokenInfo.getContentId();
 		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getId())) {
 			historyToken += "/" + HASH_PARAM_ID + "=" + tokenInfo.getId();
@@ -167,7 +160,7 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		}
 		historyToken += "?" + HASH_PARAM_COMPANY + "=" + companyId;
 		
-		History.newItem(historyToken, true);
+		History.newItem(historyToken, triggerEvent);
 	}
 	
 	private void loadContent(HistoryTokenInfo tokenInfo) {		
@@ -312,9 +305,15 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
     	
     	if (!companyId.isEmpty() && !companyId.equals(SelectedCompanyController.getInstance().getSelectedCompanyId())) {
     		SelectedCompanyController.getInstance().setSelectedCompany(companyId);
+    		
+			CommonHeaderController.updateCompanyId(companyId);
     	}
     	else {
     		loadContent(historyToken);
+    	}
+
+    	if (historyToken.getCompanyId() == null) {
+    		loadContentStatic(historyToken, false);		
     	}
     }
 	
