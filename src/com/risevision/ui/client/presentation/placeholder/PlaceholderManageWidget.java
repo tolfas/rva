@@ -690,7 +690,7 @@ public class PlaceholderManageWidget extends PopupPanel {
 	}
 	
 	public void loadStoreIframe() {
-		StoreFrameWidget.getInstance().show("#/", 
+		StoreFrameWidget.getInstance().show("", 
 		new Command() {
 
 			@Override
