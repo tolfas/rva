@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
@@ -22,10 +21,9 @@ import com.risevision.ui.client.common.data.DemoContentDataController;
 import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.info.DemoContentInfo;
 import com.risevision.ui.client.common.info.RpcResultInfo;
-import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
-import com.risevision.ui.client.common.service.PresentationService;
 import com.risevision.ui.client.common.service.PresentationServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 import com.risevision.ui.client.common.widgets.grid.SimpleGridWidget;
 
@@ -36,8 +34,8 @@ public class DemoContentGridWidget extends SimplePanel implements ClickHandler {
 	public static final int ACTION_DELETE = 4;
 	
 	//RPC
-	private final PresentationServiceAsync presentationService = GWT.create(PresentationService.class);
-	private final CompanyServiceAsync companyService = GWT.create(CompanyService.class);
+	private final PresentationServiceAsync presentationService = OAuth2ServiceWrapper.getPresentationService();
+	private final CompanyServiceAsync companyService = OAuth2ServiceWrapper.getCompanyService();
 
 	private StatusBoxWidget statusBox = StatusBoxWidget.getInstance();
 

@@ -77,10 +77,11 @@ public class AdsenseBannerWidget extends Frame {
 		this.bannerId = bannerId;
 		this.bannerSlot = bannerSlot;
 		
-		updateBanner();
+//		updateBanner();
 	}
 	
-	public void updateBanner() {
+	@SuppressWarnings("unused")
+	private void updateBanner() {
 		if (isVisible()) {
 //			renderItem();
 			

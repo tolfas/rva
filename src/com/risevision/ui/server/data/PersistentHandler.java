@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import javax.jdo.PersistenceManager;
 
 import com.risevision.ui.server.data.PersistentOAuthInfo.OAuthType;
-import com.risevision.ui.server.utils.ServerUtils;
 
 public class PersistentHandler {
 	public static final Logger log = Logger.getLogger(PersistentHandler.class.getName());
@@ -49,39 +48,7 @@ public class PersistentHandler {
         	pm.close();
         }
 	}
-	
-	public void saveUser(PersistentUserInfo user) {
-        PersistenceManager pm = PMF.get().getPersistenceManager();
-
-        try {
-            pm.makePersistent(user);
-        } finally {
-            pm.close();
-        }
-	}
-	
-	public PersistentUserInfo getUser() {
-		return getUser(ServerUtils.getGoogleUsername());
-	}
-	
-	public PersistentUserInfo getUser(String username) {
-        PersistenceManager pm = PMF.get().getPersistenceManager();
-        PersistentUserInfo user = null;
-        
-        try {
-        	user = pm.getObjectById(PersistentUserInfo.class, username);
-        	log.config("Username - " + username + " - token/secret loaded from data store.");
-
-        	return user;
-		}
-		catch (Exception e) {
-			return null;
-		}
-        finally {
-        	pm.close();
-        }
-	}
-	
+		
 	public void saveOAuth(PersistentOAuthInfo oAuth) {
         PersistenceManager pm = PMF.get().getPersistenceManager();
 

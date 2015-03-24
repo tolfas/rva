@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.presentation.placeholder;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
@@ -17,15 +16,15 @@ import com.risevision.common.client.utils.RiseUtils;
 import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.info.GadgetInfo;
 import com.risevision.ui.client.common.info.WidgetSettingsInfo;
-import com.risevision.ui.client.common.service.GadgetService;
 import com.risevision.ui.client.common.service.GadgetServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.gadget.WidgetCustomUIWidget;
 import com.risevision.ui.client.presentation.placeholder.PlaceholderManageWidget;
 import com.risevision.ui.client.presentation.placeholder.PlaylistItemManageWidget;
 
 public class WidgetSettingsWidget {
 	
-	private final GadgetServiceAsync gadgetService = GWT.create(GadgetService.class);
+	private final GadgetServiceAsync gadgetService = OAuth2ServiceWrapper.getGadgetService();
 	private GadgetRpcCallBackHandler gadgetRpcCallbackHandler = new GadgetRpcCallBackHandler();
 
 	WidgetSettingsInfo widgetSettings;

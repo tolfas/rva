@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.risevision.common.client.utils.RiseUtils;
 import com.risevision.ui.client.common.ContentId;
+import com.risevision.ui.client.common.controller.CommonHeaderController;
 import com.risevision.ui.client.common.controller.PrerequisitesController;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.info.HistoryTokenInfo;
@@ -40,7 +41,7 @@ import com.risevision.ui.client.user.UsersWidget;
  */
 public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 	private static final String HASH_PARAM_ID = "id";
-	private static final String HASH_PARAM_COMPANY = "company";
+	private static final String HASH_PARAM_COMPANY = "cid";
 	public static final String HASH_PARAM_FROM_COMPANY_ID = "fromCompanyId";
 	private static final String HASH_PARAM_BOOKMARK = "bookmark";
 	
@@ -79,6 +80,10 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		uiControlBinder.setContentContainer(contentPanel);
 		RootPanel.get("main").add(uiControlBinder);
 		
+		CommonHeaderController.init();
+	}
+	
+	public void loadPrerequisites() {
 		PrerequisitesController prereqController = PrerequisitesController.getInstance();
 		Command cmdPrerequisiteLoaded = new Command() {
 			public void execute() {
@@ -96,13 +101,13 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		
 	public void reloadContent() {
 		String historyToken = History.getToken();
-    	String[] tokens = historyToken.split("/");
+    	String[] tokens = historyToken.split("[/\\?]");
     	String companyId = "";
 
 		for (String token: tokens) {
     		String[] keyValuePair = token.split("=");
     		
-    		if (keyValuePair.length == 2 && keyValuePair[0].equals("company")) {
+    		if (keyValuePair.length == 2 && keyValuePair[0].equals(HASH_PARAM_COMPANY)) {
     			companyId = keyValuePair[1];
     		}
 		}
@@ -120,15 +125,8 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		onHistoryChange(historyToken);
 	}
 	
-	public static void loadContentStatic(HistoryTokenInfo tokenInfo, boolean triggerEvent) {
-		if (triggerEvent || instance.handler == null) {
-			loadContentStatic(tokenInfo);
-		}
-		else {
-			instance.handler.removeHandler();
-			loadContentStatic(tokenInfo);
-			instance.handler = History.addValueChangeHandler(instance);
-		}
+	public static void loadContentStatic(HistoryTokenInfo tokenInfo) {
+		loadContentStatic(tokenInfo, true);
 	}
 	
 	public static void loadContentStatic(String contentId) {
@@ -136,23 +134,14 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 		
 		tokenInfo.setContentId(contentId);
 		
-		loadContentStatic(tokenInfo);
+		loadContentStatic(tokenInfo, true);
 	}
 
-	public static void loadContentStatic(HistoryTokenInfo tokenInfo) {
-		String historyToken = tokenInfo.getContentId();
+	public static void loadContentStatic(HistoryTokenInfo tokenInfo, boolean triggerEvent) {
+		String historyToken = "/" + tokenInfo.getContentId();
 		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getId())) {
 			historyToken += "/" + HASH_PARAM_ID + "=" + tokenInfo.getId();
 		}
-		
-		String companyId;
-		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getCompanyId())) {
-			companyId = tokenInfo.getCompanyId();
-		}
-		else {
-			companyId = SelectedCompanyController.getInstance().getSelectedCompanyId();
-		}
-		historyToken += "/" + HASH_PARAM_COMPANY + "=" + companyId;
 		
 		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getFromCompanyId())) {
 			historyToken += "/" + HASH_PARAM_FROM_COMPANY_ID + "=" + tokenInfo.getFromCompanyId();
@@ -162,7 +151,16 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 			historyToken += "/" + HASH_PARAM_BOOKMARK + "=" + tokenInfo.getBookmark();
 		}
 		
-		History.newItem(historyToken, true);
+		String companyId;
+		if (!RiseUtils.strIsNullOrEmpty(tokenInfo.getCompanyId())) {
+			companyId = tokenInfo.getCompanyId();
+		}
+		else {
+			companyId = SelectedCompanyController.getInstance().getSelectedCompanyId();
+		}
+		historyToken += "?" + HASH_PARAM_COMPANY + "=" + companyId;
+		
+		History.newItem(historyToken, triggerEvent);
 	}
 	
 	private void loadContent(HistoryTokenInfo tokenInfo) {		
@@ -258,7 +256,7 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 			uiControlBinder.showStartContainer(true);
 		}
 		
-		AdsenseBannerWidget.getInstance().updateBanner();
+//		AdsenseBannerWidget.getInstance().updateBanner();
 	}
 
     private void initHistoryState(){
@@ -275,7 +273,8 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
     }
 
     private void onHistoryChange(String token){
-    	String[] tokens = token.split("/");
+    	String[] tokens = token.split("[/\\?]");
+    	
     	String companyId = "";
     	HistoryTokenInfo historyToken = new HistoryTokenInfo();
     	
@@ -304,35 +303,17 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 			}
     	}
     	
-//    	String contentId = "", companyId = "";
-//    	String[] params = {"", ""};
-//    	
-//    	for (String param: tokens) {
-//    		if (!param.contains("=")) {
-//    			contentId = param;
-//    		} 
-//    		else {
-//        		String[] keyValuePair = param.split("=");
-//
-//        		if (keyValuePair.length == 2) {
-//        			if (keyValuePair[0].toLowerCase().equals(HASH_PARAM_COMPANY)) {
-//            			companyId = keyValuePair[1];
-//        			}
-//        			else if (keyValuePair[0].toLowerCase().equals(HASH_PARAM_ID)) {
-//            			params[0] = keyValuePair[1];
-//        			}
-//        			else if (keyValuePair[0].toLowerCase().equals(HASH_PARAM_FROM_COMPANY_ID.toLowerCase())) {
-//            			params[1] = keyValuePair[1];
-//        			}
-//        		}
-//    		}
-//    	}
-    	
     	if (!companyId.isEmpty() && !companyId.equals(SelectedCompanyController.getInstance().getSelectedCompanyId())) {
     		SelectedCompanyController.getInstance().setSelectedCompany(companyId);
+    		
+			CommonHeaderController.updateCompanyId(companyId);
     	}
     	else {
     		loadContent(historyToken);
+    	}
+
+    	if (historyToken.getCompanyId() == null) {
+    		loadContentStatic(historyToken, false);		
     	}
     }
 	

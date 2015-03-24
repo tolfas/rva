@@ -19,7 +19,6 @@ import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckPanel;
@@ -33,8 +32,6 @@ import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.controller.UserAccountController;
 import com.risevision.ui.client.common.info.CompanyInfo;
 import com.risevision.ui.client.common.info.ManageSettingsInfo;
-import com.risevision.ui.client.common.service.UserService;
-import com.risevision.ui.client.common.service.UserServiceAsync;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.EmailWidget;
 import com.risevision.ui.client.common.widgets.LastModifiedWidget;
@@ -91,7 +88,7 @@ public class UiControlBinder extends Composite implements ClickHandler {
 	@UiField TableCellElement lastModifiedContainer; 
 	@UiField SimplePanel actionContainer; 
 	
-	@UiField TableCellElement statusContainer;
+	@UiField DivElement statusContainer;
 	@UiField DeckPanel contentDeckPanel;
 	@UiField Frame startFrame;
 	@UiField SimplePanel contentContainer;
@@ -241,7 +238,7 @@ public class UiControlBinder extends Composite implements ClickHandler {
 		if (!RiseUtils.strIsNullOrEmpty(logoutUrl)) {
 //			UserAccountWidget.getInstance().setRedirectUrl(logoutUrl);
 			
-			loadLogoutURL(logoutUrl);
+			updateLogoutURL(logoutUrl);
 		}
 	}
 	
@@ -465,29 +462,10 @@ public class UiControlBinder extends Composite implements ClickHandler {
 		return "";
 	}
 	
-	private void loadLogoutURL(String logoutURL) {
-		if (logoutURL != null && !logoutURL.isEmpty()) {
-			UserServiceAsync userService = GWT.create(UserService.class);
-
-			userService.getLogoutURL(logoutURL, new RpcGetLogoutURLCallBackHandler());
-		}
-	}
-	
 	private void updateLogoutURL(String logoutURL) {
 //		UserAccountWidget.getInstance().setLogoutUrl(logoutURL);
 		
 		UserAccountWidget.getInstance().setRedirectUrl(logoutURL);
-	}
-	
-	class RpcGetLogoutURLCallBackHandler implements AsyncCallback<String> {
-		public void onFailure(Throwable caught) {
-		}
-
-		public void onSuccess(String result) {
-			if (result != null && !result.isEmpty()) {
-				updateLogoutURL(result);
-			}
-		}
 	}
 	
 	private static native void initTracker(String trackerID) /*-{

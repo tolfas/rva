@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.common.widgets.tutorial;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,8 +23,8 @@ import com.risevision.ui.client.common.controller.UserAccountController;
 import com.risevision.ui.client.common.info.CompanyInfo;
 import com.risevision.ui.client.common.info.RpcResultInfo;
 import com.risevision.ui.client.common.info.UserInfo;
-import com.risevision.ui.client.common.service.UserService;
 import com.risevision.ui.client.common.service.UserServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.SpacerWidget;
 
 public class TutorialWidget extends PopupPanel {
@@ -42,7 +41,7 @@ public class TutorialWidget extends PopupPanel {
 	private CheckBox tutorialCheckbox = new CheckBox();
 	private HorizontalPanel emailUpdatesPanel = new HorizontalPanel();
 	private CheckBox emailUpdatesCheckbox = new CheckBox();
-	private UserServiceAsync userService = GWT.create(UserService.class);
+	private UserServiceAsync userService = OAuth2ServiceWrapper.getUserService();
 	
 	public static TutorialWidget getInstance() {
 		try {

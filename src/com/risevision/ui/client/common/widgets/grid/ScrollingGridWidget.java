@@ -16,7 +16,11 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -32,6 +36,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 import com.google.gwt.user.client.ui.HTMLTable.ColumnFormatter;
 import com.risevision.common.client.utils.RiseUtils;
+import com.risevision.ui.client.common.controller.CommonHeaderController;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.info.ScrollingGridInfo;
 import com.risevision.ui.client.common.widgets.SpacerWidget;
@@ -54,6 +59,15 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 	private boolean currentCheckBoxValue;
 	
 	private boolean lastColumnShortened = false;
+	
+	private HandlerRegistration handlerRegistration;
+	
+	private ResizeHandler resizeHandler = new ResizeHandler() {	
+		@Override
+		public void onResize(ResizeEvent event) {
+			resize();
+		}
+	};
 
 	/*
 	 * Be careful with saving UI components in datastructures like this: if you
@@ -161,12 +175,13 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 //		bodyFlexTable.getElement().getStyle().setTableLayout(TableLayout.FIXED);
 //		bodyFlexTable.getElement().getStyle().setWidth(100, Unit.PCT);
 		
-		scrollingBodyPanel.getElement().getStyle().setHeight(100, Unit.PCT);
 		scrollingBodyPanel.getElement().getStyle().setOverflow(Overflow.AUTO);
 		scrollingBodyPanel.setAlwaysShowScrollBars(false);
 		scrollingBodyPanel.addStyleName("jfk-scrollbar");
 		
-		scrollingBodyPanel.getElement().getParentElement().getStyle().setHeight(100, Unit.PCT);
+		resize();
+		
+//		scrollingBodyPanel.getElement().getParentElement().getStyle().setHeight(100, Unit.PCT);
 	}
 	
 	private void setHeader() {
@@ -248,6 +263,10 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 		});
 	}
 	
+	private void resize() {
+		scrollingBodyPanel.getElement().getStyle().setHeight(Math.max(CommonHeaderController.getContentHeight() - 60, 400), Unit.PX);
+	}
+	
 	protected void onAttach() {
 		mainPanel.getElement().getParentElement().getStyle().setProperty("maxWidth", "1200px");
 		
@@ -257,6 +276,21 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 	protected void onLoad() {
 		searchTextBox.setFocus(true);
 		super.onLoad();
+
+		if (resizeHandler != null) {
+			resize();
+			
+			handlerRegistration = Window.addResizeHandler(resizeHandler);
+		}
+	}
+	
+	protected void onUnload() {
+		super.onUnload();
+		
+		if (handlerRegistration != null && resizeHandler != null) {
+			handlerRegistration.removeHandler();
+			handlerRegistration = null;
+		}
 	}
 
 	public void loadGrid(ScrollingGridInfo gridInfo) {
@@ -295,6 +329,14 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 	}
 
 	public void setGridHeight(String height) {
+		if (handlerRegistration != null) {
+			handlerRegistration.removeHandler();
+			handlerRegistration = null;
+		}
+		if (resizeHandler != null) {
+			resizeHandler = null;
+		}
+		
 		scrollingBodyPanel.getElement().getStyle().setProperty("height", height);
 	}
 	
@@ -338,7 +380,7 @@ public class ScrollingGridWidget extends Composite implements ClickHandler {
 	
 	public void setHyperlink(int row, int column, String text, String contentId, String id, String companyId) {
 		Anchor actionHyperlink = new Anchor(text);
-		actionHyperlink.setHref("#" + contentId + "/id=" + id + "/company=" + companyId);
+		actionHyperlink.setHref("#" + contentId + "/id=" + id + "?cid=" + companyId);
 
 		setWidget(row, column, actionHyperlink);
 	}

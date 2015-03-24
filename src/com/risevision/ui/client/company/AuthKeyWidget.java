@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.company;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -13,14 +12,14 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.exception.RiseAsyncCallback;
-import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.SpacerWidget;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 
 public class AuthKeyWidget extends HorizontalPanel {
 	//RPC
-	private final CompanyServiceAsync companyService = GWT.create(CompanyService.class);
+	private final CompanyServiceAsync companyService = OAuth2ServiceWrapper.getCompanyService();
 	// UI Pieces
 	private StatusBoxWidget statusBox = StatusBoxWidget.getInstance();
 	private Label authKeyLabel = new Label();

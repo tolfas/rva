@@ -5,7 +5,6 @@
 package com.risevision.ui.server.utils;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -16,33 +15,20 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import oauth.signpost.OAuth;
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.basic.DefaultOAuthConsumer;
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
-
-import org.restlet.data.ChallengeResponse;
-import org.restlet.data.ChallengeScheme;
-import org.restlet.resource.ClientResource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.google.api.client.http.HttpResponse;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.risevision.core.api.Global;
-import com.risevision.ui.client.common.exception.ServiceFailedException;
 import com.risevision.ui.client.common.info.GridInfo;
 import com.risevision.ui.server.data.DataService;
 import com.risevision.ui.server.data.PersistentConfigurationInfo;
-import com.risevision.ui.server.data.PersistentOAuthInfo;
-import com.risevision.ui.server.data.PersistentUserInfo;
-import com.risevision.ui.server.data.PersistentOAuthInfo.OAuthType;
 
 public class ServerUtils {
 
@@ -243,20 +229,20 @@ public class ServerUtils {
 		return resultList;
 	}
 	
-	public static String getLogoutURL(String returnURL){	
-		UserService userService = UserServiceFactory.getUserService();		
-		return userService.createLogoutURL(returnURL);
-	}
-	
-	public static String getLoginURL(String returnURL) {
-		UserService userService = UserServiceFactory.getUserService();		
-		return userService.createLoginURL(returnURL);
-	}
-
-	public static boolean isUserLoggedIn() {
-		UserService userService = UserServiceFactory.getUserService();
-		return userService.isUserLoggedIn();
-	}
+//	public static String getLogoutURL(String returnURL){	
+//		UserService userService = UserServiceFactory.getUserService();		
+//		return userService.createLogoutURL(returnURL);
+//	}
+//	
+//	public static String getLoginURL(String returnURL) {
+//		UserService userService = UserServiceFactory.getUserService();		
+//		return userService.createLoginURL(returnURL);
+//	}
+//
+//	public static boolean isUserLoggedIn() {
+//		UserService userService = UserServiceFactory.getUserService();
+//		return userService.isUserLoggedIn();
+//	}
 	
 	public static String getGoogleUsername() {
 		String username = null;
@@ -307,111 +293,20 @@ public class ServerUtils {
 		return url;
 	}
 	
-	public static PersistentUserInfo getPersistentUser() throws ServiceFailedException {
-		PersistentUserInfo user = DataService.getInstance().getUser();
-		
-		if (user == null) {
-			throw new ServiceFailedException(ServiceFailedException.AUTHENTICATION_FAILED);
-		}
-		
-		return user;
-	}
-	
-//	public static PersistentUserInfo getPersistentUser(HttpServletRequest request) throws ServiceFailedException {
-//		String token = (String) request.getSession().getAttribute("userToken");
-//		String tokenSecret = (String) request.getSession().getAttribute("userTokenSecret");
-//		String tokenOwner = (String) request.getSession().getAttribute("userTokenOwner");
-//
-//		if (token == null || tokenSecret == null || tokenOwner == null || !tokenOwner.equals(ServerUtils.getGoogleUsername())) {
-//			PersistentUserInfo user = DataService.getInstance().getUser();
-//			
-//			if (user != null) {
-//				request.getSession().setAttribute("userToken", user.getUserToken());
-//				request.getSession().setAttribute("userTokenSecret", user.getUserTokenSecret());
-//				request.getSession().setAttribute("userTokenOwner", user.getUserName());
-//			}
-//			else {
-//				throw new ServiceFailedException(ServiceFailedException.AUTHENTICATION_FAILED);
-//			}
-//			
-//			return user;
-//		}
-//		else {
-//			PersistentUserInfo user = new PersistentUserInfo(token, tokenSecret);
-//			
-//			return user;
-//		}
-//	}
-	
-	private static OAuthConsumer createConsumer(PersistentUserInfo user) throws ServiceFailedException {	
-		PersistentOAuthInfo oAuth = DataService.getInstance().getOAuth(OAuthType.user);
-		OAuthConsumer consumer = new DefaultOAuthConsumer(oAuth.getConsumerKey(), oAuth.getConsumerSecret());
-		
-		consumer.setTokenWithSecret(user.getUserToken(), user.getUserTokenSecret());
-		
-		return consumer;
-	}
-	
-	public static void signResource(ClientResource clientResource, HttpServletRequest request, String url, String method) throws ServiceFailedException {
-		PersistentUserInfo user = ServerUtils.getPersistentUser();
-		OAuthConsumer consumer = ServerUtils.createConsumer(user);
-		
+	public static void writeDebugInfo(HttpResponse response) {
 		try {
-			URL payload_url = new URL(url);
-//			URL payload_url = new URL(ServerUtils.formatUrl(url));
-			
-			HttpURLConnection r = (HttpURLConnection) payload_url.openConnection();
-			r.setRequestMethod(method);
-	
-	        // sign the request
-	        try {
-				consumer.sign(r);
-			} catch (OAuthMessageSignerException e) {
-	//			log.severe(e.getMessage());
-				e.printStackTrace();
-			} catch (OAuthExpectationFailedException e) {
-	//			log.severe(e.getMessage());
-				e.printStackTrace();
-			} catch (OAuthCommunicationException e) {
-	//			log.severe(e.getMessage());
-				e.printStackTrace();
+			if (response.isSuccessStatusCode() && response.getContent().available() > 0) {
+				response.download(System.out);
 			}
-				
-			String header = "";
-			try {
-				header = r.getRequestProperty(OAuth.HTTP_AUTHORIZATION_HEADER);
-				if (header.contains("OAuth ")) {
-					header = header.substring("OAuth ".length(), header.length());
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			else {
+				System.out.printf("Status: %s %s", response.getStatusCode(), response.getStatusMessage());
 			}
-	
-			ChallengeResponse challenge = new ChallengeResponse(ChallengeScheme.HTTP_OAUTH);
-			challenge.setRawValue(header);
 			
-			clientResource.setChallengeResponse(challenge);
-		}
-		catch (IOException e) {
+			System.out.println();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public static void writeDebugInfo(ClientResource clientResource) {
-		if (clientResource.getStatus().isSuccess() && clientResource.getResponseEntity().isAvailable()) {
-			try {
-				clientResource.getResponseEntity().write(System.out);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else {
-			System.out.printf("Status: %s %s", clientResource.getStatus()
-					.getCode(), clientResource.getStatus().getDescription());
-		}
-		
-		System.out.println();
 	}
 	
 }

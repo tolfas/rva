@@ -6,6 +6,8 @@ package com.risevision.ui.client.presentation.placeholder;
 
 import java.util.Map;
 
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
@@ -107,12 +109,15 @@ public class PlaylistItemManageWidget extends PopupPanel {
 	}
 
 	private void styleControls() {
-		setSize("500px", "100%");
+		setSize("500px", "85%");
 		
 		//style the table	
 		mainGrid.setCellSpacing(0);
 		mainGrid.setCellPadding(0);
 		mainGrid.setStyleName("rdn-Table");
+		
+		this.getElement().getStyle().setProperty("maxHeight", "85%");
+		this.getElement().getStyle().setMargin(50, Unit.PX);
 
 		titleLabel.setStyleName("rdn-Head");
 		
@@ -269,7 +274,9 @@ public class PlaylistItemManageWidget extends PopupPanel {
 			center();
 			showSelectPanel(false, null);						
 			itemManageWidget.show(playlistItem);
-		}	
+		}
+		
+		this.getElement().getStyle().setOverflow(Overflow.AUTO);
 	}
 		
 	public void loadStoreIframe(String storePath) {
@@ -296,19 +303,17 @@ public class PlaylistItemManageWidget extends PopupPanel {
 	
 	public void center() {
 		super.center();
-		movePopup(15, -5);
+		movePopup(5);
 	}
 	
-	// leftMove and topMove are defined as % values.
-	private void movePopup(int leftMove, int topMove) {
-		int left, top;
+	// leftMove defined as % value.
+	private void movePopup(int leftMove) {
+		int left;
 		left = (int) (getAbsoluteLeft() + ((Window.getClientWidth() / 100.0) * leftMove));
-		top = (int) (getAbsoluteTop() + ((Window.getClientHeight() / 100.0) * topMove));
 		
-		top = top < 0 ? 0 : top;
 		left = left < 0 ? 0 : left;
 		
-		setPopupPosition(left, top);
+		setPopupPosition(left, 5);
 	}
 
 	private void bindData() {

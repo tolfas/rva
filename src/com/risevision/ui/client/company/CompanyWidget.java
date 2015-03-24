@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.company;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,8 +33,8 @@ import com.risevision.ui.client.common.info.AlertsInfo;
 import com.risevision.ui.client.common.info.CompanyInfo;
 import com.risevision.ui.client.common.info.FormValidatorInfo;
 import com.risevision.ui.client.common.info.HistoryTokenInfo;
-import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.ConfirmDialogWidget;
 import com.risevision.ui.client.common.widgets.CountryWidget;
@@ -58,7 +57,7 @@ public class CompanyWidget extends Composite {
 	private CompanyInfo companyInfo;
 	private boolean isBookmarkSet = false;
 	//RPC
-	private final CompanyServiceAsync companyService = GWT.create(CompanyService.class);
+	private final CompanyServiceAsync companyService = OAuth2ServiceWrapper.getCompanyService();
 	private RpcCallBackHandler rpcCallBackHandler = new RpcCallBackHandler();
 	//UI pieces
 	private ActionsWidget actionsWidget = ActionsWidget.getInstance();
@@ -127,8 +126,8 @@ public class CompanyWidget extends Composite {
 		linksPanel.add(addCompanyPanel);
 		linksPanel.add(switchCompanyLink);
 		
-		namePanel.add(linksPanel);
-		namePanel.setCellHeight(linksPanel, "24px");
+//		namePanel.add(linksPanel);
+//		namePanel.setCellHeight(linksPanel, "24px");
 		
 		mainPanel.add(namePanel);
 		mainPanel.add(topGrid);

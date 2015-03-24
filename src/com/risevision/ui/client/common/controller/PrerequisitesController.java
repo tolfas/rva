@@ -6,7 +6,6 @@ package com.risevision.ui.client.common.controller;
 
 import java.util.Date;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
@@ -16,9 +15,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.risevision.common.client.utils.RiseUtils;
 import com.risevision.ui.client.UiControlBinder;
 import com.risevision.ui.client.UiEntryPoint;
-import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
-import com.risevision.ui.client.common.data.DataAccessController;
 import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.exception.ServiceFailedException;
 import com.risevision.ui.client.common.info.CompanyInfo;
@@ -27,8 +24,8 @@ import com.risevision.ui.client.common.info.PrerequisitesInfo;
 import com.risevision.ui.client.common.info.RoleInfo;
 import com.risevision.ui.client.common.info.RpcResultInfo;
 import com.risevision.ui.client.common.info.UserInfo;
-import com.risevision.ui.client.common.service.UserService;
 import com.risevision.ui.client.common.service.UserServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.MenuWidget;
 import com.risevision.ui.client.common.widgets.messages.SystemMessagesWidget;
 import com.risevision.ui.client.company.CompanySelectorWidget;
@@ -79,8 +76,8 @@ public class PrerequisitesController {
 	private static PrerequisitesController instance;
 	private Command cmdLoadedCallBack;
 	private static boolean loaded = false; 
-	private UserServiceAsync userService = GWT.create(UserService.class);
-	private CompanyServiceAsync companyService = GWT.create(CompanyService.class);
+	private UserServiceAsync userService = OAuth2ServiceWrapper.getUserService();
+	private CompanyServiceAsync companyService = OAuth2ServiceWrapper.getCompanyService();
 	private UiControlBinder uiControlBinder = UiControlBinder.getInstance();
 	
 	private UserTermsWidget termsWidget = new UserTermsWidget();
@@ -103,17 +100,24 @@ public class PrerequisitesController {
 	}
 	
 	private void load() {
-		userService.getCurrent(Location.getHref(), new RpcGetPrereqCallBackHandler());
+		userService.getCurrent(new RpcGetPrereqCallBackHandler());
 		//userService.getCurrent(Globals.LOGOUT_URL, new RpcGetUserInfoCallBackHandler());		
+	}
+	
+	public void clear() {
+		SelectedCompanyController.getInstance().clear();
+		UserAccountController.getInstance().clear();
+		
+		showProgressBar();
+		
+		loaded = false;
 	}
 	
 	private void processPrereqInfo(PrerequisitesInfo result) {
 		//Initialize the Configuration Controller.
 		ConfigurationController configController = ConfigurationController.getInstance();
-		configController.setConfiguration(result);
-		
-		DataAccessController.correctTimestamp(result.getServerTimestamp());
-		
+		configController.setConfiguration(result.getConfiguration());
+				
 		UserAccountWidget accountWidget = UserAccountWidget.getInstance();
 		accountWidget.setRedirectUrl(result.getConfiguration().getLogoutURL());
 		
@@ -386,12 +390,12 @@ public class PrerequisitesController {
 	}
 	
 	public void showProgressBar() {
-		RootPanel.get("progress").getElement().getStyle().setProperty("display","inline");
+//		RootPanel.get("progress").getElement().getStyle().setProperty("display","inline");
 		RootPanel.get("main").getElement().getStyle().setProperty("display","none");
 	}
 
 	public void hideProgressBar() {
-		RootPanel.get("progress").getElement().getStyle().setProperty("display","none");
+//		RootPanel.get("progress").getElement().getStyle().setProperty("display","none");
 		RootPanel.get("main").getElement().getStyle().setProperty("display","inline");
 	}
 	

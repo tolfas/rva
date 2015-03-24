@@ -36,16 +36,6 @@
 		<url-pattern>/rdn2ui/schedule</url-pattern>
 	</servlet-mapping>
 
-<!-- 	<servlet> -->
-<!-- 		<servlet-name>PlaylistServlet</servlet-name> -->
-<!-- 		<servlet-class>com.risevision.ui.server.rpc.PlaylistServiceImpl</servlet-class> -->
-<!-- 	</servlet> -->
-
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>PlaylistServlet</servlet-name> -->
-<!-- 		<url-pattern>/rdn2ui/playlist</url-pattern> -->
-<!-- 	</servlet-mapping> -->
-
 	<servlet>
 		<servlet-name>GadgetServlet</servlet-name>
 		<servlet-class>com.risevision.ui.server.rpc.GadgetServiceImpl</servlet-class>
@@ -84,34 +74,6 @@
 	<servlet-mapping>
 		<servlet-name>SocialConnectorServlet</servlet-name>
 		<url-pattern>/rdn2ui/socialConnector</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>LoginHelperServlet</servlet-name>
-		<servlet-class>com.risevision.ui.server.rpc.LoginServiceImpl</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>LoginHelperServlet</servlet-name>
-		<url-pattern>/rdn2ui/loginHelper</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>UserRequestTokenServlet</servlet-name>
-		<servlet-class>com.risevision.ui.server.oauth.UserRequestTokenServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UserRequestTokenServlet</servlet-name>
-		<url-pattern>/user/request</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>UserAccessTokenServlet</servlet-name>
-		<servlet-class>com.risevision.ui.server.oauth.UserAccessTokenServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UserAccessTokenServlet</servlet-name>
-		<url-pattern>/user/access</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -158,24 +120,6 @@
 		<servlet-name>MemCacheClearServlet</servlet-name>
 		<url-pattern>/cache/clear</url-pattern>
 	</servlet-mapping>
-
-<!-- 	<servlet> -->
-<!-- 		<servlet-name>logout</servlet-name> -->
-<!-- 		<jsp-file>/logout.jsp</jsp-file> -->
-<!-- 	</servlet> -->
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>logout</servlet-name> -->
-<!-- 		<url-pattern>/logout/*</url-pattern> -->
-<!-- 	</servlet-mapping> -->
-
-	<filter>
-		<filter-name>GaeAuthFilter</filter-name>
-		<filter-class>com.risevision.gaerequest.server.GaeAuthFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>GaeAuthFilter</filter-name>
-		<url-pattern>/rdn2ui/*</url-pattern>
-	</filter-mapping>
 
 	<!-- Default page to serve -->
 	<welcome-file-list>

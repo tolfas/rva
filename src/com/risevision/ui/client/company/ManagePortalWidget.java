@@ -6,7 +6,6 @@ package com.risevision.ui.client.company;
 
 import java.util.HashMap;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
@@ -23,20 +22,16 @@ import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.info.CompanyInfo;
 import com.risevision.ui.client.common.info.ManageSettingsInfo;
-import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
 import com.risevision.ui.client.common.widgets.LastModifiedWidget;
 import com.risevision.ui.client.common.widgets.RiseListBox;
 import com.risevision.ui.client.common.widgets.SpacerWidget;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
-import com.risevision.ui.client.common.widgets.DefaultSettingWidget;
-import com.risevision.ui.client.common.widgets.colorPicker.ColorPickerTextBox;
 import com.risevision.ui.client.common.widgets.demoContent.DemoContentGridWidget;
 import com.risevision.ui.client.common.widgets.grid.FormGridWidget;
-import com.risevision.ui.client.common.widgets.mediaLibrary.GooglePickerViewId;
-import com.risevision.ui.client.common.widgets.mediaLibrary.MediaLibraryTextBox;
 import com.risevision.ui.client.presentation.PresentationSelectPopupWidget;
 import com.risevision.ui.client.presentation.common.PresentationSelectorWidget;
 
@@ -44,16 +39,17 @@ public class ManagePortalWidget extends Composite {
 	private static ManagePortalWidget instance;
 	
 	//RPC
-	private final CompanyServiceAsync companyService = GWT.create(CompanyService.class);
+	private final CompanyServiceAsync companyService = OAuth2ServiceWrapper.getCompanyService();
 	private String companyId;
 	//UI pieces
 	private ActionsWidget actionsWidget = ActionsWidget.getInstance();
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private FormValidatorWidget formValidator = new FormValidatorWidget();
 	private StatusBoxWidget statusBox = StatusBoxWidget.getInstance();
-	private FormGridWidget mainGrid = new FormGridWidget(24, 2);
+	private FormGridWidget mainGrid = new FormGridWidget(10, 2);
 //	private int descriptionRow;
 	
+	/*
 	private DefaultSettingWidget logoURLTextBox = new DefaultSettingWidget(new MediaLibraryTextBox(GooglePickerViewId.DOCS_IMAGES));
 	private DefaultSettingWidget logoTargetTextBox = new DefaultSettingWidget();
 	private CheckBox useAdsenseCheckBox = new CheckBox();
@@ -78,7 +74,7 @@ public class ManagePortalWidget extends Composite {
 //	private TextArea directoryText = new TextArea();
 //	private CheckBox showTutorialCheckBox = new CheckBox();
 	private TextBox tutorialUrlTextBox = new TextBox();
-	
+	*/
 	private CheckBox useEmailCampaignCheckBox = new CheckBox();
 	private int emailCampaignRow;
 	private RiseListBox emailCampaignServiceListBox = new RiseListBox();
@@ -119,6 +115,7 @@ public class ManagePortalWidget extends Composite {
 		
 		styleControls();
 
+		/*
 		mainGrid.addRow("Logo URL (" + ManageSettingsInfo.LOGO_WIDTH + "x" + ManageSettingsInfo.LOGO_HEIGHT + ") :",
 				"Add your logo to the left side of the header", 
 				logoURLTextBox, "rdn-TextBoxMedium");
@@ -175,6 +172,7 @@ public class ManagePortalWidget extends Composite {
 //				"Show the startup Tutorial upon logging in for any Company below yours",
 //				showTutorialCheckBox, "rdn-CheckBox");
 		mainGrid.addRow("Tutorial URL:", tutorialUrlTextBox, "rdn-TextBoxLong");
+		*/
 		
 		mainGrid.addRow("Use Email Campaign Service:", 
 				"Manage Email Campaigns to Users of any Company below yours", 
@@ -266,7 +264,7 @@ public class ManagePortalWidget extends Composite {
 		clearData();
 //		loadParentDataRPC();
 		loadDataRPC();
-		logoURLTextBox.setFocus(true);
+//		logoURLTextBox.setFocus(true);
 		
 //		StorageAppWidget.getInstance().load();
 		
@@ -282,12 +280,12 @@ public class ManagePortalWidget extends Composite {
 	
 		actionsWidget.addAction("Save", cmdSave);
 		
-		useAdsenseCheckBox.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				onAdsenseCheckBoxClicked(); 
-			}
-		});
+//		useAdsenseCheckBox.addClickHandler(new ClickHandler() {
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				onAdsenseCheckBoxClicked(); 
+//			}
+//		});
 		
 		useEmailCampaignCheckBox.addClickHandler(new ClickHandler() {
 			@Override
@@ -297,14 +295,14 @@ public class ManagePortalWidget extends Composite {
 		});
 	}
 	
-	private void onAdsenseCheckBoxClicked() {
-		boolean useAdsense = useAdsenseCheckBox.getValue();
-		
-		mainGrid.getRowFormatter().setVisible(bannerRow, !useAdsense);
-		mainGrid.getRowFormatter().setVisible(bannerRow + 1, !useAdsense);
-		mainGrid.getRowFormatter().setVisible(bannerRow + 2, useAdsense);
-		mainGrid.getRowFormatter().setVisible(bannerRow + 3, useAdsense);
-	}
+//	private void onAdsenseCheckBoxClicked() {
+//		boolean useAdsense = useAdsenseCheckBox.getValue();
+//		
+//		mainGrid.getRowFormatter().setVisible(bannerRow, !useAdsense);
+//		mainGrid.getRowFormatter().setVisible(bannerRow + 1, !useAdsense);
+//		mainGrid.getRowFormatter().setVisible(bannerRow + 2, useAdsense);
+//		mainGrid.getRowFormatter().setVisible(bannerRow + 3, useAdsense);
+//	}
 	
 	private void onEmailCampaignCheckBoxClicked() {
 		boolean useEmailCampaign = useEmailCampaignCheckBox.getValue();
@@ -322,6 +320,7 @@ public class ManagePortalWidget extends Composite {
 		CompanyInfo company = new CompanyInfo();
 		HashMap<String, String> settings = new HashMap<String, String>();
 		
+		/*
 		settings.put(ManageSettingsInfo.LOGO_URL, logoURLTextBox.getText());
 		settings.put(ManageSettingsInfo.LOGO_TARGET_URL, logoTargetTextBox.getText());
 		settings.put(ManageSettingsInfo.BANNER_URL, useAdsenseCheckBox.getValue() ? "" : bannerURLTextBox.getText());
@@ -342,6 +341,7 @@ public class ManagePortalWidget extends Composite {
 //		settings.put(ManageSettingsInfo.DIRECTORY_DESCRIPTION, directoryText.getText());
 //		settings.put(ManageSettingsInfo.SHOW_TUTORIAL, showTutorialCheckBox.getValue() ? "true" : "false");
 		settings.put(ManageSettingsInfo.TUTORIAL_URL, tutorialUrlTextBox.getText());
+		*/
 		settings.put(CompanySetting.MAIL_SYNC_ENABLED, useEmailCampaignCheckBox.getValue() ? "true" : "false");
 		settings.put(CompanySetting.MAIL_SYNC_SERVICE, emailCampaignServiceListBox.getSelectedValue());
 		settings.put(CompanySetting.MAIL_SYNC_API_URL, emailCampaignApiUrlTextBox.getText());
@@ -436,6 +436,7 @@ public class ManagePortalWidget extends Composite {
 	protected void bindParentData(CompanyInfo company) {
 		HashMap<String, String> settingsMap = company.getParentSettings();
 		
+		/*
 		if (settingsMap.containsKey(ManageSettingsInfo.LOGO_URL)){
 			logoURLTextBox.setDefaultText(settingsMap.get(ManageSettingsInfo.LOGO_URL));
 		}
@@ -469,6 +470,8 @@ public class ManagePortalWidget extends Composite {
 //		if (settingsMap.containsKey(ManageSettingsInfo.LOGOUT_URL)){
 //			logoutUrlTextBox.setDefaultText(settingsMap.get(ManageSettingsInfo.LOGOUT_URL));
 //		}
+		*/
+		
 		// As per issue 700:
 		// The Operator Start Presentation field's Default setting should not apply the Parent company's 
 		// Operator presentation, instead it should use the User presentation
@@ -494,6 +497,7 @@ public class ManagePortalWidget extends Composite {
 
 		lastModifiedWidget.Initialize(company.getChangedBy(), company.getChangeDate());
 		
+		/*
 		if (settingsMap.containsKey(ManageSettingsInfo.LOGO_URL)){
 			logoURLTextBox.setText(settingsMap.get(ManageSettingsInfo.LOGO_URL));
 		}
@@ -567,6 +571,7 @@ public class ManagePortalWidget extends Composite {
 		if (settingsMap.containsKey(ManageSettingsInfo.TUTORIAL_URL)) {
 			tutorialUrlTextBox.setText(settingsMap.get(ManageSettingsInfo.TUTORIAL_URL));
 		}
+		*/
 
 		useEmailCampaignCheckBox.setValue(settingsMap.containsKey(CompanySetting.MAIL_SYNC_ENABLED) 
 				&& "true".equals(settingsMap.get(CompanySetting.MAIL_SYNC_ENABLED)));
@@ -613,6 +618,7 @@ public class ManagePortalWidget extends Composite {
 	}
 	
 	private void clearData() {
+		/*
 		logoURLTextBox.setText("");
 		logoURLTextBox.setDefaultText("");
 		logoTargetTextBox.setText("");
@@ -646,6 +652,7 @@ public class ManagePortalWidget extends Composite {
 		salesEmailTextBox.setDefaultText("");
 //		directoryCheckBox.setValue(false, true);
 //		directoryText.setText("");
+		*/
 		
 		useEmailCampaignCheckBox.setValue(false);
 		onEmailCampaignCheckBoxClicked();

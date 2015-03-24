@@ -11,6 +11,7 @@ import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.risevision.ui.client.common.controller.CommonHeaderController;
 
 public class HtmlEditorWidget extends SimplePanel {
 	private String elementId = "htmlEditorDiv_" + System.currentTimeMillis();
@@ -73,19 +74,9 @@ public class HtmlEditorWidget extends SimplePanel {
 	}
 	
 	private void resize() {
-		if (Window.getClientWidth() - 10 > 200) {
-			this.setWidth((Window.getClientWidth() - 31) + "px");
-		}
-		else {
-			this.setWidth("200px");
-		}
+		this.setWidth(Math.max(Window.getClientWidth() - 31, 200) + "px");
 		
-		if (Window.getClientHeight() - 220 > 50) {
-			this.setHeight((Window.getClientHeight() - 206) + "px");
-		}
-		else {
-			this.setHeight("50px");
-		}
+		this.setHeight(Math.max(CommonHeaderController.getContentHeight() - 50, 50) + "px");
 		
 		refresh();
 	}

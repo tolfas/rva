@@ -6,7 +6,6 @@ package com.risevision.ui.client.company;
 
 import java.util.HashMap;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
@@ -16,8 +15,8 @@ import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.info.CompanyInfo;
 import com.risevision.ui.client.common.info.ManageSettingsInfo;
-import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.LastModifiedWidget;
 import com.risevision.ui.client.common.widgets.RolesWidget;
@@ -27,8 +26,8 @@ public class ManageSecurityWidget extends Composite {
 	private static ManageSecurityWidget instance;
 	
 	//RPC
-	private final CompanyServiceAsync companyService = GWT
-			.create(CompanyService.class);
+	private final CompanyServiceAsync companyService = 
+			OAuth2ServiceWrapper.getCompanyService();
 	private String companyId;
 	
 	//UI pieces

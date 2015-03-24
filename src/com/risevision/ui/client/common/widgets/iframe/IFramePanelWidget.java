@@ -51,7 +51,7 @@ public abstract class IFramePanelWidget extends PopupPanel {
 	}
 	
 	private void showPanel(boolean show) {
-		this.getElement().getStyle().setZIndex(show ? 1000 : -1000);
+		this.getElement().getStyle().setZIndex(show ? 1002 : -1000);
 		this.getElement().getStyle().setOpacity(show ? 1 : 0);
 		
 //		if (show) super.show();

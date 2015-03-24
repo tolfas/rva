@@ -20,6 +20,10 @@ public class UserAccountController {
 		this.userInfo = userInfo;
 	}
 	
+	public void clear() {
+		this.userInfo = null;
+	}
+	
 	public static UserAccountController getInstance() {
 		try {
 			if (instance == null)

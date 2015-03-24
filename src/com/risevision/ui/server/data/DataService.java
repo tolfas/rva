@@ -5,7 +5,6 @@
 package com.risevision.ui.server.data;
 
 import com.risevision.ui.server.data.PersistentOAuthInfo.OAuthType;
-import com.risevision.ui.server.utils.ServerUtils;
 
 public class DataService {
 	private PersistentHandler persistentHandler = new PersistentHandler();
@@ -42,44 +41,9 @@ public class DataService {
 			cache.putInCache(PersistentConfigurationInfo.ENTITY_KEY, config);
 		}
 		
-//		return new PersistentConfigurationInfo();
 		return config;
 	}
-	
-	public void saveUser(PersistentUserInfo user) {
-		persistentHandler.saveUser(user);
 		
-		CacheHandler cache = CacheHandler.getInstance();
-
-		cache.putInCache(user.getUserName(), user);
-	}
-	
-	public PersistentUserInfo getUser() {
-		if (ServerUtils.isUserLoggedIn()) {
-			return getUser(ServerUtils.getGoogleUsername());
-		}
-		else {
-			return null;
-//			throw new ServiceFailedException(ServiceFailedException.NOT_LOGGED_IN);
-		}
-	}
-	
-	private PersistentUserInfo getUser(String username) {
-		CacheHandler cache = CacheHandler.getInstance();
-		
-		PersistentUserInfo user = (PersistentUserInfo) cache.findInCache(username);
-		
-		if (user == null) {
-			user = persistentHandler.getUser(username);
-			
-			if (user != null) {
-				cache.putInCache(username, user);
-			}
-		}
-
-		return user;
-	}
-	
 	public void saveOAuth(PersistentOAuthInfo oAuth) {
 		persistentHandler.saveOAuth(oAuth);
 	}

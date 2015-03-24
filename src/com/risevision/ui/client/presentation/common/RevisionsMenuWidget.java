@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.presentation.common;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -20,12 +19,12 @@ import com.risevision.core.api.types.PresentationRevisionStatus;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.info.RpcResultInfo;
-import com.risevision.ui.client.common.service.PresentationService;
 import com.risevision.ui.client.common.service.PresentationServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 
 public class RevisionsMenuWidget extends Button {
-	private final PresentationServiceAsync presentationService = GWT.create(PresentationService.class);
+	private final PresentationServiceAsync presentationService = OAuth2ServiceWrapper.getPresentationService();
 	private StatusBoxWidget statusBox = StatusBoxWidget.getInstance(); 
 	
 	private PopupPanel menuPanel = new PopupPanel(true, false);

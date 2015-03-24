@@ -24,10 +24,9 @@ public interface UserService extends RemoteService  {
     public RpcResultInfo deleteUser(String companyId, String userId) throws ServiceFailedException;
 
 //    public UserInfo getUser(String username) throws ServiceFailedException;
-    public PrerequisitesInfo getCurrent(String requestUrl) throws ServiceFailedException;
+    public PrerequisitesInfo getCurrent() throws ServiceFailedException;
     
 	public void sendEmail(EmailInfo email);
-	public String getLogoutURL(String URL);
 //	public String getLoginURL(String URL);
 
 }

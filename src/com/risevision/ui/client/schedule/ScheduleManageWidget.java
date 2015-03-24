@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.schedule;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
@@ -25,10 +24,9 @@ import com.risevision.ui.client.common.exception.ServiceFailedException;
 import com.risevision.ui.client.common.info.FormValidatorInfo;
 import com.risevision.ui.client.common.info.HistoryTokenInfo;
 import com.risevision.ui.client.common.info.RpcResultInfo;
-import com.risevision.ui.client.common.service.ScheduleService;
 import com.risevision.ui.client.common.service.ScheduleServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
-//import com.risevision.ui.client.common.widgets.DefaultSettingsWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
 import com.risevision.ui.client.common.widgets.LastModifiedWidget;
 import com.risevision.ui.client.common.widgets.MessageBoxWidget;
@@ -44,8 +42,7 @@ public class ScheduleManageWidget extends Composite {
 	private ScheduleInfo scheduleInfo;
 	private String scheduleId;
 	//RPC
-	private final ScheduleServiceAsync scheduleService = GWT
-			.create(ScheduleService.class);
+	private final ScheduleServiceAsync scheduleService = OAuth2ServiceWrapper.getScheduleService();
 	private RpcGetScheduleCallBackHandler rpcGetScheduleCallBackHandler = new RpcGetScheduleCallBackHandler();
 	private RpcCheckDistributionCallBackHandler rpcCheckDistributionCallBackHandler = new RpcCheckDistributionCallBackHandler();
 	private RpcPutScheduleCallBackHandler rpcPutScheduleCallBackHandler = new RpcPutScheduleCallBackHandler();

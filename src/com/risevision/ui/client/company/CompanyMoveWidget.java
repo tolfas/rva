@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.company;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -24,8 +23,8 @@ import com.risevision.ui.client.common.exception.ServiceFailedException;
 import com.risevision.ui.client.common.info.CompanyInfo;
 import com.risevision.ui.client.common.info.FormValidatorInfo;
 import com.risevision.ui.client.common.info.RpcResultInfo;
-import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
 import com.risevision.ui.client.common.widgets.SpacerWidget;
@@ -35,7 +34,7 @@ import com.risevision.ui.client.common.widgets.StatusBoxWidget.Status;
 public class CompanyMoveWidget extends PopupPanel {
 	private static CompanyMoveWidget instance;
 	
-	private final CompanyServiceAsync companyService = GWT.create(CompanyService.class);
+	private final CompanyServiceAsync companyService = OAuth2ServiceWrapper.getCompanyService();
 
 	//UI pieces
 	private VerticalPanel mainPanel = new VerticalPanel();

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -23,8 +22,8 @@ import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.info.RpcResultInfo;
 import com.risevision.ui.client.common.info.SocialConnectorAccessInfo;
 import com.risevision.ui.client.common.info.SocialConnectorAccessInfo.NetworkType;
-import com.risevision.ui.client.common.service.SocialConnectorService;
 import com.risevision.ui.client.common.service.SocialConnectorServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 import com.risevision.ui.client.common.widgets.grid.SimpleGridWidget;
 
@@ -36,7 +35,7 @@ public class SocialConnectorCompanyWidget extends VerticalPanel implements Click
 	private static final int ACTION_RESET = 5;
 	
 	//RPC
-	private final SocialConnectorServiceAsync socialConnectorService = GWT.create(SocialConnectorService.class);
+	private final SocialConnectorServiceAsync socialConnectorService = OAuth2ServiceWrapper.getSocialConnectorService();
 	private SocialConnectorAccessController accessController = SocialConnectorAccessController.getInstance();
 //	private String networkName;
 	private String companyId;

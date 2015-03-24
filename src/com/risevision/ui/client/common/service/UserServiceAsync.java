@@ -21,10 +21,9 @@ public interface UserServiceAsync {
 	void deleteUser(String companyId, String userId, AsyncCallback<RpcResultInfo> callback);
 	
 //	void getUser(String username, AsyncCallback<UserInfo> callback);	
-	void getCurrent(String requestUrl, AsyncCallback<PrerequisitesInfo> callback);
+	void getCurrent(AsyncCallback<PrerequisitesInfo> callback);
 	
 	void sendEmail(EmailInfo email, AsyncCallback<Void> callback);
-	void getLogoutURL(String URL, AsyncCallback<String> callback);
 //	void getLoginURL(String URL, AsyncCallback<String> callback);
 
 }

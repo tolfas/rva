@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.schedule;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -26,8 +25,8 @@ import com.risevision.common.client.info.PresentationInfo;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
 import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.info.FormValidatorInfo;
-import com.risevision.ui.client.common.service.PresentationService;
 import com.risevision.ui.client.common.service.PresentationServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
 import com.risevision.ui.client.common.widgets.NumericBoxWidget;
@@ -48,7 +47,7 @@ public class ScheduleItemManageWidget extends PopupPanel {
 	private int itemIndex;
 	//Get Presentation name Utils
 	//RPC
-	private final PresentationServiceAsync presentationService = GWT.create(PresentationService.class);
+	private final PresentationServiceAsync presentationService = OAuth2ServiceWrapper.getPresentationService();
 	private RpcCallBackHandler rpcCallBackHandler = new RpcCallBackHandler();
 	//UI pieces
 	private int row = -1;

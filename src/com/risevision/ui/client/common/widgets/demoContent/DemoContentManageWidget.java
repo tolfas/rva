@@ -4,7 +4,6 @@
 
 package com.risevision.ui.client.common.widgets.demoContent;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -23,8 +22,8 @@ import com.risevision.ui.client.common.exception.RiseAsyncCallback;
 import com.risevision.ui.client.common.info.DemoContentInfo;
 import com.risevision.ui.client.common.info.FormValidatorInfo;
 import com.risevision.ui.client.common.info.RpcResultInfo;
-import com.risevision.ui.client.common.service.CompanyService;
 import com.risevision.ui.client.common.service.CompanyServiceAsync;
+import com.risevision.ui.client.common.service.oauth2.OAuth2ServiceWrapper;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.DefaultResolutionWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
@@ -43,7 +42,7 @@ public class DemoContentManageWidget extends PopupPanel {
 	private String objectRef;
 	//Get Presentation name Utils
 	//RPC
-	private final CompanyServiceAsync companyService = GWT.create(CompanyService.class);
+	private final CompanyServiceAsync companyService = OAuth2ServiceWrapper.getCompanyService();
 	//UI pieces
 	private int row = -1;
 	private VerticalPanel mainPanel = new VerticalPanel();
