@@ -134,7 +134,7 @@ public class GooglePickerWidget extends Frame {
 	}
 	
 	private void showPanel(boolean show) {
-		pickerPanel.getElement().getStyle().setZIndex(show ? 1000 : -1000);
+		pickerPanel.getElement().getStyle().setZIndex(show ? 1003 : -1000);
 	}
 
 	protected void onLoad() {

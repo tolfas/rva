@@ -1061,6 +1061,7 @@ table td {
   background: #ffcccc;
 }
 .dateBoxPopup {
+  z-index: 1002;
 }
 
 .gwt-DatePicker {
