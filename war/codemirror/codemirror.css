@@ -3,6 +3,10 @@
   font-family: monospace;
 }
 
+.CodeMirror pre {
+  overflow: visible;
+}
+
 .CodeMirror-scroll {
   overflow: auto;
 /*   height: 300px; */
