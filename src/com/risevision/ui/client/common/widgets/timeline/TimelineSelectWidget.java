@@ -182,6 +182,7 @@ public class TimelineSelectWidget extends PopupPanel {
 			break;
 		case Weekly:
 			rbWeekly.setValue(true, true);
+			tbWeeklyRecurrenceFrequency.setText(Integer.toString(t.getRecurrenceFrequency()));
 			cbSunday.setValue(t.getRecurrenceSunday());
 			cbMonday.setValue(t.getRecurrenceMonday());
 			cbTuesday.setValue(t.getRecurrenceTuesday());
