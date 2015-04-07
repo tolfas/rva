@@ -7,14 +7,14 @@ app.run(["$templateCache", function($templateCache) {
     "<ul>\n" +
     "  <li>\n" +
     "    <div class=\"menu-box pull-right\">\n" +
-    "      <a href=\"https://store.risevision.com/\" target=\"_blank\">\n" +
+    "      <a href=\"https://store.risevision.com/\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseStore\"></svg-icon>\n" +
     "        <span>Store</span>\n" +
     "      </a>\n" +
     "    </div>\n" +
     "    \n" +
     "    <div class=\"menu-box pull-right\">\n" +
-    "      <a href=\"http://rva.risevision.com/#PRESENTATIONS\" target=\"_blank\">\n" +
+    "      <a href=\"http://rva.risevision.com/#PRESENTATIONS\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseEditor\"></svg-icon>\n" +
     "        <span>Editor</span>\n" +
     "      </a>\n" +
@@ -23,14 +23,14 @@ app.run(["$templateCache", function($templateCache) {
     "  </li>\n" +
     "  <li>\n" +
     "    <div class=\"menu-box pull-left\">\n" +
-    "      <a href=\"http://storage.risevision.com/\" target=\"_blank\">\n" +
+    "      <a href=\"http://storage.risevision.com/\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseStorage\"></svg-icon>\n" +
     "        <span>Storage</span>\n" +
     "      </a>\n" +
     "    </div>\n" +
     "    \n" +
     "    <div class=\"menu-box pull-left\">\n" +
-    "      <a href=\"http://rva.risevision.com/#DISPLAYS\" target=\"_blank\">\n" +
+    "      <a href=\"http://rva.risevision.com/#DISPLAYS\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseDisplays\"></svg-icon>\n" +
     "        <span>Displays</span>\n" +
     "      </a>\n" +
@@ -39,14 +39,14 @@ app.run(["$templateCache", function($templateCache) {
     "  </li>\n" +
     "  <li>\n" +
     "    <div class=\"menu-box pull-left\">\n" +
-    "      <a href=\"http://rva.risevision.com/#SCHEDULES\" target=\"_blank\">\n" +
+    "      <a href=\"http://rva.risevision.com/#SCHEDULES\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseSchedules\"></svg-icon>\n" +
     "        <span>Schedules</span>\n" +
     "      </a>\n" +
     "    </div>\n" +
     "    \n" +
     "    <div class=\"menu-box pull-right\">\n" +
-    "      <a href=\"https://support.risevision.com\" target=\"_blank\">\n" +
+    "      <a href=\"https://support.risevision.com/#/\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseSupport\"></svg-icon>\n" +
     "        <span>Support</span>\n" +
     "      </a>\n" +
@@ -60,7 +60,7 @@ app.run(["$templateCache", function($templateCache) {
     "      </a>\n" +
     "    </div>\n" +
     "    <div class=\"menu-box pull-right\">\n" +
-    "      <a href=\"http://help.risevision.com/\" target=\"_blank\">\n" +
+    "      <a href=\"http://help.risevision.com/\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseDocumentation\"></svg-icon>\n" +
     "        <span>Documentation</span>\n" +
     "      </a>\n" +
@@ -68,13 +68,13 @@ app.run(["$templateCache", function($templateCache) {
     "  </li>\n" +
     "  <li>\n" +
     "    <div class=\"menu-box pull-left\">\n" +
-    "      <a href=\"http://developer.risevision.com/\" target=\"_blank\">\n" +
+    "      <a href=\"http://developer.risevision.com/\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseDevelopers\"></svg-icon>\n" +
     "        <span>Developer</span>\n" +
     "      </a>\n" +
     "    </div>\n" +
     "    <div class=\"menu-box pull-right\">\n" +
-    "      <a href=\"http://www.risevision.com/about-us/\" target=\"_blank\">\n" +
+    "      <a href=\"http://www.risevision.com/about-us/#\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseLogo\"></svg-icon>\n" +
     "        <span>About</span>\n" +
     "      </a>\n" +
@@ -461,7 +461,7 @@ app.run(["$templateCache", function($templateCache) {
     "        Country\n" +
     "      </label>\n" +
     "      <select id=\"company-settings-country\" class=\"form-control selectpicker\"\n" +
-    "        ng-model=\"company.country\" ng-options=\"c[1] as c[0] for c in countries\">\n" +
+    "        ng-model=\"company.country\" ng-options=\"c.code as c.name for c in countries\">\n" +
     "        <option value=\"\">&lt; Select Country &gt;</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
@@ -855,7 +855,7 @@ app.run(["$templateCache", function($templateCache) {
     "    </div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <label for=\"country\">Country</label>\n" +
-    "      <select id=\"country\" class=\"form-control selectpicker\" ng-model=\"addr.country\" ng-options=\"c[1] as c[0] for c in countries\">\n" +
+    "      <select id=\"country\" class=\"form-control selectpicker\" ng-model=\"addr.country\" ng-options=\"c.code as c.name for c in countries\">\n" +
     "        <option value=\"\">&lt; Select Country &gt;</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
@@ -939,21 +939,6 @@ try { app = angular.module("risevision.common.header.templates"); }
 catch(err) { app = angular.module("risevision.common.header.templates", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
-  $templateCache.put("last-modified.html",
-    "<span class=\"text-muted\">\n" +
-    "  <small>\n" +
-    "    Saved {{changeDate | date:'d-MMM-yyyy h:mm a'}} by {{changedBy | username}}\n" +
-    "  </small>\n" +
-    "</span>\n" +
-    "");
-}]);
-})();
-
-(function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
   $templateCache.put("move-company-modal.html",
     "<div rv-spinner\n" +
     "  rv-spinner-key=\"move-company-modal\"\n" +
@@ -1015,7 +1000,7 @@ app.run(["$templateCache", function($templateCache) {
     "    ng-show=\"company.name && !moveSuccess\" ng-click=\"moveCompany()\">Move Company\n" +
     "    <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
     "  </button>\n" +
-    "  <button type=\"button\" class=\"btn btn-primary close-move-company-button\" data-dismiss=\"modal\" ng-click=\"closeModal()\">\n" +
+    "  <button type=\"button\" class=\"btn btn-default btn-fixed-width close-move-company-button\" data-dismiss=\"modal\" ng-click=\"closeModal()\">\n" +
     "    {{dismissButtonText}} <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
     "  </button>\n" +
     "</div>\n" +
@@ -1233,18 +1218,18 @@ app.run(["$templateCache", function($templateCache) {
     "<div class=\"modal-body text-center\" style=\"padding:15px 20px;\">\n" +
     "  <img src=\"//s3.amazonaws.com/rise-common/images/logo-small.png\" class=\"text-center\" width=\"113\" height=\"42\" alt=\"Rise Vision\">\n" +
     "  \n" +
-    "  <h1>The Enterprise Digital Signage Platform</h1>\n" +
-    "  <p class=\"lead\">Everything you need to create amazing digital signage for FREE</p>\n" +
+    "  <h1>Enterprise Digital Signage Platform</h1>\n" +
+    "  <p class=\"lead\">Use it for Free</p>\n" +
     "  \n" +
     "  <h4 class=\"add-bottom\"><a href=\"http://www.risevision.com\" target=\"_blank\">Learn More about Rise Vision</a></h4>\n" +
     "  \n" +
-    "  <button class=\"btn-lg btn btn-primary\" ng-click=\"login();\">\n" +
+    "  <button class=\"btn-lg btn btn-primary\" ng-click=\"login('registrationComplete')\">\n" +
     "    <i class=\"fa fa-google fa-lg icon-left\"></i>\n" +
     "    Start with a Google Account\n" +
     "  </button>\n" +
     "  \n" +
     "  <p class=\"text-muted half-top\">Don&apos;t Have a Google Account? <a href=\"https://accounts.google.com/SignUp\" target=\"_blank\">Get One Here.</a></p>\n" +
-    "  <p class=\"text-muted half-top\">Already a Rise Vision User? <a ng-click=\"login(); $event.stopPropagation();\" href=\"#\">Sign In</a></p>\n" +
+    "  <p class=\"text-muted half-top\">Already a Rise Vision User? <a ng-click=\"login('registrationComplete'); $event.stopPropagation();\" ng-href=\"#\">Sign In</a></p>\n" +
     "</div>\n" +
     "");
 }]);
@@ -1537,6 +1522,7 @@ angular.module("risevision.common.header", [
   "risevision.common.loading",
   "risevision.ui-flow",
   "risevision.common.systemmessages", "risevision.core.systemmessages",
+  "risevision.core.countries",
   "risevision.core.oauth2",
   "risevision.common.geodata",
   "risevision.store.data-gadgets",
@@ -1546,7 +1532,7 @@ angular.module("risevision.common.header", [
   "risevision.common.shoppingcart",
   "checklist-model",
   "ui.bootstrap", "ngSanitize", "rvScrollEvent", "ngCsv", "ngTouch",
-  "risevision.common.components",
+  "risevision.common.components.last-modified",
   "risevision.common.svg"
 ])
 
@@ -1869,12 +1855,17 @@ angular.module("risevision.common.header")
 ]);
 
 angular.module("risevision.common.header")
-  .controller("SignUpModalCtrl", ["$scope", "uiFlowManager",
-  function($scope, uiFlowManager) {
+  .controller("SignUpModalCtrl", ["$scope", "userState", "uiFlowManager",
+  "$loading",
+  function($scope, userState, uiFlowManager, $loading) {
     
-    // Trigger Login action
-    $scope.login = function () {
-      uiFlowManager.invalidateStatus("signedInWithGoogle");
+    // Login Modal
+    $scope.login = function (endStatus) {
+      $loading.startGlobal("auth-buttons-login");
+      userState.authenticate(true).then().finally(function(){
+        $loading.stopGlobal("auth-buttons-login");
+        uiFlowManager.invalidateStatus(endStatus);
+      });
     };
   }
 ]);
@@ -1894,8 +1885,8 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 .controller("CompanyButtonsCtrl", [ "$scope", "$modal", "$templateCache",
-  "userState",
-  function($scope, $modal, $templateCache, userState) {
+  "userState", "getCoreCountries",
+  function($scope, $modal, $templateCache, userState, getCoreCountries) {
     $scope.inRVAFrame = userState.inRVAFrame();
 
     $scope.$watch(function () {return userState.isSubcompanySelected(); },
@@ -1926,7 +1917,12 @@ angular.module("risevision.common.header")
       $modal.open({
         template: $templateCache.get("subcompany-modal.html"),
         controller: "SubCompanyModalCtrl",
-        size: "lg"
+        size: "lg",
+        resolve: {
+          countries: function () {
+            return getCoreCountries();
+          }
+        }
       });
     };
 
@@ -1939,6 +1935,9 @@ angular.module("risevision.common.header")
         resolve: {
           companyId: function () {
             return userState.getSelectedCompanyId();
+          },
+          countries: function () {
+            return getCoreCountries();
           }
         }
       });
@@ -2238,15 +2237,15 @@ angular.module("risevision.common.header")
 angular.module("risevision.common.header")
 
 .controller("CompanySettingsModalCtrl", ["$scope", "$modalInstance",
-  "updateCompany", "companyId", "COUNTRIES", "REGIONS_CA", "REGIONS_US", "TIMEZONES",
+  "updateCompany", "companyId", "countries", "REGIONS_CA", "REGIONS_US", "TIMEZONES",
   "getCompany", "regenerateCompanyField", "$window", "$loading", "humanReadableError",
   "userState", "deleteCompany",
   function($scope, $modalInstance, updateCompany, companyId,
-    COUNTRIES, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany, regenerateCompanyField,
+    countries, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany, regenerateCompanyField,
     $window, $loading, humanReadableError, userState, deleteCompany) {
 
     $scope.company = {id: companyId};
-    $scope.countries = COUNTRIES;
+    $scope.countries = countries;
     $scope.regionsCA = REGIONS_CA;
     $scope.regionsUS = REGIONS_US;
     $scope.timezones = TIMEZONES;
@@ -2321,7 +2320,7 @@ angular.module("risevision.common.header")
         regenerateCompanyField($scope.company.id, "authKey").then(
           function(resp) {
             $scope.company.authKey = resp.item;
-            alert("Successfully changed authentication key.");
+            alert("Successfully changed Authentication Key.");
           },
           function (error) {
             alert("Error: " + humanReadableError(error));
@@ -2363,14 +2362,14 @@ angular.module("risevision.common.header")
 
 angular.module("risevision.common.header")
 .controller("SubCompanyModalCtrl", ["$scope", "$modalInstance", "$modal",
-  "$templateCache", "createCompany", "COUNTRIES", "REGIONS_CA", "REGIONS_US",
+  "$templateCache", "createCompany", "countries", "REGIONS_CA", "REGIONS_US",
   "TIMEZONES", "userState", "$loading", "humanReadableError",
   function($scope, $modalInstance, $modal, $templateCache,
-    createCompany, COUNTRIES, REGIONS_CA, REGIONS_US, TIMEZONES, userState, 
+    createCompany, countries, REGIONS_CA, REGIONS_US, TIMEZONES, userState, 
     $loading, humanReadableError) {
 
     $scope.company = {};
-    $scope.countries = COUNTRIES;
+    $scope.countries = countries;
     $scope.regionsCA = REGIONS_CA;
     $scope.regionsUS = REGIONS_US;
     $scope.timezones = TIMEZONES;
@@ -3193,243 +3192,6 @@ angular.module("risevision.common.header")
 })(angular);
 
 angular.module("risevision.common.geodata", [])
-.value("COUNTRIES",
-        [["Afghanistan", "AF"],
-        ["Albania", "AL"],
-        ["Algeria", "DZ"],
-        ["American Samoa", "AS"],
-        ["Andorra", "AD"],
-        ["Angola", "AO"],
-        ["Anguilla", "AI"],
-        ["Antarctica", "AQ"],
-        ["Antigua and Barbuda", "AG"],
-        ["Argentina", "AR"],
-        ["Armenia", "AM"],
-        ["Aruba", "AW"],
-        ["Australia", "AU"],
-        ["Austria", "AT"],
-        ["Azerbaijan", "AZ"],
-        ["Bahamas", "BS"],
-        ["Bahrain", "BH"],
-        ["Bangladesh", "BD"],
-        ["Barbados", "BB"],
-        ["Belarus", "BY"],
-        ["Belgium", "BE"],
-        ["Belize", "BZ"],
-        ["Benin", "BJ"],
-        ["Bermuda", "BM"],
-        ["Bhutan", "BT"],
-        ["Bolivia", "BO"],
-        ["Bosnia and Herzegovina", "BA"],
-        ["Botswana", "BW"],
-        ["Bouvet Island", "BV"],
-        ["Brazil", "BR"],
-        ["British Indian Ocean Territory", "IO"],
-        ["British Virgin Islands", "VG"],
-        ["Brunei Darussalam", "BN"],
-        ["Bulgaria", "BG"],
-        ["Burkina Faso", "BF"],
-        ["Burundi", "BI"],
-        ["Cambodia", "KH"],
-        ["Cameroon", "CM"],
-        ["Canada", "CA"],
-        ["Cape Verde", "CV"],
-        ["Cayman Islands", "KY"],
-        ["Central African Republic", "CF"],
-        ["Chad", "TD"],
-        ["Chile", "CL"],
-        ["China", "CN"],
-        ["Christmas Island", "CX"],
-        ["Cocos", "CC"],
-        ["Colombia", "CO"],
-        ["Comoros", "KM"],
-        ["Congo", "CG"],
-        ["Cook Islands", "CK"],
-        ["Costa Rica", "CR"],
-        ["Croatia", "HR"],
-        ["Cuba", "CU"],
-        ["Cyprus", "CY"],
-        ["Czech Republic", "CZ"],
-        ["Denmark", "DK"],
-        ["Djibouti", "DJ"],
-        ["Dominica", "DM"],
-        ["Dominican Republic", "DO"],
-        ["Ecuador", "EC"],
-        ["Egypt", "EG"],
-        ["El Salvador", "SV"],
-        ["Equatorial Guinea", "GQ"],
-        ["Eritrea", "ER"],
-        ["Estonia", "EE"],
-        ["Ethiopia", "ET"],
-        ["Falkland Islands", "FK"],
-        ["Faroe Islands", "FO"],
-        ["Fiji", "FJ"],
-        ["Finland", "FI"],
-        ["France", "FR"],
-        ["French Guiana", "GF"],
-        ["French Polynesia", "PF"],
-        ["French Southern Territories", "TF"],
-        ["Gabon", "GA"],
-        ["Gambia", "GM"],
-        ["Georgia", "GE"],
-        ["Germany", "DE"],
-        ["Ghana", "GH"],
-        ["Gibraltar", "GI"],
-        ["Greece", "GR"],
-        ["Greenland", "GL"],
-        ["Grenada", "GD"],
-        ["Guadeloupe", "GP"],
-        ["Guam", "GU"],
-        ["Guatemala", "GT"],
-        ["Guinea", "GN"],
-        ["Guinea-Bissau", "GW"],
-        ["Guyana", "GY"],
-        ["Haiti", "HT"],
-        ["Heard and McDonald Islands", "HM"],
-        ["Honduras", "HN"],
-        ["Hong Kong", "HK"],
-        ["Hungary", "HU"],
-        ["Iceland", "IS"],
-        ["India", "IN"],
-        ["Indonesia", "ID"],
-        ["Iran", "IR"],
-        ["Iraq", "IQ"],
-        ["Ireland", "IE"],
-        ["Israel", "IL"],
-        ["Italy", "IT"],
-        ["Ivory Coast", "CI"],
-        ["Jamaica", "JM"],
-        ["Japan", "JP"],
-        ["Jordan", "JO"],
-        ["Kazakhstan", "KZ"],
-        ["Kenya", "KE"],
-        ["Kiribati", "KI"],
-        ["Kuwait", "KW"],
-        ["Kyrgyzstan", "KG"],
-        ["Laos", "LA"],
-        ["Latvia", "LV"],
-        ["Lebanon", "LB"],
-        ["Lesotho", "LS"],
-        ["Liberia", "LR"],
-        ["Libya", "LY"],
-        ["Liechtenstein", "LI"],
-        ["Lithuania", "LT"],
-        ["Luxembourg", "LU"],
-        ["Macau", "MO"],
-        ["Macedonia", "MK"],
-        ["Madagascar", "MG"],
-        ["Malawi", "MW"],
-        ["Malaysia", "MY"],
-        ["Maldives", "MV"],
-        ["Mali", "ML"],
-        ["Malta", "MT"],
-        ["Marshall Islands", "MH"],
-        ["Martinique", "MQ"],
-        ["Mauritania", "MR"],
-        ["Mauritius", "MU"],
-        ["Mayotte", "YT"],
-        ["Mexico", "MX"],
-        ["Micronesia", "FM"],
-        ["Moldova", "MD"],
-        ["Monaco", "MC"],
-        ["Mongolia", "MN"],
-        ["Montserrat", "MS"],
-        ["Morocco", "MA"],
-        ["Mozambique", "MZ"],
-        ["Myanmar", "MM"],
-        ["Namibia", "NA"],
-        ["Nauru", "NR"],
-        ["Nepal", "NP"],
-        ["Netherlands", "NL"],
-        ["Netherlands Antilles", "AN"],
-        ["New Caledonia", "NC"],
-        ["New Zealand", "NZ"],
-        ["Nicaragua", "NI"],
-        ["Niger", "NE"],
-        ["Nigeria", "NG"],
-        ["Niue", "NU"],
-        ["Norfolk Island", "NF"],
-        ["North Korea", "KP"],
-        ["Northern Mariana Islands", "MP"],
-        ["Norway", "NO"],
-        ["Oman", "OM"],
-        ["Pakistan", "PK"],
-        ["Palau", "PW"],
-        ["Panama", "PA"],
-        ["Papua New Guinea", "PG"],
-        ["Paraguay", "PY"],
-        ["Peru", "PE"],
-        ["Philippines", "PH"],
-        ["Pitcairn", "PN"],
-        ["Poland", "PL"],
-        ["Portugal", "PT"],
-        ["Puerto Rico", "PR"],
-        ["Qatar", "QA"],
-        ["Reunion", "RE"],
-        ["Romania", "RO"],
-        ["Russian Federation", "RU"],
-        ["Rwanda", "RW"],
-        ["S. Georgia and S. Sandwich Islands", "GS"],
-        ["Saint Kitts and Nevis", "KN"],
-        ["Saint Lucia", "LC"],
-        ["Saint Vincent and The Grenadines", "VC"],
-        ["Samoa", "WS"],
-        ["San Marino", "SM"],
-        ["Sao Tome and Principe", "ST"],
-        ["Saudi Arabia", "SA"],
-        ["Serbia", "RS"],
-        ["Senegal", "SN"],
-        ["Seychelles", "SC"],
-        ["Sierra Leone", "SL"],
-        ["Singapore", "SG"],
-        ["Slovakia", "SK"],
-        ["Slovenia", "SI"],
-        ["Solomon Islands", "SB"],
-        ["Somalia", "SO"],
-        ["South Africa", "ZA"],
-        ["South Korea", "KR"],
-        ["Spain", "ES"],
-        ["Sri Lanka", "LK"],
-        ["St. Helena", "SH"],
-        ["St. Pierre and Miquelon", "PM"],
-        ["Sudan", "SD"],
-        ["Suriname", "SR"],
-        ["Svalbard and Jan Mayen Islands", "SJ"],
-        ["Swaziland", "SZ"],
-        ["Sweden", "SE"],
-        ["Switzerland", "CH"],
-        ["Syria", "SY"],
-        ["Taiwan", "TW"],
-        ["Tajikistan", "TJ"],
-        ["Tanzania", "TZ"],
-        ["Thailand", "TH"],
-        ["Togo", "TG"],
-        ["Tokelau", "TK"],
-        ["Tonga", "TO"],
-        ["Trinidad and Tobago", "TT"],
-        ["Tunisia", "TN"],
-        ["Turkey", "TR"],
-        ["Turkmenistan", "TM"],
-        ["Turks and Caicos Islands", "TC"],
-        ["Tuvalu", "TV"],
-        ["Uganda", "UG"],
-        ["Ukraine", "UA"],
-        ["United Arab Emirates", "AE"],
-        ["United Kingdom", "UK"],
-        ["United States", "US"],
-        ["Uruguay", "UY"],
-        ["US Minor Outlying Islands", "UM"],
-        ["US Virgin Islands", "VI"],
-        ["Uzbekistan", "UZ"],
-        ["Vanuatu", "VU"],
-        ["Venezuela", "VE"],
-        ["Viet Nam", "VN"],
-        ["Wallis and Futuna Islands", "WF"],
-        ["Western Sahara", "EH"],
-        ["Yemen", "YE"],
-        ["Zambia", "ZM"],
-        ["Zimbabwe", "ZW"]])
-
     .value("REGIONS_CA", [
         ["Alberta", "AB"],
         ["British Columbia", "BC"],
@@ -3910,7 +3672,7 @@ angular.module("risevision.common.geodata", [])
         var loc, path, search, state;
         
         // Redirect to full URL path
-        if (!$rootScope.redirectToRoot) {
+        if ($rootScope.redirectToRoot === false) {
           loc = $window.location.href.substr(0, $window.location.href.indexOf("#")) || $window.location.href;
         }
         // Redirect to the URL root and append pathname back to the URL
@@ -5224,6 +4986,56 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
 
 })(angular);
 
+(function (angular) {
+
+  "use strict";
+
+  angular.module("risevision.core.countries", ["risevision.common.gapi"])
+
+  .factory("getCoreCountries", ["coreAPILoader", "$q", "$log", "$filter",
+    function (coreAPILoader, $q, $log, $filter) {
+      var deferred;
+      return function () {
+        if (deferred) {
+          return deferred.promise;
+        }
+        else {
+          deferred = $q.defer();  
+        }
+        
+        coreAPILoader().then(function (coreApi) {
+          return coreApi.country.list();
+        })
+        .then(function (resp) {
+          var items = resp.result ? resp.result.items : [];
+          if(items instanceof Array) { 
+            items = $filter("orderBy")(items, "name");
+          }
+
+          deferred.resolve(items);
+        })
+        .then(null, function(e) {
+          $log.debug("getCoreCountries failed", e);
+          deferred.reject(e);
+          
+          deferred = null;
+        });
+        return deferred.promise;
+      };
+  }])
+  .factory("COUNTRIES", ["getCoreCountries", 
+    function (getCoreCountries) {
+      var countries = [];
+     
+      getCoreCountries().then(function(result) {
+        Array.prototype.push.apply(countries, result);
+      })
+      
+      return countries;
+  }]);
+
+})(angular);
+
 "use strict";
 
 angular.module("risevision.common.fastpass", [])
@@ -5276,6 +5088,36 @@ function (loadFastpass, userState) {
       $scope.$watch(function () { return userState.getUserEmail(); }, function (email) {
         if(email) {
           loadFastpass(userState.getUsername(), userState.getUserEmail());
+        }
+      });
+    }
+  };
+}]);
+
+angular.module("risevision.common.header")
+.directive("linkCid", ["userState",
+function (userState) {
+  return {
+    link: function($scope, ele, attr){
+      var updateLinkCompanyId = function(companyId) {
+        var index = attr.href.indexOf("cid=");
+        var value;
+        if (index > -1) {
+          value = attr.href.substring(0, index + 4) + companyId;
+        }
+        else {
+          value = attr.href + 
+            (attr.href.indexOf("?") === -1 ? "?": "&") + 
+            "cid=" + companyId;
+        }
+        attr.$set("href", value);
+      };
+      
+      $scope.$watch(function () {
+        return userState.getSelectedCompanyId();
+      }, function(newValue, oldValue) {
+        if (newValue && newValue !== oldValue) {
+          updateLinkCompanyId(newValue);
         }
       });
     }
@@ -5816,38 +5658,57 @@ angular.module("risevision.store.data-gadgets", [])
 
   }]);
 
-"use strict";
+(function () {
+  "use strict";
 
-angular.module("risevision.common.components", [])
-  .directive("lastModified", ["$templateCache",
-    function ($templateCache) {
-      return {
-        restrict: "E",
-        scope: {
-          changeDate: "=",
-          changedBy: "="
-        },
-        template: $templateCache.get("last-modified.html"),
-        link: function ($scope) {
-          $scope.$watch("changedBy", function(newVal) {
-            $scope.changedBy = newVal ? newVal : "N/A";
-          });
-        } //link()
-      };
-    }
-  ]);
-
-"use strict";
-
-// Simple filter that removes the domain from an email
-// for example, bld@riseholdings.com would return bld
-angular.module("risevision.common.components")
-  .filter("username", function () {
-    return function (email) {
-      var username = email;
-      if (email && email.indexOf("@") !== -1) {
-        username = email.substring(0, email.indexOf("@"));
+  angular.module("risevision.common.components.last-modified", [])
+    .directive("lastModified", ["$templateCache",
+      function ($templateCache) {
+        return {
+          restrict: "E",
+          scope: {
+            changeDate: "=",
+            changedBy: "="
+          },
+          template: $templateCache.get("last-modified/last-modified.html"),
+          link: function ($scope) {
+            $scope.$watch("changedBy", function(newVal) {
+              $scope.changedBy = newVal ? newVal : "N/A";
+            });
+          } //link()
+        };
       }
-      return username;
-    };
-  });
+    ]);
+}());
+
+(function () {
+  "use strict";
+
+  // Simple filter that removes the domain from an email
+  // for example, bld@riseholdings.com would return bld
+  angular.module("risevision.common.components.last-modified")
+    .filter("username", function () {
+      return function (email) {
+        var username = email;
+        if (email && email.indexOf("@") !== -1) {
+          username = email.substring(0, email.indexOf("@"));
+        }
+        return username;
+      };
+    });
+}());
+
+(function(module) {
+try { app = angular.module("risevision.common.components.last-modified"); }
+catch(err) { app = angular.module("risevision.common.components.last-modified", []); }
+app.run(["$templateCache", function($templateCache) {
+  "use strict";
+  $templateCache.put("last-modified/last-modified.html",
+    "<span class=\"text-muted\">\n" +
+    "  <small>\n" +
+    "    Saved {{changeDate | date:'d-MMM-yyyy h:mm a'}} by {{changedBy | username}}\n" +
+    "  </small>\n" +
+    "</span>\n" +
+    "");
+}]);
+})();
