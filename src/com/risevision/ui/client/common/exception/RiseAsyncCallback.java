@@ -33,6 +33,7 @@ public abstract class RiseAsyncCallback<T> implements AsyncCallback<T>{
 //		else {
 //			onFailure();
 //		}
+		this.caught = caught;
 		
 		onFailure();
 	}
