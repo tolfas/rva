@@ -55,6 +55,9 @@ angular.module('risevision.rva', [
         else if ((navOptions[i].title === 'Settings' || navOptions[i].title === 'Network') && userState.hasRole('ua')) {
           visibleOptions.push(navOptions[i]);
         }
+        else if (navOptions[i].title === 'Start') {
+        	visibleOptions.push(navOptions[i]);
+        }
       }
       
       $scope.navOptions = visibleOptions;
