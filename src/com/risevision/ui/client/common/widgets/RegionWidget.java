@@ -34,7 +34,7 @@ public class RegionWidget extends Composite{
 		lsRegion.addItem("Newfoundland and Labrador", "NL");
 		lsRegion.addItem("Northwest Territories", "NT");
 		lsRegion.addItem("Nova Scotia", "NS");
-		lsRegion.addItem("Nunavut", "NV");
+		lsRegion.addItem("Nunavut", "NU");
 		lsRegion.addItem("Ontario", "ON");
 		lsRegion.addItem("Prince Edward Island", "PE");
 		lsRegion.addItem("Quebec", "QC");
