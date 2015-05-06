@@ -131,12 +131,6 @@ app.run(["$templateCache", function($templateCache) {
     "      <span class=\"item-name\">User Settings</span>\n" +
     "    </a>\n" +
     "  </li>\n" +
-    "  <li ng-show=\"false\">\n" +
-    "    <a href=\"\" class=\"action\" ng-click=\"paymentMethods()\">\n" +
-    "      <i class=\"fa fa-usd\"></i>\n" +
-    "      <span class=\"item-name\">Payment Methods</span>\n" +
-    "    </a>\n" +
-    "  </li>\n" +
     "\n" +
     "  <li class=\"dropdown-footer text-right\" ng-show=\"isLoggedIn\">\n" +
     "    <button class=\"sign-out-button btn btn-sm btn-default\" ng-click=\"logout()\">Sign Out <i class=\"fa fa-sign-out\"></i>\n" +
@@ -785,139 +779,6 @@ try { app = angular.module("risevision.common.header.templates"); }
 catch(err) { app = angular.module("risevision.common.header.templates", []); }
 app.run(["$templateCache", function($templateCache) {
   "use strict";
-  $templateCache.put("credit-cards-modal.html",
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" ng-click=\"closeModal()\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </button>\n" +
-    "  <h2 id=\"pay-now-label\" class=\"modal-title\">Credit Cards</h2>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body\" ng-scroll-event=\"handleScroll($event, isEndEvent)\">\n" +
-    "  <form role=\"form\">\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"card-number\">Card Number</label>\n" +
-    "      <input id=\"card-number\" data-stripe=\"number\" class=\"form-control\" type=\"text\" ng-model=\"card.number\"/>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"card-name\">Cardholder Name</label>\n" +
-    "      <input id=\"card-name\" data-stripe=\"name\" class=\"form-control\" type=\"text\" ng-model=\"card.name\"/>\n" +
-    "    </div>\n" +
-    "    <div class=\"row form-group\">\n" +
-    "      <div class=\"col-md-3\">\n" +
-    "        <label for=\"expiry-month\">Exp. Month</label>\n" +
-    "        <select id=\"expiry-month\" data-stripe=\"exp-month\" class=\"form-control selectpicker\" ng-model=\"card.expMonth\">\n" +
-    "          <option value=\"1\">01</option>\n" +
-    "          <option value=\"2\">02</option>\n" +
-    "          <option value=\"3\">03</option>\n" +
-    "          <option value=\"4\" selected>04</option>\n" +
-    "          <option value=\"5\">05</option>\n" +
-    "          <option value=\"6\">06</option>\n" +
-    "          <option value=\"7\">07</option>\n" +
-    "          <option value=\"8\">08</option>\n" +
-    "          <option value=\"9\">09</option>\n" +
-    "          <option value=\"10\">10</option>\n" +
-    "          <option value=\"11\">11</option>\n" +
-    "          <option value=\"12\">12</option>\n" +
-    "        </select>\n" +
-    "      </div>\n" +
-    "      <div class=\"col-md-3\">\n" +
-    "        <label for=\"expiry-year\">Exp. Year</label>\n" +
-    "        <select id=\"expiry-year\" data-stripe=\"exp-year\" class=\"form-control selectpicker\" ng-model=\"card.expYear\">\n" +
-    "          <option value=\"2014\" selected>2014</option>\n" +
-    "          <option value=\"2015\">2015</option>\n" +
-    "          <option value=\"2016\">2016</option>\n" +
-    "          <option value=\"2017\">2017</option>\n" +
-    "          <option value=\"2018\">2018</option>\n" +
-    "          <option value=\"2019\">2019</option>\n" +
-    "          <option value=\"2020\">2020</option>\n" +
-    "          <option value=\"2021\">2021</option>\n" +
-    "          <option value=\"2022\">2022</option>\n" +
-    "          <option value=\"2023\">2023</option>\n" +
-    "          <option value=\"2024\">2024</option>\n" +
-    "        </select>\n" +
-    "      </div>\n" +
-    "      <div class=\"col-md-3\">\n" +
-    "        <label for=\"cvc\">Security Code</label>\n" +
-    "        <input id=\"cvc\" data-stripe=\"cvc\" class=\"form-control\" type=\"text\" size=\"4\" ng-model=\"card.cvc\">\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "    <!-- Address -->\n" +
-    "    <h3>Billing Address</h3>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"street\">Street</label>\n" +
-    "      <input id=\"street\" type=\"text\" class=\"form-control\" ng-model=\"addr.address1\" />\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"unit\">Street (Line 2)</label>\n" +
-    "      <input id=\"unit\" type=\"text\" class=\"form-control\" ng-model=\"addr.address2\" />\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"city\">City</label>\n" +
-    "      <input id=\"city\" type=\"text\" class=\"form-control\" ng-model=\"addr.city\" />\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"country\">Country</label>\n" +
-    "      <select id=\"country\" class=\"form-control selectpicker\" ng-model=\"addr.country\" ng-options=\"c.code as c.name for c in countries\">\n" +
-    "        <option value=\"\">&lt; Select Country &gt;</option>\n" +
-    "      </select>\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"province\">State / Province</label>\n" +
-    "      <!-- <input id=\"province\" type=\"text\" class=\"form-control\" ng-model=\"addr.province\" ng-hide=\"addr.country == 'US' || addr.country == 'CA'\" /> -->\n" +
-    "      <select class=\"form-control selectpicker\" ng-model=\"addr.province\" ng-options=\"c[1] as c[0] for c in regionsCA\" ng-show=\"addr.country == 'CA'\">\n" +
-    "        <option value=\"\">&lt; Select Province &gt;</option>\n" +
-    "      </select>\n" +
-    "      <!-- <select class=\"form-control selectpicker\" ng-model=\"addr.province\" ng-options=\"c[1] as c[0] for c in regionsUS\" ng-show=\"addr.country == 'US'\">\n" +
-    "        <option value=\"\">&lt; Select State &gt;</option>\n" +
-    "      </select> -->\n" +
-    "    </div>\n" +
-    "    <div class=\"form-group\">\n" +
-    "      <label for=\"zip\">Zip / Postal Code</label>\n" +
-    "      <input id=\"zip\" type=\"text\" class=\"form-control\" ng-model=\"addr.postalCode\" />\n" +
-    "    </div>\n" +
-    "    <!-- End Address-->\n" +
-    "    <div class=\"form-group danger\" ng-show=\"isDeletingCard\">\n" +
-    "      Warning! If you delete this credit card from your account all subscription renewals paid on this card will fail at the time of renewal resulting in potential loss of service. Please confirm you wish to proceed with deleting this card by typing \"DELETE\" into the box below and clicking on the Confirm Deletion button.\n" +
-    "      <div class=\"row\">\n" +
-    "        <div class=\"col-sm-4\">\n" +
-    "          <input type=\"text\" class=\"form-control\" />\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "  </form>\n" +
-    "</div>\n" +
-    "<div class=\"modal-footer\">\n" +
-    "  <div class=\"row\">\n" +
-    "    <div class=\"col-sm-3\">\n" +
-    "      <a href=\"https://stripe.com/\" target=\"_blank\">\n" +
-    "        <img src=\"img/powered-by-stripe.png\" class=\"stripe\" width=\"119\" height=\"26\" alt=\"Powered by Stripe\">\n" +
-    "      </a>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-sm-9\">\n" +
-    "      <button type=\"button\" class=\"btn btn-success btn-fixed-width\" data-dismiss=\"modal\" ng-click=\"closeModal()\">Save\n" +
-    "        <i class=\"fa fa-white fa-check icon-right\"></i>\n" +
-    "      </button>\n" +
-    "      <button type=\"button\" class=\"btn btn-danger btn-fixed-width\" ng-show=\"!isDeletingCard\" ng-click=\"deleteCard()\">\n" +
-    "        Delete <i class=\"fa fa-white fa-trash-o icon-right\"></i>\n" +
-    "      </button>\n" +
-    "      <button type=\"button\" class=\"btn btn-danger btn-confirm-delete\" data-dismiss=\"modal\" ng-show=\"isDeletingCard\" ng-click=\"closeModal()\">\n" +
-    "        Confirm Deletion <i class=\"fa fa-white fa-warning icon-right\"></i>\n" +
-    "      </button>\n" +
-    "      <button type=\"button\" class=\"btn btn-default btn-fixed-width\" data-dismiss=\"modal\" ng-click=\"closeModal()\">Cancel\n" +
-    "        <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
-    "      </button>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "");
-}]);
-})();
-
-(function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
   $templateCache.put("global-alerts.html",
     "<div class=\"container\">\n" +
     "  <div class=\"row\">\n" +
@@ -1005,64 +866,6 @@ app.run(["$templateCache", function($templateCache) {
     "  <button type=\"button\" class=\"btn btn-default btn-fixed-width close-move-company-button\" data-dismiss=\"modal\" ng-click=\"closeModal()\">\n" +
     "    {{dismissButtonText}} <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
     "  </button>\n" +
-    "</div>\n" +
-    "");
-}]);
-})();
-
-(function(module) {
-try { app = angular.module("risevision.common.header.templates"); }
-catch(err) { app = angular.module("risevision.common.header.templates", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("payment-methods-modal.html",
-    "<div class=\"modal-header\">\n" +
-    "  <button type=\"button\" class=\"close\" ng-click=\"closeModal()\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </button>\n" +
-    "  <h2 id=\"user-settings-label\" class=\"modal-title\">Payment Methods</h2>\n" +
-    "</div>\n" +
-    "<div class=\"modal-body\">\n" +
-    "  <div class=\"container-fluid\">\n" +
-    "    <div class=\"list-group\">\n" +
-    "      <div class=\"row list-group-item\">\n" +
-    "        <div class=\"col-sm-10\">\n" +
-    "          Visa - 123\n" +
-    "          <span class=\"expiry\">Expires - 02/15</span>\n" +
-    "        </div>\n" +
-    "        <div class=\"col-sm-2 edit\">\n" +
-    "          <a href=\"\" ng-click=\"creditCards()\">\n" +
-    "            Edit\n" +
-    "          </a>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "      <div class=\"row list-group-item\">\n" +
-    "        <div class=\"col-sm-10\">\n" +
-    "          Amex - 123\n" +
-    "          <span class=\"expiry\">Expires - 02/15</span>\n" +
-    "        </div>\n" +
-    "        <div class=\"col-sm-2 edit\">\n" +
-    "          <a href=\"\" ng-click=\"creditCards()\">\n" +
-    "            Edit\n" +
-    "          </a>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "<div class=\"modal-footer\">\n" +
-    "  <div class=\"row\">\n" +
-    "    <div class=\"col-sm-3 stripe\">\n" +
-    "      <a href=\"https://stripe.com/\" target=\"_blank\">\n" +
-    "        <img src=\"img/powered-by-stripe.png\" width=\"119\" height=\"26\" alt=\"Powered by Stripe\">\n" +
-    "      </a>\n" +
-    "    </div>\n" +
-    "    <div class=\"col-sm-9\">\n" +
-    "      <button type=\"button\" class=\"btn btn-default\" ng-click=\"closeModal()\">\n" +
-    "        Cancel <i class=\"fa fa-white fa-times icon-right\"></i>\n" +
-    "      </button>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
     "</div>\n" +
     "");
 }]);
@@ -1866,15 +1669,6 @@ angular.module("risevision.common.header")
           }
         });
       };
-      // Show Payment Methods Modal
-      $scope.paymentMethods = function (size) {
-        // var modalInstance =
-        $modal.open({
-          template: $templateCache.get("payment-methods-modal.html"),
-          controller: "PaymentMethodsModalCtrl",
-          size: size
-        });
-      };
 
       $loading.startGlobal("auth-buttons-silent");
       oauth2APILoader() //force loading oauth api on startup
@@ -2121,33 +1915,6 @@ angular.module("risevision.common.header")
 
   }
 ]);
-
-angular.module("risevision.common.header")
-
-.controller("PaymentMethodsModalCtrl", ["$scope", "$modalInstance", "$modal",
-  "$templateCache",
-  function ($scope, $modalInstance, $modal, $templateCache) {
-    $scope.closeModal = function () {
-      $modalInstance.dismiss("cancel");
-    };
-    // Show Payment Methods Modal
-    $scope.creditCards = function (size) {
-      // var modalInstance =
-      $modal.open({
-        template: $templateCache.get("credit-cards-modal.html"),
-        controller: "CreditCardsModalCtrl",
-        size: size
-      });
-    };
-  }
-])
-  .controller("CreditCardsModalCtrl", ["$scope", "$modalInstance",
-    function ($scope, $modalInstance) {
-      $scope.closeModal = function () {
-        $modalInstance.dismiss("cancel");
-      };
-    }
-  ]);
 
 angular.module("risevision.common.header")
   .controller("RegistrationModalCtrl", [
@@ -3249,7 +3016,7 @@ angular.module("risevision.common.header")
       message = resp.message;
     } else if (resp.error) {
       if (resp.error.message) {
-        message = resp.message;
+        message = resp.error.message;
       } else {
         message = resp.error;
       }
@@ -3295,7 +3062,7 @@ angular.module("risevision.common.header")
        * check if date is in range
        * @param {Date} date
        * @param {String} strStartDate
-       * @return {String} strEndDate
+       * @param {String} strEndDate
        */
       return function (date, strStartDate, strEndDate) {
         // strStartDate, strEndDate can either be empty string or date in ISO 8601 format "2014-05-14T00:00:00.000Z"
@@ -3303,7 +3070,7 @@ angular.module("risevision.common.header")
 
         // When parsing time, we don't want to convert Universal time to the current TimeZone
         // example new Date(Date.parse("2014-05-14T00:00:00.000")); returns "Tue May 13 2014 20:00:00 GMT-0400 (EDT)"
-        // what we want is to pretennd that date already comes adjusted to the current TimeZone
+        // what we want is to pretend that date already comes adjusted to the current TimeZone
         // example "2014-05-14T00:00:00.000" show be converted to "Tue May 14 2014 00:00:00 GMT-0400 (EDT)"
 
         var res = true;
@@ -3512,47 +3279,9 @@ angular.module("risevision.common.geodata", [])
 (function (angular) {
   "use strict";
 
-  angular.module("risevision.common.popupdetector", [])
-
-  .factory("popupTest", ["$q", "$window", "$timeout",
-    function ($q, $window, $timeout) {
-      return function () {
-        var deferred = $q.defer();
-
-        var errorMsg = "<strong>Sign In Pop-Up Blocked</strong> - " +
-          "Allow pop-ups from store.risevision.com in the browser settings and Sign In again.";
-        $timeout(function () {
-          var popup = $window.open("", "", "width=50, height=50", true);
-          $timeout(function () {
-            try {
-              if (!popup || popup.outerHeight === 0) {
-                //First Checking Condition Works For IE & Firefox
-                //Second Checking Condition Works For Chrome
-                deferred.reject(errorMsg);
-              } else {
-                popup.close();
-                deferred.resolve(true);
-              }
-            } catch (e) {
-              deferred.reject(errorMsg);
-              try {
-                popup.close();
-              } catch (e1) {}
-            }
-          }, 25);
-        }, 2500);
-        return deferred.promise;
-      };
-    }
-  ]);
-
-})(angular);
-
-(function (angular) {
-  "use strict";
-
   angular.module("risevision.common.rvtokenstore", [
-    "risevision.common.util", "LocalStorageModule"
+    "risevision.common.util", "LocalStorageModule",
+    "ngBiscuit"
   ])
 
   .service("rvTokenStore", ["$log", "$location", "cookieStore",
@@ -3625,7 +3354,7 @@ angular.module("risevision.common.geodata", [])
     "risevision.common.companystate", "risevision.common.util",
     "risevision.common.gapi", "risevision.common.localstorage",
     "risevision.common.config", "risevision.core.cache",
-    "risevision.core.oauth2", "ngBiscuit",
+    "risevision.core.oauth2",
     "risevision.core.util", "risevision.core.userprofile",
     "risevision.common.loading", "risevision.ui-flow",
     "risevision.common.rvtokenstore"
@@ -3658,7 +3387,9 @@ angular.module("risevision.common.geodata", [])
             state.s +
             state.u
           );
-        } else {
+        } else if ($location.$$html5) { // HTML5 mode, clear path
+          $location.path("");
+        } else { // non HTML5 mode, set hash
           $window.location.hash = state.u;
         }
       }
@@ -3781,37 +3512,31 @@ angular.module("risevision.common.geodata", [])
 
       var refreshProfile = function () {
         var deferred = $q.defer();
-        getOAuthUserInfo().then(function (oauthUserInfo) {
-          //populate profile if the current user is a rise vision user
-          getUserProfile(_state.user.username, true).then(
-            function (profile) {
-              objectHelper.clearAndCopy(angular.extend({
-                username: oauthUserInfo.email
-              }, profile), _state.profile);
+        //populate profile if the current user is a rise vision user
+        getUserProfile(_state.user.username, true).then(
+          function (profile) {
+            objectHelper.clearAndCopy(angular.extend({
+              username: _state.user.username
+            }, profile), _state.profile);
 
-              //set role map
-              _state.roleMap = {};
-              if (_state.profile.roles) {
-                _state.profile.roles.forEach(function (val) {
-                  _state.roleMap[val] = true;
-                });
-              }
+            //set role map
+            _state.roleMap = {};
+            if (_state.profile.roles) {
+              _state.profile.roles.forEach(function (val) {
+                _state.roleMap[val] = true;
+              });
+            }
 
-              //populate company info
-              return companyState.init();
-            }).then(function () {
-            deferred.resolve();
-          }, deferred.reject);
+            //populate company info
+            return companyState.init();
+          }).then(function () {
+          deferred.resolve();
         }, deferred.reject);
         return deferred.promise;
       };
 
-      /*
-       * Responsible for triggering the Google OAuth process.
-       *
-       */
-      var _authorize = function (attemptImmediate) {
-        var authorizeDeferred = $q.defer();
+      var _gapiAuthorize = function (attemptImmediate) {
+        var deferred = $q.defer();
 
         var opts = {
           client_id: CLIENT_ID,
@@ -3825,47 +3550,72 @@ angular.module("risevision.common.geodata", [])
         } else {
           opts.prompt = "select_account";
         }
-        gapiLoader().then(function (gApi) {
-          gApi.auth.authorize(opts, function (authResult) {
-            $log.debug("authResult", authResult);
-            if (authResult && !authResult.error) {
-              _scheduleAccessTokenAutoRefresh();
-              getOAuthUserInfo().then(function (oauthUserInfo) {
-                if (!_state.user.username || !_state.profile.username ||
-                  _state.user.username !== oauthUserInfo.email) {
 
-                  //populate user
-                  objectHelper.clearAndCopy({
-                    userId: oauthUserInfo.id, //TODO: ideally we should not use real user ID or email, but use hash value instead
-                    username: oauthUserInfo.email,
-                    picture: oauthUserInfo.picture
-                  }, _state.user);
+        gapiLoader()
+          .then(function (gApi) {
+            gApi.auth.authorize(opts, function (authResult) {
+              $log.debug("authResult", authResult);
+              if (authResult && !authResult.error) {
+                _scheduleAccessTokenAutoRefresh();
 
-                  _setUserToken();
-                  refreshProfile()
-                    .finally(function () {
-                      authorizeDeferred.resolve(authResult);
-                      $rootScope.$broadcast(
-                        "risevision.user.authorized");
-                      if (!attemptImmediate) {
-                        $rootScope.$broadcast(
-                          "risevision.user.userSignedIn");
-                      }
-                    });
-                } else {
+                deferred.resolve(authResult);
+              } else {
+                _clearUserToken();
+
+                deferred.reject(authResult.error ||
+                  "failed to authorize user");
+              }
+            });
+          }).then(null, deferred.reject); //gapiLoader
+
+        return deferred.promise;
+      };
+
+      /*
+       * Responsible for triggering the Google OAuth process.
+       *
+       */
+      var _authorize = function (attemptImmediate) {
+        var authorizeDeferred = $q.defer();
+
+        var authResult;
+
+        _gapiAuthorize(attemptImmediate)
+          .then(function (res) {
+            authResult = res;
+
+            return getOAuthUserInfo();
+          })
+          .then(function (oauthUserInfo) {
+            if (!_state.user.username || !_state.profile.username ||
+              _state.user.username !== oauthUserInfo.email) {
+
+              //populate user
+              objectHelper.clearAndCopy({
+                userId: oauthUserInfo.id, //TODO: ideally we should not use real user ID or email, but use hash value instead
+                username: oauthUserInfo.email,
+                picture: oauthUserInfo.picture
+              }, _state.user);
+
+              _setUserToken();
+
+              refreshProfile()
+                .finally(function () {
                   authorizeDeferred.resolve(authResult);
-                }
-              }, function (err) {
-                objectHelper.clearObj(_state.user);
-                authorizeDeferred.reject(err);
-              });
+                  $rootScope.$broadcast("risevision.user.authorized");
+                  if (!attemptImmediate) {
+                    $rootScope.$broadcast(
+                      "risevision.user.userSignedIn");
+                  }
+                });
             } else {
-              objectHelper.clearObj(_state.user);
-              _clearUserToken();
-              authorizeDeferred.reject("not authorized");
+              authorizeDeferred.resolve(authResult);
             }
+          })
+          .then(null, function (err) {
+            objectHelper.clearObj(_state.user);
+            authorizeDeferred.reject(err);
           });
-        }, authorizeDeferred.reject); //gapiLoader
 
         return authorizeDeferred.promise;
       };
@@ -3905,7 +3655,7 @@ angular.module("risevision.common.geodata", [])
           localStorageService.set("risevision.common.userState", _state);
           uiFlowManager.persist();
 
-          $window.location = GOOGLE_OAUTH2_URL +
+          $window.location.href = GOOGLE_OAUTH2_URL +
             "?response_type=token" +
             "&scope=" + encodeURIComponent(OAUTH2_SCOPES) +
             "&client_id=" + CLIENT_ID +
@@ -3960,9 +3710,10 @@ angular.module("risevision.common.geodata", [])
                   authenticateDeferred.reject(
                     "Authentication Error: " + authResult.error);
                 }
-              }, function () {
+              })
+              .then(null, function (err) {
                 _clearUserToken();
-                authenticateDeferred.reject();
+                authenticateDeferred.reject(err);
               })
               .finally(function () {
                 $loading.stopGlobal(
@@ -4167,6 +3918,8 @@ angular.module("risevision.common.geodata", [])
               objectHelper.clearAndCopy(company, _state.selectedCompany);
 
               deferred.resolve();
+              $rootScope.$broadcast(
+                "risevision.company.selectedCompanyChanged");
             })
             .then(null, function (resp) {
               $log.error("Failed to load selected company.", resp);
@@ -4191,10 +3944,15 @@ angular.module("risevision.common.geodata", [])
             if (_state.userCompany.id === _state.selectedCompany.id) {
               objectHelper.clearAndCopy(company, _state.userCompany);
             }
+
+            $rootScope.$broadcast("risevision.company.updated");
           }
         },
         resetCompany: function () {
           objectHelper.clearAndCopy(_state.userCompany, _state.selectedCompany);
+
+          $rootScope.$broadcast(
+            "risevision.company.selectedCompanyChanged");
         },
         resetCompanyState: _resetCompanyState,
         getUserCompanyId: function () {
@@ -4458,8 +4216,8 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
 
   "use strict";
   angular.module("risevision.common.account", [
-    "risevision.common.gapi", "risevision.core.oauth2",
-    "risevision.common.company",
+    "risevision.common.gapi",
+    "risevision.core.userprofile",
     "risevision.core.cache"
   ])
 
@@ -4486,8 +4244,8 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
   ])
 
   .factory("agreeToTermsAndUpdateUser", ["$q", "$log",
-    "createCompany", "agreeToTerms", "updateUser",
-    function ($q, $log, createCompany, agreeToTerms, updateUser) {
+    "agreeToTerms", "updateUser",
+    function ($q, $log, agreeToTerms, updateUser) {
       return function (username, basicProfile) {
         $log.debug("registerAccount called.", username, basicProfile);
         var deferred = $q.defer();
@@ -4506,8 +4264,8 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
   ])
 
   .factory("registerAccount", ["$q", "$log",
-    "createCompany", "addAccount", "updateUser",
-    function ($q, $log, createCompany, addAccount, updateUser) {
+    "addAccount", "updateUser",
+    function ($q, $log, addAccount, updateUser) {
       return function (username, basicProfile) {
         $log.debug("registerAccount called.", username, basicProfile);
         var deferred = $q.defer();
