@@ -6,7 +6,8 @@ angular.module('risevision.rva', [
   'risevision.common.header.templates'
 ])
 .controller('AppCtrl', ['$scope', '$window', '$location', 'userState',
-  function ($scope, $window, $location, userState) {
+  'segmentAnalytics',
+  function ($scope, $window, $location, userState, segmentAnalytics) {
     var navOptions = [{
       title: 'Start',
       link: '#/',
@@ -136,18 +137,23 @@ angular.module('risevision.rva', [
     // RVA calls this:
     // the RVA highjacks the route change handlers from the CH
     // so it sends notificatios for those events
-    $scope.updateCompanyId = function(companyId) {
-      if (companyId && companyId !== userState.getSelectedCompanyId()) {
-        if (userState.getUserCompanyId() && companyId !== userState.getUserCompanyId()) {
-          userState.switchCompany(companyId);
+    $window.rvChCtrl = {
+      updateCompanyId: function(companyId) {
+        if (companyId && companyId !== userState.getSelectedCompanyId()) {
+          if (userState.getUserCompanyId() && companyId !== userState.getUserCompanyId()) {
+            userState.switchCompany(companyId);
+          }
+          else {
+            userState.resetCompany();
+            $scope.$digest();
+          }
         }
-        else {
-          userState.resetCompany();
-          $scope.$digest();
-        }
-      }
-    }
-
+      },
+      trackPageview: function(contentId) {
+    	  segmentAnalytics.pageview(contentId);
+    	}
+    };
+    
   }
 ]) //ctr
 //.value('CORE_URL', 'https://rvacore-test.appspot.com/_ah/api'); // override default core value

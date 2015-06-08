@@ -323,24 +323,19 @@ public class UiEntryPoint implements EntryPoint, ValueChangeHandler<String> {
 	}
 	
 	private static void trackEvent(String contentId) {
-		trackAnalyticsEvent(contentId, "clicked", "");
+//		trackAnalyticsEvent(contentId, "clicked", "");
+		CommonHeaderController.trackPageview(contentId);
 	}
 	
 	public static native void trackAnalyticsEvent(String eventName, String eventAction, String eventLabel) /*-{
-	try {
-			$wnd.trackEvent(eventName, eventAction, eventLabel);
-		} catch (err) {}
-	}-*/;	
-	
-//	private static native void trackEvent(String contentId) /*-{
-//		try {
-//			$wnd.trackEvent(contentId);
+//		try { 
+//			$wnd.trackEvent(eventName, eventAction, eventLabel);
 //		} catch (err) {}
-//	}-*/;
+	}-*/;	
 
 	public static native void trackPageview(String contentId) /*-{
 //		try {
-			$wnd.trackPageview(contentId);
+//			$wnd.trackPageview(contentId);
 //		} catch (err) {}
 	}-*/;
 	
