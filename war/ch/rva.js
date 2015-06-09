@@ -138,7 +138,7 @@ angular.module('risevision.rva', [
     // so it sends notificatios for those events
     $scope.updateCompanyId = function(companyId) {
       if (companyId && companyId !== userState.getSelectedCompanyId()) {
-        if (companyId !== userState.getUserCompanyId()) {
+        if (userState.getUserCompanyId() && companyId !== userState.getUserCompanyId()) {
           userState.switchCompany(companyId);
         }
         else {
