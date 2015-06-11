@@ -14,7 +14,7 @@ app.run(["$templateCache", function($templateCache) {
     "    </div>\n" +
     "    \n" +
     "    <div class=\"menu-box pull-right\">\n" +
-    "      <a href=\"http://rva.risevision.com/#PRESENTATIONS\" target=\"_blank\" link-cid>\n" +
+    "      <a href=\"https://rva.risevision.com/#PRESENTATIONS\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseEditor\"></svg-icon>\n" +
     "        <span>Editor</span>\n" +
     "      </a>\n" +
@@ -23,14 +23,14 @@ app.run(["$templateCache", function($templateCache) {
     "  </li>\n" +
     "  <li>\n" +
     "    <div class=\"menu-box pull-left\">\n" +
-    "      <a href=\"http://storage.risevision.com/\" target=\"_blank\" link-cid>\n" +
+    "      <a href=\"https://storage.risevision.com/\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseStorage\"></svg-icon>\n" +
     "        <span>Storage</span>\n" +
     "      </a>\n" +
     "    </div>\n" +
     "    \n" +
     "    <div class=\"menu-box pull-left\">\n" +
-    "      <a href=\"http://rva.risevision.com/#DISPLAYS\" target=\"_blank\" link-cid>\n" +
+    "      <a href=\"https://rva.risevision.com/#DISPLAYS\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseDisplays\"></svg-icon>\n" +
     "        <span>Displays</span>\n" +
     "      </a>\n" +
@@ -39,7 +39,7 @@ app.run(["$templateCache", function($templateCache) {
     "  </li>\n" +
     "  <li>\n" +
     "    <div class=\"menu-box pull-left\">\n" +
-    "      <a href=\"http://rva.risevision.com/#SCHEDULES\" target=\"_blank\" link-cid>\n" +
+    "      <a href=\"https://rva.risevision.com/#SCHEDULES\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseSchedules\"></svg-icon>\n" +
     "        <span>Schedules</span>\n" +
     "      </a>\n" +
@@ -60,7 +60,7 @@ app.run(["$templateCache", function($templateCache) {
     "      </a>\n" +
     "    </div>\n" +
     "    <div class=\"menu-box pull-right\">\n" +
-    "      <a href=\"http://help.risevision.com/\" target=\"_blank\" link-cid>\n" +
+    "      <a href=\"https://help.risevision.com/\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseDocumentation\"></svg-icon>\n" +
     "        <span>Documentation</span>\n" +
     "      </a>\n" +
@@ -68,13 +68,13 @@ app.run(["$templateCache", function($templateCache) {
     "  </li>\n" +
     "  <li>\n" +
     "    <div class=\"menu-box pull-left\">\n" +
-    "      <a href=\"http://developer.risevision.com/\" target=\"_blank\" link-cid>\n" +
+    "      <a href=\"https://developer.risevision.com/\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseDevelopers\"></svg-icon>\n" +
     "        <span>Developer</span>\n" +
     "      </a>\n" +
     "    </div>\n" +
     "    <div class=\"menu-box pull-right\">\n" +
-    "      <a href=\"http://www.risevision.com/about-us/#\" target=\"_blank\" link-cid>\n" +
+    "      <a href=\"https://www.risevision.com/about-us/#\" target=\"_blank\" link-cid>\n" +
     "        <svg-icon p=\"riseLogo\"></svg-icon>\n" +
     "        <span>About</span>\n" +
     "      </a>\n" +
@@ -540,7 +540,7 @@ app.run(["$templateCache", function($templateCache) {
     "		</div>\n" +
     "		<!-- List of Companies -->\n" +
     "		<div class=\"list-group scrollable-list\"\n" +
-    "		  rv-scroll-event=\"handleScroll($event, isEndEvent)\"\n" +
+    "		  scrolling-list=\"loadCompanies()\"\n" +
     "		  rv-spinner rv-spinner-key=\"company-selector-modal-list\"\n" +
     "			rv-spinner-start-active=\"1\"\n" +
     "		>\n" +
@@ -1252,14 +1252,6 @@ app.run(["$templateCache", function($templateCache) {
     "        <p ng-show=\"forms.userSettingsForm.email.$invalid && !forms.userSettingsForm.email.$pristine\"\n" +
     "          class=\"help-block validation-error-message-email\">A valid email address is required.</p>\n" +
     "    </div>\n" +
-    "    <div class=\"checkbox\">\n" +
-    "      <label>\n" +
-    "        <input type=\"checkbox\"\n" +
-    "          id=\"user-settings-newsletter\"\n" +
-    "          ng-model=\"user.mailSyncEnabled\">\n" +
-    "          Subscribe To Email Updates\n" +
-    "      </label>\n" +
-    "    </div>\n" +
     "    <div class=\"form-group\">\n" +
     "      <label>\n" +
     "        Roles\n" +
@@ -1279,7 +1271,7 @@ app.run(["$templateCache", function($templateCache) {
     "      <label>\n" +
     "        Last Login\n" +
     "      </label>\n" +
-    "      <div>{{user.lastLogin | humanReadableDateTime}}</div>\n" +
+    "      <div>{{user.lastLogin | date:'d-MMM-yyyy h:mm a'}}</div>\n" +
     "    </div>\n" +
     "    <div class=\"form-group\" ng-if=\"!editingYourself && !isAdd\">\n" +
     "      <label for=\"user-settings-status\">\n" +
@@ -1336,9 +1328,11 @@ angular.module("risevision.common.header", [
   "risevision.common.registration",
   "risevision.common.shoppingcart",
   "checklist-model",
-  "ui.bootstrap", "ngSanitize", "rvScrollEvent", "ngCsv", "ngTouch",
+  "ui.bootstrap", "ngSanitize", "ngCsv", "ngTouch",
   "risevision.common.components.last-modified",
-  "risevision.common.svg"
+  "risevision.common.components.scrolling-list",
+  "risevision.common.svg",
+  "risevision.common.analytics"
 ])
 
 .factory("bindToScopeWithWatch", [
@@ -1426,22 +1420,30 @@ angular.module("risevision.common.header", [
     };
   }
 ])
-  .run(["$rootScope", "userState", "selectedCompanyUrlHandler",
-    function ($rootScope, userState, selectedCompanyUrlHandler) {
-      $rootScope.$watch(function () {
-          return userState.getSelectedCompanyId();
-        },
-        function (newCompanyId) {
-          if (newCompanyId) {
-            selectedCompanyUrlHandler.updateUrl();
-          }
-        });
 
-      //detect selectCompany changes on route UI
-      $rootScope.$on("$stateChangeSuccess", selectedCompanyUrlHandler.updateSelectedCompanyFromUrl);
-      $rootScope.$on("$routeChangeSuccess", selectedCompanyUrlHandler.updateSelectedCompanyFromUrl);
-    }
-  ])
+.run(["$rootScope", "userState", "selectedCompanyUrlHandler",
+  function ($rootScope, userState, selectedCompanyUrlHandler) {
+    $rootScope.$watch(function () {
+        return userState.getSelectedCompanyId();
+      },
+      function (newCompanyId) {
+        if (newCompanyId) {
+          selectedCompanyUrlHandler.updateUrl();
+        }
+      });
+
+    //detect selectCompany changes on route UI
+    $rootScope.$on("$stateChangeSuccess", selectedCompanyUrlHandler.updateSelectedCompanyFromUrl);
+    $rootScope.$on("$routeChangeSuccess", selectedCompanyUrlHandler.updateSelectedCompanyFromUrl);
+  }
+])
+
+.run(["segmentAnalytics", "analyticsEvents",
+  function (segmentAnalytics) {
+    // calling "analyticsEvents" service to initialize
+    segmentAnalytics.load("AFtY3tN10BQj6RbnfpDDp9Hx8N1modKN");
+  }
+])
 
 .directive("ngEnter", function () {
   return function (scope, element, attrs) {
@@ -1857,7 +1859,7 @@ angular.module("risevision.common.header")
       },
       function (isRvUser) {
         $scope.isRiseVisionUser = isRvUser;
-        shoppingCart.initialize();
+        shoppingCart.get();
       });
 
   }
@@ -1921,10 +1923,10 @@ angular.module("risevision.common.header")
     "$scope", "$modalInstance",
     "$loading", "registerAccount", "$log", "cookieStore",
     "userState", "pick", "uiFlowManager", "humanReadableError",
-    "agreeToTermsAndUpdateUser", "account",
+    "agreeToTermsAndUpdateUser", "account", "segmentAnalytics",
     function ($scope, $modalInstance, $loading, registerAccount, $log,
       cookieStore, userState, pick, uiFlowManager, humanReadableError,
-      agreeToTermsAndUpdateUser, account) {
+      agreeToTermsAndUpdateUser, account, segmentAnalytics) {
 
       var newUser = !account;
 
@@ -1995,6 +1997,12 @@ angular.module("risevision.common.header")
             function () {
               userState.refreshProfile().then()
                 .finally(function () {
+                  segmentAnalytics.track("User Registered", {
+                    "companyId": userState.getUserCompanyId(),
+                    "companyName": userState.getUserCompanyName(),
+                    "isNewCompany": newUser
+                  });
+
                   $modalInstance.close("success");
                   $loading.stop("registration-modal");
                 });
@@ -2085,11 +2093,12 @@ angular.module("risevision.common.header")
   "TIMEZONES",
   "getCompany", "regenerateCompanyField", "$window", "$loading",
   "humanReadableError",
-  "userState", "deleteCompany",
+  "userState", "deleteCompany", "segmentAnalytics",
   function ($scope, $modalInstance, updateCompany, companyId,
     countries, REGIONS_CA, REGIONS_US, TIMEZONES, getCompany,
     regenerateCompanyField,
-    $window, $loading, humanReadableError, userState, deleteCompany) {
+    $window, $loading, humanReadableError, userState, deleteCompany,
+    segmentAnalytics) {
 
     $scope.company = {
       id: companyId
@@ -2138,6 +2147,12 @@ angular.module("risevision.common.header")
       updateCompany($scope.company.id, company)
         .then(
           function () {
+            segmentAnalytics.track("Company Updated", {
+              companyId: userState.getSelectedCompanyId(),
+              companyName: userState.getSelectedCompanyName(),
+              isUserCompany: !userState.isSubcompanySelected()
+            });
+
             userState.updateCompanySettings($scope.company);
             $modalInstance.close("success");
           })
@@ -2156,6 +2171,12 @@ angular.module("risevision.common.header")
         deleteCompany($scope.company.id)
           .then(
             function () {
+              segmentAnalytics.track("Company Deleted", {
+                companyId: userState.getSelectedCompanyId(),
+                companyName: userState.getSelectedCompanyName(),
+                isUserCompany: !userState.isSubcompanySelected()
+              });
+
               if (userState.getUserCompanyId() === $scope.company.id) {
                 userState.signOut();
               } else if (userState.getSelectedCompanyId() === $scope.company.id) {
@@ -2227,9 +2248,10 @@ angular.module("risevision.common.header")
     "$templateCache", "createCompany", "countries", "REGIONS_CA",
     "REGIONS_US",
     "TIMEZONES", "userState", "$loading", "humanReadableError",
+    "segmentAnalytics",
     function ($scope, $modalInstance, $modal, $templateCache,
       createCompany, countries, REGIONS_CA, REGIONS_US, TIMEZONES, userState,
-      $loading, humanReadableError) {
+      $loading, humanReadableError, segmentAnalytics) {
 
       $scope.company = {};
       $scope.countries = countries;
@@ -2253,7 +2275,12 @@ angular.module("risevision.common.header")
       $scope.save = function () {
         $scope.loading = true;
         createCompany(userState.getSelectedCompanyId(),
-          $scope.company).then(function () {
+          $scope.company).then(function (company) {
+          segmentAnalytics.track("Company Created", {
+            companyId: company.id,
+            companyName: company.name
+          });
+
           $modalInstance.close("success");
         }, function (err) {
           alert("Error: " + humanReadableError(err));
@@ -2301,7 +2328,7 @@ angular.module("risevision.common.header")
         $modalInstance.dismiss("cancel");
       };
 
-      function loadCompanies() {
+      $scope.loadCompanies = function () {
         if (!$scope.companies.endOfList) {
           $scope.loading = true;
           companyService.getCompanies(
@@ -2315,30 +2342,19 @@ angular.module("risevision.common.header")
             $scope.loading = false;
           });
         }
-      }
+      };
 
       if ($scope.companies.list.length === 0) {
-        loadCompanies();
+        $scope.loadCompanies();
       }
 
       $scope.doSearch = function () {
         $scope.companies.clear();
-        loadCompanies();
+        $scope.loadCompanies();
       };
 
       $scope.setCompany = function (company) {
         $modalInstance.close(company.id);
-      };
-
-      $scope.handleScroll = function (event, isEndEvent) {
-        // $log.debug(event.target.scrollTop + " / " + event.target.scrollHeight + " / " + isEndEvent);
-        if (isEndEvent) {
-          if ((event.target.scrollHeight - event.target.clientHeight - event.target
-            .scrollTop) < 20) {
-            //load more rows if less than 20px left to the bottom
-            loadCompanies();
-          }
-        }
       };
 
     }
@@ -2480,30 +2496,12 @@ angular.module("risevision.common.header")
 ]);
 
 angular.module("risevision.common.header")
-  .filter("humanReadableDateTime", [
-
-    function () {
-      return function (d) {
-        if (d) {
-          d = new Date(d);
-          return (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() +
-            " at " + d.toLocaleTimeString() + " EST"; //always assume EST
-        } else {
-          return "";
-        }
-      };
-
-    }
-  ])
 
 .controller("AddUserModalCtrl", ["$scope", "addUser", "$modalInstance",
-  "companyId", "userState",
-  "userRoleMap", "humanReadableError", "$loading", "$timeout",
+  "companyId", "userState", "userRoleMap", "humanReadableError", "$loading",
+  "segmentAnalytics",
   function ($scope, addUser, $modalInstance, companyId, userState,
-    userRoleMap, humanReadableError, $loading) {
-    $scope.user = {
-      mailSyncEnabled: false
-    };
+    userRoleMap, humanReadableError, $loading, segmentAnalytics) {
     $scope.isAdd = true;
 
     //push roles into array
@@ -2541,6 +2539,11 @@ angular.module("risevision.common.header")
         $scope.loading = true;
         addUser(companyId, $scope.user.username, $scope.user).then(
           function () {
+            segmentAnalytics.track("User Created", {
+              userId: $scope.user.username,
+              companyId: companyId
+            });
+
             $modalInstance.close("success");
           },
           function (error) {
@@ -2594,10 +2597,10 @@ angular.module("risevision.common.header")
 .controller("UserSettingsModalCtrl", [
   "$scope", "$modalInstance", "updateUser", "getUserProfile", "deleteUser",
   "addUser", "username", "userRoleMap", "$log", "$loading", "userState",
-  "uiFlowManager", "humanReadableError",
+  "uiFlowManager", "humanReadableError", "$rootScope", "segmentAnalytics",
   function ($scope, $modalInstance, updateUser, getUserProfile, deleteUser,
     addUser, username, userRoleMap, $log, $loading, userState,
-    uiFlowManager, humanReadableError) {
+    uiFlowManager, humanReadableError, $rootScope, segmentAnalytics) {
     $scope.user = {};
     $scope.$watch("loading", function (loading) {
       if (loading) {
@@ -2643,6 +2646,12 @@ angular.module("risevision.common.header")
       if (confirm("Are you sure you want to delete this user?")) {
         deleteUser($scope.username)
           .then(function () {
+            segmentAnalytics.track("User Deleted", {
+              userId: $scope.username,
+              companyId: userState.getSelectedCompanyId(),
+              isSelf: $scope.username === userState.getUsername()
+            });
+
             if ($scope.username === userState.getUsername()) {
               userState.signOut().then().finally(function () {
                 uiFlowManager.invalidateStatus("registrationComplete");
@@ -2664,6 +2673,12 @@ angular.module("risevision.common.header")
         $scope.loading = true;
         updateUser(username, $scope.user).then(
           function () {
+            segmentAnalytics.track("User Updated", {
+              userId: $scope.username,
+              companyId: userState.getSelectedCompanyId(),
+              isSelf: $scope.username === userState.getUsername()
+            });
+
             $modalInstance.close("success");
           },
           function (error) {
@@ -2672,7 +2687,9 @@ angular.module("risevision.common.header")
           }
         ).finally(function () {
           if (username === userState.getUsername()) {
-            userState.refreshProfile();
+            userState.refreshProfile().then(function () {
+              $rootScope.$broadcast("risevision.user.updated");
+            });
           }
           $scope.loading = false;
         });
@@ -2935,78 +2952,6 @@ angular.module("risevision.common.header")
   });
 
 (function (angular) {
-
-  "use strict";
-
-  var INTERVAL_DELAY = 150;
-
-  angular.module("rvScrollEvent", [])
-    .directive("rvScrollEvent", ["$parse", "$window",
-      function ($parse, $window) {
-        return {
-          scope: false,
-          link: function (scope, element, attr) {
-            var fn = $parse(attr.rvScrollEvent);
-            var interval,
-              handler,
-              el = element[0],
-              scrollEvent = "scroll",
-              scrollPosition = {
-                x: 0,
-                y: 0
-              };
-
-            var bindScroll = function () {
-              handler = function (event) {
-
-                scrollPosition.x = el.scrollLeft;
-                scrollPosition.y = el.scrollTop;
-
-                startInterval(event);
-                unbindScroll();
-                scrollTrigger(event, false);
-              };
-
-
-              element.bind(scrollEvent, handler);
-            };
-
-            var startInterval = function (event) {
-              interval = $window.setInterval(function () {
-                if (scrollPosition.x === el.scrollLeft &&
-                  scrollPosition.y === el.scrollTop) {
-                  $window.clearInterval(interval);
-                  bindScroll();
-                  scrollTrigger(event, true);
-                } else {
-                  scrollPosition.x = el.scrollLeft;
-                  scrollPosition.y = el.scrollTop;
-                }
-              }, INTERVAL_DELAY);
-            };
-
-            var unbindScroll = function () {
-              // be nice to others, don"t unbind their scroll handlers
-              element.unbind(scrollEvent, handler);
-            };
-
-            var scrollTrigger = function (event, isEndEvent) {
-              scope.$apply(function () {
-                fn(scope, {
-                  $event: event,
-                  isEndEvent: isEndEvent
-                });
-              });
-            };
-
-            bindScroll();
-          }
-        };
-      }
-    ]);
-})(angular);
-
-(function (angular) {
   "use strict";
   angular.module("risevision.common.util", [])
 
@@ -3024,35 +2969,6 @@ angular.module("risevision.common.header")
       message = resp;
     }
     return JSON.stringify(message);
-  })
-
-  .value("BaseList", function (maxCount) {
-    this.list = [];
-    this.maxCount = maxCount ? maxCount : 20;
-    this.cursor = null;
-    this.endOfList = false;
-    this.searchString = "";
-    this.clear = function () {
-      this.list = [];
-      this.cursor = null;
-      this.endOfList = false;
-    };
-    this.append = function (items) {
-      for (var i = 0; i < items.length; i++) {
-        this.list.push(items[i]);
-      }
-    };
-    this.concat = function (items) {
-      this.list = this.list.concat(items);
-    };
-    this.add = function (items, cursor) {
-      this.cursor = cursor;
-      this.endOfList = items.length < maxCount;
-      this.concat(items);
-    };
-    this.remove = function (index) {
-      this.list.splice(index, 1);
-    };
   })
 
   .factory("dateIsInRange", [
@@ -3800,6 +3716,7 @@ angular.module("risevision.common.geodata", [])
         getSelectedCompanyId: companyState.getSelectedCompanyId,
         getSelectedCompanyName: companyState.getSelectedCompanyName,
         updateCompanySettings: companyState.updateCompanySettings,
+        updateUserCompanySettings: companyState.updateUserCompanySettings,
         getSelectedCompanyCountry: companyState.getSelectedCompanyCountry,
         getUsername: function () {
           return (_state.user && _state.user.username) || null;
@@ -3893,9 +3810,13 @@ angular.module("risevision.common.geodata", [])
 
         //populate userCompany
         getCompany().then(function (company) {
+          var selectedCompanyId = _companyState.getSelectedCompanyId() ?
+            _companyState.getSelectedCompanyId() :
+            pendingSelectedCompany;
+
           objectHelper.clearAndCopy(company, _state.userCompany);
 
-          return _switchCompany(pendingSelectedCompany);
+          return _switchCompany(selectedCompanyId);
         })
           .then(null, function () {
             _companyState.resetCompany();
@@ -3945,7 +3866,21 @@ angular.module("risevision.common.geodata", [])
               objectHelper.clearAndCopy(company, _state.userCompany);
             }
 
-            $rootScope.$broadcast("risevision.company.updated");
+            $rootScope.$broadcast("risevision.company.updated", {
+              "companyId": company.id
+            });
+          }
+        },
+        updateUserCompanySettings: function (company) {
+          if (company && _state.userCompany) {
+            objectHelper.clearAndCopy(company, _state.userCompany);
+            if (_state.userCompany.id === _state.selectedCompany.id) {
+              objectHelper.clearAndCopy(company, _state.selectedCompany);
+            }
+
+            $rootScope.$broadcast("risevision.company.updated", {
+              "companyId": company.id
+            });
           }
         },
         resetCompany: function () {
@@ -3973,11 +3908,19 @@ angular.module("risevision.common.geodata", [])
           return (_state.selectedCompany && _state.selectedCompany.country) ||
             null;
         },
-        getCopyOfUserCompany: function () {
-          return objectHelper.follow(_state.userCompany);
+        getCopyOfUserCompany: function (noFollow) {
+          if (noFollow) {
+            return angular.extend({}, _state.userCompany);
+          } else {
+            return objectHelper.follow(_state.userCompany);
+          }
         },
-        getCopyOfSelectedCompany: function () {
-          return objectHelper.follow(_state.selectedCompany);
+        getCopyOfSelectedCompany: function (noFollow) {
+          if (noFollow) {
+            return angular.extend({}, _state.selectedCompany);
+          } else {
+            return objectHelper.follow(_state.selectedCompany);
+          }
         },
         isSubcompanySelected: function () {
           return _state.selectedCompany && _state.selectedCompany.id !==
@@ -3994,6 +3937,100 @@ angular.module("risevision.common.geodata", [])
       };
 
       return _companyState;
+    }
+  ]);
+
+})(angular);
+
+(function (angular) {
+
+  "use strict";
+
+  angular.module("risevision.common.analytics", [])
+    .factory("segmentAnalytics", ["$rootScope", "$window", "$log",
+      function ($rootScope, $window, $log) {
+        var service = {};
+
+        $window.analytics = $window.analytics || [];
+        var analytics = $window.analytics;
+
+        analytics.factory = function (t) {
+          return function () {
+            var e = Array.prototype.slice.call(arguments);
+            e.unshift(t);
+            $window.analytics.push(e);
+
+            $log.debug("Segment Tracker", e);
+
+            return $window.analytics;
+          };
+        };
+        analytics.methods = ["trackSubmit", "trackClick", "trackLink",
+          "trackForm",
+          "pageview", "identify", "group", "track", "ready", "alias",
+          "page",
+          "once", "off", "on"
+        ];
+        for (var i = 0; i < analytics.methods.length; i++) {
+          var method = analytics.methods[i];
+          service[method] = analytics.factory(method);
+        }
+
+        /**
+         * @description
+         * Load Segment.io analytics script
+         * @param apiKey The key API to use
+         */
+        service.load = function (apiKey) {
+          var e = document.createElement("script");
+          e.type = "text/javascript";
+          e.async = !0;
+          e.src = ("https:" === document.location.protocol ? "https://" :
+            "http://") + "cdn.segment.com/analytics.js/v1/" + apiKey +
+            "/analytics.min.js";
+          var n = document.getElementsByTagName("script")[0];
+          n.parentNode.insertBefore(e, n);
+        };
+
+        return service;
+      }
+    ])
+
+  .factory("analyticsEvents", ["$rootScope", "segmentAnalytics",
+    "userState", "$location",
+    function ($rootScope, segmentAnalytics, userState, $location) {
+      var service = {};
+
+      var _identify = function () {
+        var profile = userState.getCopyOfProfile();
+        segmentAnalytics.identify(userState.getUsername(), {
+          email: profile.email,
+          firstName: profile.firstName ? profile.firstName : "",
+          lastName: profile.lastName ? profile.lastName : "",
+          companyId: userState.getUserCompanyId(),
+          companyName: userState.getUserCompanyName(),
+          company: {
+            id: userState.getUserCompanyId(),
+            name: userState.getUserCompanyName()
+          }
+        });
+      };
+
+      $rootScope.$on("risevision.user.authorized", function () {
+        if (userState.getUsername()) {
+          _identify();
+        }
+      });
+
+      // Listening to $viewContentLoaded event to track pageview
+      $rootScope.$on("$viewContentLoaded", function () {
+        if (segmentAnalytics.location !== $location.path()) {
+          segmentAnalytics.location = $location.path();
+          segmentAnalytics.pageview(segmentAnalytics.location);
+        }
+      });
+
+      return service;
     }
   ]);
 
@@ -4655,11 +4692,14 @@ angular.module("risevision.ui-flow", ["LocalStorageModule"])
     .constant("COMPANY_WRITABLE_FIELDS", [
       "name", "street", "unit", "city", "province", "country",
       "postalCode", "timeZoneOffset", "telephone", "fax", "companyStatus",
-      "notificationEmails", "mailSyncEnabled", "sellerId", "isTest"
+      "notificationEmails", "mailSyncEnabled", "sellerId", "isTest",
+      "shipToUseCompanyAddress", "shipToName", "shipToStreet", "shipToUnit",
+      "shipToCity", "shipToProvince", "shipToPostalCode", "shipToCountry"
     ])
     .constant("COMPANY_SEARCH_FIELDS", [
       "name", "id", "street", "unit", "city", "province", "country",
-      "postalCode", "telephone", "fax"
+      "postalCode", "telephone", "fax",
+      "shipToName", "shipToStreet", "shipToCity", "shipToPostalCode"
     ])
 
     .factory("createCompany", ["$q", "coreAPILoader", "COMPANY_WRITABLE_FIELDS",
@@ -5191,6 +5231,11 @@ angular.module("risevision.common.header")
     "userState",
     function (rvStorage, storeAPILoader, $log, $q, userState) {
       var _items = [];
+      var _cart = {
+        "items": _items,
+        "useBillToAddress": false,
+        "shipToAttention": ""
+      };
 
       var readFromStorage = function () {
         var deferred = $q.defer();
@@ -5205,6 +5250,9 @@ angular.module("risevision.common.header")
               if (!resp.error) {
                 clearItems();
                 addItems(resp.items);
+                _cart.useBillToAddress = resp.useBillToAddress;
+                _cart.shipToAttention = resp.shipToAttention ? resp.shipToAttention :
+                  "";
                 deferred.resolve();
               } else {
                 $log.warn("Error loading cart items. Error: " + resp.error);
@@ -5230,8 +5278,8 @@ angular.module("risevision.common.header")
                 "data": {
                   //"id": userState.getUsername(),
                   "jsonItems": getJsonItems(_items),
-                  "shipToAttention": "",
-                  "useBillToAddress": true
+                  "shipToAttention": _cart.shipToAttention,
+                  "useBillToAddress": _cart.useBillToAddress
                 }
               };
               var request = storeApi.cart.put(obj);
@@ -5254,6 +5302,12 @@ angular.module("risevision.common.header")
         }
         return deferred.promise;
 
+      };
+
+      var clearCart = function () {
+        _cart.useBillToAddress = false;
+        _cart.shipToAttention = "";
+        clearItems();
       };
 
       var clearItems = function () {
@@ -5289,11 +5343,28 @@ angular.module("risevision.common.header")
         return JSON.stringify(cleanedItems);
       };
 
-      var loadReady = $q.defer();
+      var loadReady = null;
       var username = null;
 
       var cartManager = {
-        loadReady: loadReady.promise,
+        get: function () {
+
+          if (loadReady !== null && username === userState.getUsername()) {
+            return loadReady;
+          }
+
+          username = userState.getUsername();
+          clearCart();
+
+          loadReady = $q.defer();
+          var deferred = loadReady;
+
+          readFromStorage().then(function () {
+            deferred.resolve(_cart);
+          });
+
+          return deferred;
+        },
         clear: function () {
           clearItems();
           persistToStorage();
@@ -5309,15 +5380,18 @@ angular.module("risevision.common.header")
             clearItems();
             addItems(items);
           }
-          persistToStorage();
+          return persistToStorage();
         },
-        initialize: function () {
-          if (username !== userState.getUsername()) {
-            username = userState.getUsername();
-            clearItems();
-            readFromStorage().then(loadReady.resolve);
-          }
-          return _items;
+        getShipToAttention: function () {
+          return _cart.shipToAttention;
+        },
+        getUseBillToAddress: function () {
+          return _cart.useBillToAddress;
+        },
+        setAddressFields: function (shipToAttention, useBillToAddress) {
+          _cart.shipToAttention = shipToAttention;
+          _cart.useBillToAddress = useBillToAddress;
+          return persistToStorage();
         },
         getItemCount: function () {
           if (_items !== null) {
@@ -5390,7 +5464,7 @@ angular.module("risevision.common.header")
           return false;
         }
       };
-      cartManager.initialize();
+      //cartManager.initialize();
 
       return cartManager;
 
@@ -5808,7 +5882,7 @@ angular.module("risevision.store.data-gadgets", [])
           },
           template: $templateCache.get("last-modified/last-modified.html"),
           link: function ($scope) {
-            $scope.$watch("changedBy", function(newVal) {
+            $scope.$watch("changedBy", function (newVal) {
               $scope.changedBy = newVal ? newVal : "N/A";
             });
           } //link()
@@ -5835,16 +5909,170 @@ angular.module("risevision.store.data-gadgets", [])
 }());
 
 (function(module) {
-try { app = angular.module("risevision.common.components.last-modified"); }
-catch(err) { app = angular.module("risevision.common.components.last-modified", []); }
-app.run(["$templateCache", function($templateCache) {
-  "use strict";
-  $templateCache.put("last-modified/last-modified.html",
-    "<span class=\"text-muted\">\n" +
-    "  <small>\n" +
-    "    Saved {{changeDate | date:'d-MMM-yyyy h:mm a'}} by {{changedBy | username}}\n" +
-    "  </small>\n" +
-    "</span>\n" +
-    "");
+try {
+  module = angular.module('risevision.common.components.last-modified');
+} catch (e) {
+  module = angular.module('risevision.common.components.last-modified', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('last-modified/last-modified.html',
+    '<span class="text-muted"><small>Saved {{changeDate | date:\'d-MMM-yyyy h:mm a\'}} by {{changedBy | username}}</small></span>');
 }]);
 })();
+
+(function (angular) {
+
+  "use strict";
+
+  angular.module("risevision.common.components.scrolling-list", [
+    "rvScrollEvent"
+  ])
+    .value("BaseList", function (maxCount) {
+      this.list = [];
+      this.maxCount = maxCount ? maxCount : 20;
+      this.cursor = null;
+      this.endOfList = false;
+
+      //unused
+      this.searchString = "";
+      this.clear = function () {
+        this.list = [];
+        this.cursor = null;
+        this.endOfList = false;
+      };
+      this.concat = function (items) {
+        this.list = this.list.concat(items);
+      };
+      this.add = function (items, cursor) {
+        this.cursor = cursor;
+        this.endOfList = items.length < this.maxCount;
+        this.concat(items);
+      };
+
+      //unused
+      var append = function (items) {
+        for (var i = 0; i < items.length; i++) {
+          this.list.push(items[i]);
+        }
+      };
+      //unused
+      var remove = function (index) {
+        this.list.splice(index, 1);
+      };
+    });
+
+})(angular);
+
+(function (angular) {
+
+  "use strict";
+
+  var INTERVAL_DELAY = 150;
+
+  angular.module("rvScrollEvent", [])
+    .directive("rvScrollEvent", ["$parse", "$window",
+      function ($parse, $window) {
+        return {
+          scope: false,
+          link: function (scope, element, attr) {
+            var fn = $parse(attr.rvScrollEvent);
+            var interval,
+              handler,
+              el = element[0],
+              scrollEvent = "scroll",
+              scrollPosition = {
+                x: 0,
+                y: 0
+              };
+
+            var bindScroll = function () {
+              handler = function (event) {
+
+                scrollPosition.x = el.scrollLeft;
+                scrollPosition.y = el.scrollTop;
+
+                startInterval(event);
+                unbindScroll();
+                scrollTrigger(event, false);
+              };
+
+
+              element.bind(scrollEvent, handler);
+            };
+
+            var startInterval = function (event) {
+              interval = $window.setInterval(function () {
+                if (scrollPosition.x === el.scrollLeft &&
+                  scrollPosition.y === el.scrollTop) {
+                  $window.clearInterval(interval);
+                  bindScroll();
+                  scrollTrigger(event, true);
+                } else {
+                  scrollPosition.x = el.scrollLeft;
+                  scrollPosition.y = el.scrollTop;
+                }
+              }, INTERVAL_DELAY);
+            };
+
+            var unbindScroll = function () {
+              // be nice to others, don"t unbind their scroll handlers
+              element.unbind(scrollEvent, handler);
+            };
+
+            var scrollTrigger = function (event, isEndEvent) {
+              scope.$apply(function () {
+                fn(scope, {
+                  $event: event,
+                  isEndEvent: isEndEvent
+                });
+              });
+            };
+
+            bindScroll();
+          }
+        };
+      }
+    ]);
+})(angular);
+
+(function (angular) {
+
+  "use strict";
+
+  angular.module("risevision.common.components.scrolling-list")
+    .directive("scrollingList", ["$parse", "$compile",
+      function ($parse, $compile) {
+        return {
+          restrict: "A",
+          replace: false,
+          terminal: true,
+          priority: 1000,
+          link: function link(scope, element, attr) {
+            var fn = $parse(attr.scrollingList);
+
+            scope.handleScroll = function (event, isEndEvent) {
+              // $log.debug(event.target.scrollTop + " / " + event.target.scrollHeight + " / " + isEndEvent);
+              if (isEndEvent) {
+                if (event.target.scrollTop &&
+                  (event.target.scrollHeight - event.target.clientHeight -
+                    event.target.scrollTop) < 20) {
+                  //load more rows if less than 20px left to the bottom
+
+                  fn(scope);
+                }
+              }
+            };
+
+            // Override this directive with rvScrollEvent
+            // http://stackoverflow.com/questions/19224028/add-directives-from-directive-in-angularjs
+            element.attr("rv-scroll-event",
+              "handleScroll($event, isEndEvent)");
+            element.removeAttr("scrolling-list"); //remove the attribute to avoid indefinite loop
+
+            $compile(element)(scope);
+          }
+        };
+      }
+    ]);
+
+})(angular);

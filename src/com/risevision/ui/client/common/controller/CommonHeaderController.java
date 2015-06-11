@@ -35,7 +35,15 @@ public class CommonHeaderController {
 		RootPanel.get("commonHeaderContainer").getElement().getClientHeight());
 	}
 	
+	public static void trackPageview(String contentId) {
+		trackPageviewNative(contentId);
+	}
+	
 	private static native void updateCompanyIdNative(String companyId) /*-{
-		$wnd.angular.element($wnd.document.getElementsByTagName("common-header")).scope().updateCompanyId(companyId);
+		$wnd.window.rvChCtrl && $wnd.window.rvChCtrl.updateCompanyId(companyId);
+	}-*/;
+	
+	private static native void trackPageviewNative(String contentId) /*-{
+		$wnd.window.rvChCtrl && $wnd.window.rvChCtrl.trackPageview(contentId);
 	}-*/;
 }
