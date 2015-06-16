@@ -527,19 +527,12 @@ app.run(["$templateCache", function($templateCache) {
     "			Select Sub-Company\n" +
     "		</h2>\n" +
     "	</div>\n" +
-    "	<div class=\"modal-body jfk-scrollbar\">\n" +
+    "	<div class=\"modal-body\">\n" +
     "	  <!-- Search -->\n" +
-    "		<div class=\"input-group company-search add-bottom\">\n" +
-    "			<input id=\"csSearch\" type=\"text\" class=\"form-control\"\n" +
-    "				placeholder=\"Search Companies\"\n" +
-    "				ng-model=\"search.searchString\"\n" +
-    "				ng-enter=\"doSearch()\">\n" +
-    "		    <span class=\"input-group-addon primary-bg\" ng-click=\"doSearch()\">\n" +
-    "		      <i class=\"fa fa-search\"></i>\n" +
-    "		    </span>\n" +
-    "		</div>\n" +
+    "		<search-filter filter-config=\"filterConfig\" search=\"search\" do-search=\"doSearch\"></search-filter> \n" +
+    "\n" +
     "		<!-- List of Companies -->\n" +
-    "		<div class=\"list-group scrollable-list\"\n" +
+    "		<div class=\"list-group scrollable-list half-top\"\n" +
     "		  scrolling-list=\"loadCompanies()\"\n" +
     "		  rv-spinner rv-spinner-key=\"company-selector-modal-list\"\n" +
     "			rv-spinner-start-active=\"1\"\n" +
@@ -1330,6 +1323,7 @@ angular.module("risevision.common.header", [
   "checklist-model",
   "ui.bootstrap", "ngSanitize", "ngCsv", "ngTouch",
   "risevision.common.components.last-modified",
+  "risevision.common.components.search-filter",
   "risevision.common.components.scrolling-list",
   "risevision.common.svg",
   "risevision.common.analytics"
@@ -1438,10 +1432,10 @@ angular.module("risevision.common.header", [
   }
 ])
 
-.run(["segmentAnalytics", "analyticsEvents",
-  function (segmentAnalytics) {
+.run(["segmentAnalytics", "SEGMENT_API_KEY", "analyticsEvents",
+  function (segmentAnalytics, SEGMENT_API_KEY) {
     // calling "analyticsEvents" service to initialize
-    segmentAnalytics.load("AFtY3tN10BQj6RbnfpDDp9Hx8N1modKN");
+    segmentAnalytics.load(SEGMENT_API_KEY);
   }
 ])
 
@@ -2307,11 +2301,14 @@ angular.module("risevision.common.header")
     function ($scope, $modalInstance, companyService,
       companyId, BaseList, $loading) {
 
-      var DB_MAX_COUNT = 20; //number of records to load at a time
+      var DB_MAX_COUNT = 40; //number of records to load at a time
 
       $scope.companies = new BaseList(DB_MAX_COUNT);
       $scope.search = {
-        searchString: ""
+        query: ""
+      };
+      $scope.filterConfig = {
+        placeholder: "Search Companies"
       };
 
       $scope.$watch("loading", function (loading) {
@@ -2332,7 +2329,7 @@ angular.module("risevision.common.header")
         if (!$scope.companies.endOfList) {
           $scope.loading = true;
           companyService.getCompanies(
-            companyId, $scope.search.searchString,
+            companyId, $scope.search.query,
             $scope.companies.cursor, DB_MAX_COUNT, null).then(function (
             result) {
             if (result && result.items) {
@@ -3860,28 +3857,16 @@ angular.module("risevision.common.geodata", [])
         init: _init,
         switchCompany: _switchCompany,
         updateCompanySettings: function (company) {
-          if (company && _state.selectedCompany) {
+          if (company && company.id === _companyState.getSelectedCompanyId()) {
             objectHelper.clearAndCopy(company, _state.selectedCompany);
-            if (_state.userCompany.id === _state.selectedCompany.id) {
-              objectHelper.clearAndCopy(company, _state.userCompany);
-            }
-
-            $rootScope.$broadcast("risevision.company.updated", {
-              "companyId": company.id
-            });
           }
-        },
-        updateUserCompanySettings: function (company) {
-          if (company && _state.userCompany) {
+          if (company && company.id === _companyState.getUserCompanyId()) {
             objectHelper.clearAndCopy(company, _state.userCompany);
-            if (_state.userCompany.id === _state.selectedCompany.id) {
-              objectHelper.clearAndCopy(company, _state.selectedCompany);
-            }
-
-            $rootScope.$broadcast("risevision.company.updated", {
-              "companyId": company.id
-            });
           }
+
+          $rootScope.$broadcast("risevision.company.updated", {
+            "companyId": company.id
+          });
         },
         resetCompany: function () {
           objectHelper.clearAndCopy(_state.userCompany, _state.selectedCompany);
@@ -3947,41 +3932,46 @@ angular.module("risevision.common.geodata", [])
   "use strict";
 
   angular.module("risevision.common.analytics", [])
-    .factory("segmentAnalytics", ["$rootScope", "$window", "$log",
-      function ($rootScope, $window, $log) {
-        var service = {};
 
-        $window.analytics = $window.analytics || [];
-        var analytics = $window.analytics;
+  .value("SEGMENT_API_KEY", "AFtY3tN10BQj6RbnfpDDp9Hx8N1modKN")
 
-        analytics.factory = function (t) {
-          return function () {
-            var e = Array.prototype.slice.call(arguments);
-            e.unshift(t);
-            $window.analytics.push(e);
+  .factory("segmentAnalytics", ["$rootScope", "$window", "$log",
+    function ($rootScope, $window, $log) {
+      var service = {};
+      var loaded;
 
-            $log.debug("Segment Tracker", e);
+      $window.analytics = $window.analytics || [];
+      var analytics = $window.analytics;
 
-            return $window.analytics;
-          };
+      analytics.factory = function (t) {
+        return function () {
+          var e = Array.prototype.slice.call(arguments);
+          e.unshift(t);
+          $window.analytics.push(e);
+
+          $log.debug("Segment Tracker", e);
+
+          return $window.analytics;
         };
-        analytics.methods = ["trackSubmit", "trackClick", "trackLink",
-          "trackForm",
-          "pageview", "identify", "group", "track", "ready", "alias",
-          "page",
-          "once", "off", "on"
-        ];
-        for (var i = 0; i < analytics.methods.length; i++) {
-          var method = analytics.methods[i];
-          service[method] = analytics.factory(method);
-        }
+      };
+      analytics.methods = ["trackSubmit", "trackClick", "trackLink",
+        "trackForm",
+        "pageview", "identify", "group", "track", "ready", "alias",
+        "page",
+        "once", "off", "on"
+      ];
+      for (var i = 0; i < analytics.methods.length; i++) {
+        var method = analytics.methods[i];
+        service[method] = analytics.factory(method);
+      }
 
-        /**
-         * @description
-         * Load Segment.io analytics script
-         * @param apiKey The key API to use
-         */
-        service.load = function (apiKey) {
+      /**
+       * @description
+       * Load Segment.io analytics script
+       * @param apiKey The key API to use
+       */
+      service.load = function (apiKey) {
+        if (apiKey && !loaded) {
           var e = document.createElement("script");
           e.type = "text/javascript";
           e.async = !0;
@@ -3990,11 +3980,14 @@ angular.module("risevision.common.geodata", [])
             "/analytics.min.js";
           var n = document.getElementsByTagName("script")[0];
           n.parentNode.insertBefore(e, n);
-        };
 
-        return service;
-      }
-    ])
+          loaded = true;
+        }
+      };
+
+      return service;
+    }
+  ])
 
   .factory("analyticsEvents", ["$rootScope", "segmentAnalytics",
     "userState", "$location",
@@ -5920,6 +5913,53 @@ module.run(['$templateCache', function($templateCache) {
 }]);
 })();
 
+"use strict";
+
+angular.module("risevision.common.components.search-filter", [])
+  .directive("searchFilter", ["$timeout",
+    function ($timeout) {
+
+      return {
+        restrict: "E",
+        scope: {
+          filterConfig: "=",
+          search: "=",
+          doSearch: "="
+        },
+        templateUrl: "search-filter/search-filter.html",
+        link: function ($scope) {
+          $scope.delay = (function () {
+            var promise = null;
+            return function (callback, ms) {
+              $timeout.cancel(promise); //clearTimeout(timer);
+              promise = $timeout(callback, ms); //timer = setTimeout(callback, ms);
+            };
+          })();
+
+          $scope.reset = function () {
+            if ($scope.search.query) {
+              $scope.search.query = "";
+              $scope.doSearch();
+            }
+          };
+
+        } //link()
+      };
+    }
+  ]);
+
+(function(module) {
+try {
+  module = angular.module('risevision.common.components.search-filter');
+} catch (e) {
+  module = angular.module('risevision.common.components.search-filter', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('search-filter/search-filter.html',
+    '<div class="input-group"><span class="input-group-addon" ng-click="doSearch()"><i class="fa fa-search"></i></span> <input type="text" class="form-control" placeholder="{{ filterConfig.placeholder }}" ng-model="search.query" ng-enter="delay(doSearch, 0)" ng-change="delay(doSearch, 1000)"> <span class="input-group-addon" ng-click="reset()"><i class="fa fa-times"></i></span></div>');
+}]);
+})();
+
 (function (angular) {
 
   "use strict";
@@ -5929,7 +5969,7 @@ module.run(['$templateCache', function($templateCache) {
   ])
     .value("BaseList", function (maxCount) {
       this.list = [];
-      this.maxCount = maxCount ? maxCount : 20;
+      this.maxCount = maxCount ? maxCount : 40;
       this.cursor = null;
       this.endOfList = false;
 

@@ -109,7 +109,7 @@ public class StoreFrameWidget extends RpcDialogBoxWidget {
 		
 		String url = ConfigurationController.getInstance().getConfiguration().getStoreURL();
 		url += storePath;
-		url += "?inRVA=true&cid=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
+		url += "?inRVA=true&cat=Content&cid=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
 		url += "&up_id=" + "if_divEditor";
 		url += "&parent=" + URL.encodeQueryString(Window.Location.getHref());
 
