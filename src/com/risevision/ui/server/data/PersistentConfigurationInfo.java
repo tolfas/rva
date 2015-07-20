@@ -39,7 +39,7 @@ public class PersistentConfigurationInfo implements Serializable {
 	private static final String LINUX_INSTALLER_URL = SERVER_URL + "/player/download?os=lnx";
 	private static final String MAC_INSTALLER_URL = SERVER_URL + "/player/download?os=mac";
 	
-	private static final String INSTALLER_URL = "http://www.risevision.com/player/";
+	private static final String INSTALLER_URL = "https://help.risevision.com/user/create-a-display";
 	
 	// Logout URL 
 //	private static final String LOGOUT_URL = "/logout/"; // Logout servlet (redirects to login page)
