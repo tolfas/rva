@@ -106,7 +106,7 @@ public class DisplayServiceImpl extends RiseRemoteServiceServlet implements Disp
 		form.add(DisplayAttribute.BROWSER_UPGRADE_MODE, Integer.toString(display.getBrowserUpgradeMode()));
 		form.add(DisplayAttribute.RESTART_ENABLED, ServerUtils.BooleanToStr(display.getRestartEnabled()));
 		form.add(DisplayAttribute.RESTART_TIME, display.getRestartTime());	
-		form.add(DisplayAttribute.MONITORING_ENABLED, ServerUtils.BooleanToStr(display.isMonitoringEnabled()));
+//		form.add(DisplayAttribute.MONITORING_ENABLED, ServerUtils.BooleanToStr(display.isMonitoringEnabled()));
 		
 		put(url, form);
 		
@@ -320,7 +320,7 @@ public class DisplayServiceImpl extends RiseRemoteServiceServlet implements Disp
 				display.setHeight(ServerUtils.strToInt(ServerUtils.getNodeValue(fstElmnt, DisplayAttribute.HEIGHT), 0));
 				display.setRestartEnabled(ServerUtils.StrToBoolean(ServerUtils.getNode(fstElmnt, DisplayAttribute.RESTART_ENABLED)));
 				display.setRestartTime(ServerUtils.getNodeValue(fstElmnt, DisplayAttribute.RESTART_TIME));
-				display.setMonitoringEnabled(ServerUtils.StrToBoolean(ServerUtils.getNode(fstElmnt, DisplayAttribute.MONITORING_ENABLED)));
+//				display.setMonitoringEnabled(ServerUtils.StrToBoolean(ServerUtils.getNode(fstElmnt, DisplayAttribute.MONITORING_ENABLED)));
 				
 				display.setBrowserUpgradeMode(ServerUtils.strToInt(ServerUtils.getNode(fstElmnt, DisplayAttribute.BROWSER_UPGRADE_MODE), BrowserUpgradeMode.AUTO));
 				display.setChromiumVersion(ServerUtils.getNode(fstElmnt, DisplayAttribute.CHROMIUM_VERSION));

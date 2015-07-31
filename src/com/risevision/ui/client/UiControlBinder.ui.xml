@@ -71,7 +71,7 @@
 			</div>
 		</div>
 		<div>
-			<table cellspacing="0" cellpadding="0" style="width:100%; position:absolute; bottom: 0; background:white; border:1px solid #e5e5e5; border-width: 1px 0 0 0;">
+			<table cellspacing="0" cellpadding="0" style="width:100%; background:white; border:1px solid #e5e5e5; border-width: 1px 0 0 0;">
 				<tr>
 					<td align="left" valign="top" ui:field="termsContainer" style="padding-left:20px;"></td>
 					<td align="middle" valign="top">Platform by <a href="http://www.risevision.com" target="_blank" tabIndex="-1">Rise Vision</a>

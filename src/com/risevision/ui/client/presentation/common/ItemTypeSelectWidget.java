@@ -103,7 +103,7 @@ public class ItemTypeSelectWidget extends Anchor {
 		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_TEXT), PlaylistItemInfo.TYPE_TEXT);
 		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_PRESENTATION), PlaylistItemInfo.TYPE_PRESENTATION);
 		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_IMAGE), PlaylistItemInfo.TYPE_IMAGE);
-		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_VIDEO), PlaylistItemInfo.TYPE_VIDEO);
+//		addMenuOption(RiseUtils.capitalizeFirstLetter(PlaylistItemInfo.TYPE_VIDEO), PlaylistItemInfo.TYPE_VIDEO);
 		addMenuOption(PlaylistItemInfo.TYPE_HTML, PlaylistItemInfo.TYPE_HTML);
 		
 		popupMenuBar.addSeparator();
