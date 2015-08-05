@@ -75,7 +75,7 @@ public class DisplayInfo implements Serializable, HasAddress {
 	private int subscriptionStatus;
 	private boolean restartEnabled = true;
 	private String restartTime = "03:00";
-	private boolean monitoringEnabled = false;
+//	private boolean monitoringEnabled = false;
 
 	// output fields only
 	private String address;
@@ -307,13 +307,13 @@ public class DisplayInfo implements Serializable, HasAddress {
 		this.restartTime = restartTime;
 	}
 	
-	public boolean isMonitoringEnabled() {
-		return monitoringEnabled;
-	}
-
-	public void setMonitoringEnabled(boolean monitoringEnabled) {
-		this.monitoringEnabled = monitoringEnabled;
-	}
+//	public boolean isMonitoringEnabled() {
+//		return monitoringEnabled;
+//	}
+//
+//	public void setMonitoringEnabled(boolean monitoringEnabled) {
+//		this.monitoringEnabled = monitoringEnabled;
+//	}
 
 	public int getBrowserUpgradeMode() {
 		return browserUpgradeMode;

@@ -62,7 +62,7 @@ public class DisplayManageWidget extends Composite {
 	private FormValidatorWidget formValidator = new FormValidatorWidget();
 	private StatusBoxWidget statusBox = StatusBoxWidget.getInstance();
 	private FormGridWidget topGrid = new FormGridWidget(4, 2);
-	private FormGridWidget playerGrid = new FormGridWidget(13, 2);
+	private FormGridWidget playerGrid = new FormGridWidget(11, 2);
 	private FormGridWidget socialConnectorGrid = new FormGridWidget(1, 2);
 	//UI: Display fields
 	private TextBox tbName = new TextBox();
@@ -78,7 +78,7 @@ public class DisplayManageWidget extends Composite {
 	private AddressWidget wgAddress = new AddressWidget(true);
 	private CheckBox cbUseCompanyAddress = new CheckBox();
 	private RestartWidget scheduledRebootWidget = new RestartWidget();
-	private CheckBox monitoringCheckBox = new CheckBox();
+//	private CheckBox monitoringCheckBox = new CheckBox();
 //	private HorizontalPanel installPanel = new HorizontalPanel();
 	private Label lbDisplayId = new Label();
 	
@@ -99,7 +99,7 @@ public class DisplayManageWidget extends Composite {
 	private Label recommendedChromiumLabel = new Label();
 	private Label cacheVersionLabel = new Label("N/A");
 	
-	private PlayerErrorListWidget playerErrorList = new PlayerErrorListWidget();
+//	private PlayerErrorListWidget playerErrorList = new PlayerErrorListWidget();
 	//last modified
 	private LastModifiedWidget wgLastModified = LastModifiedWidget.getInstance();
 	
@@ -157,10 +157,10 @@ public class DisplayManageWidget extends Composite {
 		playerGrid.addRow("Scheduled Reboot:", 
 				"The time of day that your Display reboots and performs its daily maintenance", 
 				scheduledRebootWidget);
-		playerGrid.addRow("Monitor:", 
-				"Check to send email notifications to the Users defined in your Settings when " +
-				"a Display fails / recovers",
-				monitoringCheckBox, "rdn-CheckBox");
+//		playerGrid.addRow("Monitor:", 
+//				"Check to send email notifications to the Users defined in your Settings when " +
+//				"a Display fails / recovers",
+//				monitoringCheckBox, "rdn-CheckBox");
 		playerGrid.addRow("Operating System:", 
 				"The operating system and version that the Display uses", 
 				osVersionLabel);
@@ -192,7 +192,7 @@ public class DisplayManageWidget extends Composite {
 		playerGrid.addRow("Recommended Browser:", recommendedChromiumLabel);
 		playerGrid.addRow("Installed Browser:", chromiumVersionLabel);
 //		bottomGrid.addRow("Cache Version:", cacheVersionLabel);
-		playerGrid.addRow("Display Errors:", playerErrorList);
+//		playerGrid.addRow("Display Errors:", playerErrorList);
 		
 		mainPanel.add(formValidator);
 		mainPanel.add(topGrid);
@@ -356,7 +356,7 @@ public class DisplayManageWidget extends Composite {
 
 		wgAddress.loadData(displayInfo);
 		scheduledRebootWidget.loadData(displayInfo.getRestartEnabled(), displayInfo.getRestartTime());
-		monitoringCheckBox.setValue(displayInfo.isMonitoringEnabled());
+//		monitoringCheckBox.setValue(displayInfo.isMonitoringEnabled());
 
 		heartbeatWidget.setStatus(displayInfo.getDisplayStatus() /*, displayInfo.getBlockExpiryDate() */);
 		lastUpdateLabel.setTooltip(RiseUtils.dateToString(displayInfo.getLastConnectionDate()),
@@ -397,7 +397,7 @@ public class DisplayManageWidget extends Composite {
 		
 		showInstallWarning();
 		
-		playerErrorList.initWidget(displayInfo.getId());
+//		playerErrorList.initWidget(displayInfo.getId());
 
 		wgLastModified.Initialize(displayInfo.getChangedBy(), displayInfo.getChangeDate());
 		statusBox.clear();
@@ -418,7 +418,7 @@ public class DisplayManageWidget extends Composite {
 		displayInfo.setBrowserUpgradeMode(RiseUtils.strToInt(browserUpgradeModeWidget.getSelectedValue(), BrowserUpgradeMode.AUTO));
 		displayInfo.setRestartEnabled(scheduledRebootWidget.getRestartEnabled());
 		displayInfo.setRestartTime(scheduledRebootWidget.getRestartTime());
-		displayInfo.setMonitoringEnabled(monitoringCheckBox.getValue());
+//		displayInfo.setMonitoringEnabled(monitoringCheckBox.getValue());
 
 		wgAddress.saveData(displayInfo);
 		
