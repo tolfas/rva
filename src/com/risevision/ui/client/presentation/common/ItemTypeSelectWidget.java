@@ -57,7 +57,7 @@ public class ItemTypeSelectWidget extends Anchor {
 					public void execute() {
 						final HashMap<String, Object> data = new HashMap<String, Object>();
 						data.put("via", PlaceholderManageWidget.VIA_STORE);
-						data.put("storePath", "");
+						data.put("storePath", "products/");
 						selectItem(PlaylistItemInfo.TYPE_GADGET, data);
 					}
 				});
