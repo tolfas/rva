@@ -150,7 +150,8 @@ angular.module('risevision.rva', [
         }
       },
       trackPageview: function(contentId) {
-    	  segmentAnalytics.pageview(contentId);
+    	  // [AD] Disabling pageviews from RVA
+    	  //segmentAnalytics.pageview(contentId);
     	}
     };
     
