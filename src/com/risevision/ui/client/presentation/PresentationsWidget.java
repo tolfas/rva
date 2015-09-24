@@ -26,6 +26,7 @@ import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.LastModifiedWidget;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 import com.risevision.ui.client.common.widgets.grid.ScrollingGridWidget;
+import com.risevision.ui.client.common.widgets.store.StoreTemplateFrameWidget;
 
 public class PresentationsWidget extends Composite {
 	private static PresentationsWidget instance;
@@ -94,6 +95,13 @@ public class PresentationsWidget extends Composite {
 
 	private void initActions(){
 		actionsWidget = ActionsWidget.getInstance();
+		
+		Command cmdStoreTemplates = new Command() {
+			public void execute() {
+				openStoreDialog();
+			}
+		};
+
 		Command cmdTemplates = new Command() {
 			public void execute() {
 				showPanel(1);
@@ -112,7 +120,8 @@ public class PresentationsWidget extends Composite {
 			}
 		};		
 
-		actionsWidget.addAction("Add from Template", cmdTemplates);
+		actionsWidget.addAction("Add from Template", cmdStoreTemplates);
+		actionsWidget.addAction("Templates Shared with You", cmdTemplates);
 		actionsWidget.addAction("View Presentations", cmdPresentations);
 		actionsWidget.addAction("Add", cmdShowAdd);
 	}	
@@ -122,12 +131,16 @@ public class PresentationsWidget extends Composite {
 	}
 	
 	public void showPanel(int panel) {
-		actionsWidget.setVisible(panel == 0, "Add from Template");
+		actionsWidget.setVisible(panel == 0, "Templates Shared with You");
 		actionsWidget.setVisible(panel == 1, "View Presentations");
 		
 		contentPanel.showWidget(panel);
 	}
 
+	private void openStoreDialog() {
+		StoreTemplateFrameWidget.getInstance().showStore("products/");
+	}
+	
 	protected void onLoad() {
 		super.onLoad();
 
