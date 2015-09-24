@@ -4,12 +4,16 @@
 
 package com.risevision.ui.client.presentation;
 
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.risevision.common.client.info.PresentationInfo;
+import com.risevision.core.api.types.UserRole;
+import com.risevision.ui.client.common.controller.UserAccountController;
 import com.risevision.ui.client.common.info.FormValidatorInfo;
 import com.risevision.ui.client.common.widgets.ActionsWidget;
 import com.risevision.ui.client.common.widgets.DefaultResolutionWidget;
@@ -27,11 +31,13 @@ public class PresentationOptionsWidget extends VerticalPanel {
 	//UI pieces
 	private Label titleLabel = new Label("Presentation Settings");
 	private FormValidatorWidget formValidator = new FormValidatorWidget();
-	private FormGridWidget mainGrid = new FormGridWidget(7, 2, true);
+	private FormGridWidget mainGrid = new FormGridWidget(8, 2, true);
 	private TextBox nameTextBox = new TextBox();
 	private DefaultResolutionWidget resolutionWidget = new DefaultResolutionWidget();
 	private BackgroundWidget backgroundWidget = new BackgroundWidget();
 	private CheckBox isTemplateBox = new CheckBox("");
+	private CheckBox isStoreProductBox = new CheckBox("");
+	private int storeProductRow = -1;
 	private CheckBox hidePointer = new CheckBox("");
 	private PlaceholderSelectListBox selectorListBox = new PlaceholderSelectListBox();
 	private Label idLabel = new Label();
@@ -71,6 +77,10 @@ public class PresentationOptionsWidget extends VerticalPanel {
 		mainGrid.addRow("Template:", 
 				"Template Presentations are shared with all Companies below the Parent Company",
 				isTemplateBox, "rdn-CheckBox");
+		mainGrid.addRow("Store Product:", 
+				"Presentation Template that is listed in the Store",
+				isStoreProductBox, "rdn-CheckBox");
+		storeProductRow = mainGrid.getRow();
 		mainGrid.addRow("Hide Mouse Pointer:", 
 				"Hide the mouse pointer so it is not seen and cannot be used in the Presentation",
 				hidePointer, "rdn-CheckBox");
@@ -115,6 +125,12 @@ public class PresentationOptionsWidget extends VerticalPanel {
 
 		actionsWidget.addAction("Okay", cmdSave);
 		actionsWidget.addAction("Cancel", cmdCancel);
+		
+		isTemplateBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				templateValueChanged();	
+			}
+		});
 	}
 
 	public void init(Command onChange){
@@ -146,6 +162,9 @@ public class PresentationOptionsWidget extends VerticalPanel {
 		backgroundWidget.init(presentation.getBackgroundStyle(), presentation.isBackgroundScaleToFit());
 
 		isTemplateBox.setValue(presentation.isTemplate());
+		isStoreProductBox.setValue(presentation.isStoreProduct());
+		templateValueChanged();
+		
 		hidePointer.setValue(presentation.getHidePointer());
 		selectorListBox.bindSelectListBox(presentation, presentation.getDonePlaceholder());
 		
@@ -177,10 +196,24 @@ public class PresentationOptionsWidget extends VerticalPanel {
 		presentation.setBackgroundScaleToFit(backgroundWidget.isScaleToFit());
 
 		presentation.setTemplate(isTemplateBox.getValue());
+		if (UserAccountController.getInstance().userHasRole(UserRole.BILLING_ADMINISTRATOR))
+			presentation.setStoreProduct(isStoreProductBox.getValue());
+		
 		presentation.setHidePointer(hidePointer.getValue());
 		presentation.setDonePlaceholder(selectorListBox.getSelectedValue());
 		
 		return true;
+	}
+	
+	private void templateValueChanged() {
+		if (isTemplateBox.getValue()) {
+			mainGrid.getRowFormatter().setVisible(storeProductRow, true);
+		}
+		else {
+			mainGrid.getRowFormatter().setVisible(storeProductRow, false);
+		}
+		
+		isStoreProductBox.setEnabled(UserAccountController.getInstance().userHasRole(UserRole.BILLING_ADMINISTRATOR));
 	}
 
 	private void doActionSave() {
