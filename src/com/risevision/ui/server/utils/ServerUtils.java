@@ -295,7 +295,7 @@ public class ServerUtils {
 	
 	public static void writeDebugInfo(HttpResponse response) {
 		try {
-			if (response.isSuccessStatusCode() && response.getContent().available() > 0) {
+			if (response.isSuccessStatusCode() && response.getContent() != null && response.getContent().available() > 0) {
 				response.download(System.out);
 			}
 			else {

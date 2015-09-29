@@ -27,7 +27,7 @@ import com.risevision.ui.client.common.widgets.DurationWidget;
 import com.risevision.ui.client.common.widgets.FormValidatorWidget;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 import com.risevision.ui.client.common.widgets.TooltipLabelWidget;
-import com.risevision.ui.client.common.widgets.store.StoreFrameWidget;
+import com.risevision.ui.client.common.widgets.store.StoreContentFrameWidget;
 import com.risevision.ui.client.common.widgets.timeline.TimelineWidget;
 import com.risevision.ui.client.display.DistributionWidget;
 import com.risevision.ui.client.gadget.GadgetSelectWidget;
@@ -184,7 +184,7 @@ public class PlaylistItemManageWidget extends PopupPanel {
 		show();
 		
 		if (PlaceholderManageWidget.VIA_STORE.equals(this.insertVia)) {
-			gadget = StoreFrameWidget.getInstance().getSelectedGadget();			
+			gadget = StoreContentFrameWidget.getInstance().getSelectedGadget();			
 		}
 		else {
 			gadget = gadgetSelectWidget.getCurrentGadget();
@@ -280,7 +280,7 @@ public class PlaylistItemManageWidget extends PopupPanel {
 	}
 		
 	public void loadStoreIframe(String storePath) {
-		StoreFrameWidget.getInstance().show(storePath,
+		StoreContentFrameWidget.getInstance().show(storePath,
 		new Command() {
 
 			@Override

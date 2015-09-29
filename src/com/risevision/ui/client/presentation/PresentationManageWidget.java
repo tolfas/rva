@@ -673,7 +673,7 @@ public class PresentationManageWidget extends Composite implements KeyDownHandle
 					
 					MessageBoxWidget.getInstance().show("Very sorry but this Template is not available to you. " +
 							"If you really want to use it send us the link to this preview " +
-							"at <a href='mailto:support@risevision.com' target='_blank'>support@risevision.com</a> " +
+							"at support@risevision.com " +
 							"and we will see if we can hook you up with the creator.");
 					
 					UiEntryPoint.loadContentStatic(ContentId.HOME);
@@ -690,6 +690,7 @@ public class PresentationManageWidget extends Composite implements KeyDownHandle
 					presentationInfo.setId("");
 					presentationInfo.setChangedBy("");
 					presentationInfo.setTemplate(false);
+					presentationInfo.setStoreProduct(false);
 					presentationInfo.setDistributionString("");
 					
 					presentationId = "";

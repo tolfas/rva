@@ -7,21 +7,19 @@ package com.risevision.ui.client.common.widgets.store;
 import java.util.List;
 
 import com.google.gwt.http.client.URL;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.risevision.ui.client.UiEntryPoint;
+import com.risevision.ui.client.common.ContentId;
 import com.risevision.ui.client.common.controller.ConfigurationController;
 import com.risevision.ui.client.common.controller.SelectedCompanyController;
-import com.risevision.ui.client.common.data.GadgetDataController;
-import com.risevision.ui.client.common.info.GadgetInfo;
-import com.risevision.ui.client.common.info.GadgetsInfo;
+import com.risevision.ui.client.common.info.HistoryTokenInfo;
 import com.risevision.ui.client.common.widgets.StatusBoxWidget;
 import com.risevision.ui.client.common.widgets.iframe.CommandType;
 import com.risevision.ui.client.common.widgets.iframe.RpcDialogBoxWidget;
 import com.risevision.ui.client.gadget.GadgetCommandHelper;
 
-public class StoreFrameWidget extends RpcDialogBoxWidget {
-	private static StoreFrameWidget instance;
+public class StoreTemplateFrameWidget extends RpcDialogBoxWidget {
+	private static StoreTemplateFrameWidget instance;
 	
 	private static final String HTML_STRING = 
 			GadgetCommandHelper.HTML_STRING +
@@ -73,17 +71,13 @@ public class StoreFrameWidget extends RpcDialogBoxWidget {
 			"	}" +
 			"</script>" +
 			"";
-
-	private Command onSave;
-	private Command onCancel;
 	
-	private GadgetInfo selectedGadget = null;
 	private StatusBoxWidget statusBox = StatusBoxWidget.getInstance();
 	
-	public static StoreFrameWidget getInstance() {
+	public static StoreTemplateFrameWidget getInstance() {
 		try {
 			if (instance == null) {
-				instance = new StoreFrameWidget();
+				instance = new StoreTemplateFrameWidget();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,7 +85,7 @@ public class StoreFrameWidget extends RpcDialogBoxWidget {
 		return instance;
 	}
 	
-	public StoreFrameWidget() {
+	public StoreTemplateFrameWidget() {
 		super();
 
 		GadgetCommandHelper.init();
@@ -103,13 +97,11 @@ public class StoreFrameWidget extends RpcDialogBoxWidget {
 		
 	}
 
-	public void show(String storePath, Command onSave, Command onCancel){
-		this.onSave = onSave;
-		this.onCancel = onCancel;
-		
+	public void showStore(String storePath){
 		String url = ConfigurationController.getInstance().getConfiguration().getStoreURL();
+//		String url = "https://store-stage-1.risevision.com/";
 		url += storePath;
-		url += "?inRVA=true&cat=Content&cid=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
+		url += "?inRVA=true&cat=Templates&cid=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
 		url += "&up_id=" + "if_divEditor";
 		url += "&parent=" + URL.encodeQueryString(Window.Location.getHref());
 
@@ -119,78 +111,31 @@ public class StoreFrameWidget extends RpcDialogBoxWidget {
 
 		show(url);
 	}
-
-	private void onWidgetSave(GadgetInfo gadget) {
-		show("about:blank");
-		hide();
-		
-		selectedGadget = gadget;
-
-		if (onSave != null) {
-			onSave.execute();
-		}
-	}
-
-	private void onWidgetCancel() {
-		show("about:blank");
-		hide();
-		
-		if (onCancel!= null) {
-			onCancel.execute();
-		}
-	}
-
-
+	
 	@Override
 	public void onMessage(String command, List<String> values) {
 
 		if (command.equals(CommandType.SAVE_COMMAND)) {
-			final String productCode = values.get(0);
-			GadgetsInfo gadgetsInfo = new GadgetsInfo();
-			gadgetsInfo.setProductCode(productCode);
-			String companyId = SelectedCompanyController.getInstance().getSelectedCompanyId();
-			gadgetsInfo.setCompanyId(companyId);
-			boolean shared = !ConfigurationController.getInstance().isRiseCompanyId(companyId);
-			GadgetDataController.getInstance().getGadgets(gadgetsInfo, shared, new AsyncCallback<GadgetsInfo>() {
+			String[] tokens = values.get(0).split(",");
+			
+			if (tokens.length > 1) {
+				HistoryTokenInfo tokenInfo = new HistoryTokenInfo();
+				tokenInfo.setId(tokens[0]);
+				tokenInfo.setFromCompanyId(tokens[1]);
+				tokenInfo.setContentId(ContentId.PRESENTATION_MANAGE);
 				
-				@Override
-				public void onSuccess(GadgetsInfo result) {
-					if (result.getGadgets().size() > 0) {
-						GadgetInfo gadget = result.getGadgets().get(0);
-						onWidgetSave(gadget);
-					}
-					else {
-						StoreFrameWidget.this.onFailure("No Gadget associated with productCode: " + productCode);
-						onWidgetCancel();
-						hide();
-					}
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-					StoreFrameWidget.this.onFailure(StatusBoxWidget.RPC_ERROR);
-					onWidgetCancel();
-					hide();
-				}
-			});
+				UiEntryPoint.loadContentStatic(tokenInfo);	
+			}
 		}
 		else if (command.equals(CommandType.CLOSE_COMMAND)) {
-			onWidgetCancel();
-			hide();
+
 		}		
+		hide();
 		
 	}
 
 	protected void onFailure(String message) {
 		statusBox.setStatus(StatusBoxWidget.Status.ERROR, message);
-	}
-
-	public GadgetInfo getSelectedGadget() {
-		return selectedGadget;
-	}
-
-	public void setSelectedGadget(GadgetInfo selectedGadget) {
-		this.selectedGadget = selectedGadget;
 	}
 
 }

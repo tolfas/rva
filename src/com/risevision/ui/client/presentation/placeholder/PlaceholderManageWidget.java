@@ -44,7 +44,7 @@ import com.risevision.ui.client.common.widgets.TooltipLabelWidget;
 import com.risevision.ui.client.common.widgets.TransitionWidget;
 import com.risevision.ui.client.common.widgets.UnitLabelWidget;
 import com.risevision.ui.client.common.widgets.background.BackgroundWidget;
-import com.risevision.ui.client.common.widgets.store.StoreFrameWidget;
+import com.risevision.ui.client.common.widgets.store.StoreContentFrameWidget;
 import com.risevision.ui.client.common.widgets.timeline.TimelineWidget;
 import com.risevision.ui.client.display.DistributionWidget;
 import com.risevision.ui.client.gadget.GadgetSelectWidget;
@@ -322,7 +322,7 @@ public class PlaceholderManageWidget extends PopupPanel {
 	private void contentSelected(){
 		GadgetInfo gadget = null;
 		if (VIA_STORE.equals(this.insertData.get("via"))) {
-			gadget = StoreFrameWidget.getInstance().getSelectedGadget();			
+			gadget = StoreContentFrameWidget.getInstance().getSelectedGadget();			
 		}
 		else {
 			gadget = gadgetSelectWidget.getCurrentGadget();
@@ -690,7 +690,7 @@ public class PlaceholderManageWidget extends PopupPanel {
 	}
 	
 	private void loadStoreIframe() {
-		StoreFrameWidget.getInstance().show("products/", 
+		StoreContentFrameWidget.getInstance().show("products/", 
 		new Command() {
 
 			@Override
