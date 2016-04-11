@@ -100,8 +100,8 @@ public class StorageFrameWidget extends RpcDialogBoxWidget {
 		this.onSave = onSave;
 		
 		String url = ConfigurationController.getInstance().getConfiguration().getMediaLibraryURL();
-		url += "/files/" + SelectedCompanyController.getInstance().getSelectedCompanyId();
-		url += "?up_id=" + "if_divEditor";
+		url += "/storage-selector.html#/?cid=" + SelectedCompanyController.getInstance().getSelectedCompanyId();
+		url += "&up_id=" + "if_divEditor";
 		url += "&parent=" + URL.encodeQueryString(Window.Location.getHref());
 		
 		url = url.replace("'", "\\'");
