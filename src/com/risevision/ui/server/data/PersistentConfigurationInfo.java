@@ -27,8 +27,8 @@ public class PersistentConfigurationInfo implements Serializable {
 //	private static final String VIEWER_URL = "http://rvashow2.appspot.com/";
 	private static final String VIEWER_URL = "http://preview.risevision.com/"; //production
 	
-//	private static final String MEDIA_LIBRARY_URL = "http://storage.rvacore-test.appspot.com";
-	private static final String MEDIA_LIBRARY_URL = "http://storage.risevision.com";
+//	private static final String MEDIA_LIBRARY_URL = "https://apps-stage-0.risevision.com";
+	private static final String MEDIA_LIBRARY_URL = "https://apps.risevision.com";
 	
 	// ID of Rise Vision Inc - Top tier PNO
 //	private static final String RISE_ID = "b428b4e8-c8b9-41d5-8a10-b4193c789443"; // Dev
