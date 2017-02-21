@@ -5,9 +5,11 @@ angular.module('risevision.rva', [
   'risevision.common.header',
   'risevision.common.header.templates'
 ])
+.value('DISPLAYS_URL', 'https://apps.risevision.com/displays')
 .controller('AppCtrl', ['$scope', '$window', '$location', 'userState',
-  'segmentAnalytics',
-  function ($scope, $window, $location, userState, segmentAnalytics) {
+  'segmentAnalytics', 'DISPLAYS_URL',
+  function ($scope, $window, $location, userState, segmentAnalytics,
+    DISPLAYS_URL) {
     var navOptions = [{
       title: 'Start',
       link: '#/',
@@ -22,8 +24,9 @@ angular.module('risevision.rva', [
       states: ['root.common.gadgets']
     }, {
       title: 'Displays',
-      link: '#/DISPLAYS',
-      states: ['root.common.displays']
+      link: DISPLAYS_URL,
+      cid: true,
+      target: '_blank',
     }, {
       title: 'Schedules',
       link: '#/SCHEDULES',
@@ -117,9 +120,9 @@ angular.module('risevision.rva', [
       else if (value.indexOf('GADGETS') > -1 || value.indexOf('GADGET_MANAGE') > -1) {  
         $scope.navSelected = 'root.common.gadgets';
       }
-      else if (value.indexOf('DISPLAYS') > -1 || value.indexOf('DISPLAY_MANAGE') > -1) {  
-        $scope.navSelected = 'root.common.displays';
-      }
+      // else if (value.indexOf('DISPLAYS') > -1 || value.indexOf('DISPLAY_MANAGE') > -1) {  
+      //   $scope.navSelected = 'root.common.displays';
+      // }
       else if (value.indexOf('SCHEDULES') > -1 || value.indexOf('SCHEDULE_MANAGE') > -1) {  
         $scope.navSelected = 'root.common.schedules';
       }
