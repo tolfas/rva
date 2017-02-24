@@ -29,9 +29,6 @@ body {
   direction: ltr;
   line-height: 16px;
 }
-a, a:visited, a:hover {
-  color: #0000AA;
-}
 
 table td {
 /*  line-height: 24px;*/
@@ -1309,37 +1306,6 @@ td.datePickerMonth {
 	margin-right: 8px;
 }
 
-/* style for unvisted Links */
-A:link {
-/*	font-family: Arial, Helvetica, sans-serif;*/
-/*	font-size: 12px;*/
-	color: #0A5DC3;
-	text-decoration: none;
-}
-
-/* style for visted Links */
-A:visited {
-/*	font-family: Arial, Helvetica, sans-serif;*/
-/*	font-size: 12px;*/
-	color: #0A5DC3;
-	text-decoration: none;
-}
-
-/* style for active Links */
-A:active {
-/*	font-family: Arial, Helvetica, sans-serif;*/
-/*	font-size: 12px;*/
-	color: #0A5DC3;
-}
-
-/* style for hover Links */
-A:hover {
-/*	font-family: Arial, Helvetica, sans-serif;*/
-/*	font-size: 12px;*/
-	color: #0A5DC3;
-	text-decoration: underline;
-}
-
 /* style for Grids*/
 .rdn-Grid {
 	table-layout: fixed;
@@ -1377,7 +1343,6 @@ A:hover {
 	line-height: 15px;
 	white-space: nowrap;
 	padding-right: 10px;
-	color: #0A5DC3;
 	text-decoration: none;
 	border-bottom: 1px solid #999999;
 }
