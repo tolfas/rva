@@ -7,9 +7,9 @@ angular.module('risevision.rva', [
 ])
 .value('DISPLAYS_URL', 'https://apps.risevision.com/displays')
 .controller('AppCtrl', ['$scope', '$window', '$location', 'userState',
-  'segmentAnalytics', 'DISPLAYS_URL',
+  'segmentAnalytics', 'zendesk', 'DISPLAYS_URL',
   function ($scope, $window, $location, userState, segmentAnalytics,
-    DISPLAYS_URL) {
+    zendesk, DISPLAYS_URL) {
     var navOptions = [{
       title: 'Start',
       link: '#/',
@@ -114,6 +114,8 @@ angular.module('risevision.rva', [
     $scope.$watch(function () {
       return $location.path();
     }, function(value) {
+      zendesk.forceCloseAll();
+
       if (value.indexOf('PRESENTATIONS') > -1 || value.indexOf('PRESENTATION_MANAGE') > -1) {  
         $scope.navSelected = 'root.common.presentations';
       }

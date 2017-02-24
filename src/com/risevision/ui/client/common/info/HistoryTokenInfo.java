@@ -4,6 +4,11 @@
 
 package com.risevision.ui.client.common.info;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.risevision.ui.client.common.utils.Utils;
+
 public class HistoryTokenInfo {
 
 	private String contentId;
@@ -11,6 +16,11 @@ public class HistoryTokenInfo {
 	private String id;
 	private String fromCompanyId;
 	private String bookmark;
+	private List<String> extraTokens;
+	
+	public HistoryTokenInfo() {
+		extraTokens = new ArrayList<String>();
+	}
 	
 	public String getContentId() {
 		return contentId;
@@ -50,5 +60,21 @@ public class HistoryTokenInfo {
 	
 	public void setBookmark(String bookmark) {
 		this.bookmark = bookmark;
+	}
+
+	public List<String> getExtraTokens() {
+		return extraTokens;
+	}
+
+	public void setExtraTokens(List<String> extraTokens) {
+		this.extraTokens = extraTokens;
+	}
+	
+	public boolean isEqual(HistoryTokenInfo newToken) {
+		return Utils.stringEquals(this.contentId, newToken.contentId) &&
+				Utils.stringEquals(this.companyId, newToken.companyId) &&
+				Utils.stringEquals(this.id, newToken.id) &&
+				Utils.stringEquals(this.fromCompanyId, newToken.fromCompanyId) &&
+				Utils.stringEquals(this.bookmark, newToken.bookmark);
 	}
 }
