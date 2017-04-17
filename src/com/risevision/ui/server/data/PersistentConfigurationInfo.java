@@ -49,7 +49,7 @@ public class PersistentConfigurationInfo implements Serializable {
 //	private static final String TERMS_URL = "http://docs.google.com/document/pub?id=1YwrUFIBCKG4iIo34Q-jxHM-4yJdJ13ohb6v3wLXun1A";
 //	private static final String TERMS_URL = "RiseVisionTermsofServiceandPrivacy.html";
 //	private static final String TERMS_URL = "http://www.risevision.com/TermsOfServiceAndPrivacy/";
-	private static final String TERMS_URL = "http://www.risevision.com/terms-service-privacy/";
+	private static final String TERMS_URL = "https://www.risevision.com/terms-of-service";
     
     public static final String GCS_ACCOUNT_EMAIL = "";
     
