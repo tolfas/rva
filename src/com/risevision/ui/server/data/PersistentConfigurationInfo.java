@@ -16,7 +16,8 @@ import com.risevision.ui.client.common.info.ConfigurationInfo;
 @PersistenceCapable
 public class PersistentConfigurationInfo implements Serializable {
 
-	private static final String SERVER_URL = "https://rvacore-test.appspot.com";
+//	private static final String SERVER_URL = "https://rvacore-test.appspot.com";
+	private static final String SERVER_URL = "https://custom-rise-auth-dot-rvacore-test.appspot.com";
 //	private static final String SERVER_URL = "https://rvacore-test2.appspot.com";
 //	private static final String SERVER_URL = "https://rvaserver2.appspot.com";
 	
