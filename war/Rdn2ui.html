@@ -100,14 +100,17 @@
 	
 	<!-- Common Header -->
 	<div id="commonHeaderContainer">
-    	<common-header nav-options="navOptions" nav-selected="navSelected" ng-controller="AppCtrl"></common-header>
-    </div>
+  	<common-header nav-options="navOptions" nav-selected="navSelected" ng-controller="AppCtrl" ng-hide="hideCH"></common-header>
+  </div>
 	
 	<div id="main" style="display: none">
 	</div>
 	
-	<script src="ch/common-header.min.js"></script>
+  <div ui-view></div>
+
+	<script src="ch/common-header.js"></script>
 	<script src="ch/rva.js"></script>
+  <script src="ch/svc-access.js"></script>
 	
 	<script type="text/javascript">
 		var google_conversion_id = 1070323044;

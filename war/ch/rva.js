@@ -2,26 +2,169 @@
 
 angular.module('risevision.rva', [
   'ngRoute',
+  'risevision.rva.services',
   'risevision.common.header',
   'risevision.common.header.templates'
 ])
 .value('DISPLAYS_URL', 'https://apps.risevision.com/displays')
-.controller('AppCtrl', ['$scope', '$window', '$location', 'userState',
-  'segmentAnalytics', 'zendesk', 'DISPLAYS_URL',
-  function ($scope, $window, $location, userState, segmentAnalytics,
-    zendesk, DISPLAYS_URL) {
+// Set up our mappings between URLs, templates, and controllers
+.config(['$urlRouterProvider', '$stateProvider', '$locationProvider',
+  function storeRouteConfig($urlRouterProvider, $stateProvider, 
+    $locationProvider) {
+
+    $locationProvider.html5Mode(false);
+
+    $urlRouterProvider.otherwise("/");
+
+    // Use $stateProvider to configure states.
+    $stateProvider
+
+    .state('apps.start', {
+      url: '/',
+      resolve: {
+        canAccessApps: ['canAccessApps',
+          function (canAccessApps) {
+            return canAccessApps();
+          }
+        ]
+      }
+    })
+
+    // editor
+    .state('apps.editor', {
+      url: '?cid',
+      abstract: true
+    })
+
+    .state('apps.editor.list', {
+      url: '/PRESENTATIONS',
+      resolve: {
+        canAccessApps: ['canAccessApps',
+          function (canAccessApps) {
+            return canAccessApps();
+          }
+        ]
+      }
+    })
+    .state('apps.editor.manage', {
+      url: '/PRESENTATION_MANAGE/:id/:fromCompanyId',
+      params: {
+        id: {squash: true},
+        fromCompanyId: {squash: true}
+      },
+      resolve: {
+        canAccessApps: ['canAccessApps',
+          function (canAccessApps) {
+            return canAccessApps();
+          }
+        ]
+      }
+    })
+
+    .state('apps.schedules', {
+      url: '?cid',
+      abstract: true,
+    })
+    .state('apps.schedules.list', {
+      url: '/SCHEDULES',
+      resolve: {
+        canAccessApps: ['canAccessApps',
+          function (canAccessApps) {
+            return canAccessApps();
+          }
+        ]
+      }
+    })
+    .state('apps.schedules.manage', {
+      url: '/SCHEDULE_MANAGE/:id',
+      params: {
+        id: {squash: true}
+      },
+      resolve: {
+        canAccessApps: ['canAccessApps',
+          function (canAccessApps) {
+            return canAccessApps();
+          }
+        ]
+      }
+    })
+
+    .state('apps.gadgets', {
+      url: '?cid',
+      abstract: true,
+    })
+    .state('apps.gadgets.list', {
+      url: '/GADGETS',
+      resolve: {
+        canAccessApps: ['canAccessApps',
+          function (canAccessApps) {
+            return canAccessApps();
+          }
+        ]
+      }
+    })
+    .state('apps.gadgets.manage', {
+      url: '/GADGET_MANAGE/:id',
+      params: {
+        id: {squash: true}
+      },
+      resolve: {
+        canAccessApps: ['canAccessApps',
+          function (canAccessApps) {
+            return canAccessApps();
+          }
+        ]
+      }
+    })
+
+    .state('apps.settings', {
+      url: '?cid',
+      abstract: true,
+    })    
+    .state('apps.settings.company', {
+      url: '/COMPANY_MANAGE',
+      resolve: {
+        canAccessApps: ['canAccessApps',
+          function (canAccessApps) {
+            return canAccessApps();
+          }
+        ]
+      }
+    })
+    .state('apps.settings.portal', {
+      url: '/MANAGE_PORTAL',
+      resolve: {
+        canAccessApps: ['canAccessApps',
+          function (canAccessApps) {
+            return canAccessApps();
+          }
+        ]
+      }
+    })
+  }
+])
+.controller('AppCtrl', ['$scope', '$rootScope', '$window', '$location', 
+  '$state', 'userState', 'segmentAnalytics', 'zendesk', 'DISPLAYS_URL',
+  function ($scope, $rootScope, $window, $location, $state, userState, 
+    segmentAnalytics, zendesk, DISPLAYS_URL) {
     var navOptions = [{
       title: 'Start',
       link: '#/',
-      states: ['root.common.start']
+      states: ['apps.start']
     }, {
       title: 'Presentations',
       link: '#/PRESENTATIONS',
-      states: ['root.common.presentations']
+      states: [
+        'apps.editor.list',
+        'apps.editor.manage'
+      ]
     }, {
       title: 'Gadgets',
       link: '#/GADGETS',
-      states: ['root.common.gadgets']
+      states: [
+        'apps.gadgets.list',
+        'apps.gadgets.manage'
+      ]
     }, {
       title: 'Displays',
       link: DISPLAYS_URL,
@@ -30,20 +173,34 @@ angular.module('risevision.rva', [
     }, {
       title: 'Schedules',
       link: '#/SCHEDULES',
-      states: ['root.common.schedules']
+      states: [
+        'apps.schedules.list', 
+        'apps.schedules.manage'
+      ]
     }, {
       title: 'Settings',
       link: '#/COMPANY_MANAGE',
-      states: ['root.common.settings']
+      states: ['apps.settings.company']
     }, {
       title: 'Network',
       link: '#/MANAGE_PORTAL',
-      states: ['root.common.network']
+      states: ['apps.settings.portal']
     }];
     
     $scope.navOptions = [];
-    $scope.navSelected = 'root.common.start';
+    $scope.navSelected = 'apps.start';
     
+    $scope.hideCH = false;
+
+    $rootScope.$on('$stateChangeSuccess', function () {
+      $scope.navSelected = $state.current.name;
+      $scope.hideCH = $state.current.name ===
+        'apps.launcher.unauthorized' ||
+        $state.current.name === 'apps.launcher.unregistered' ||
+        $state.current.name === 'apps.launcher.signin' ||
+        $state.current.name === 'apps.launcher.signup';
+    });
+
     var updateNavOptions = function() {
       var visibleOptions = [];
       for (var i = 0; i < navOptions.length; i++) {
@@ -115,28 +272,6 @@ angular.module('risevision.rva', [
       return $location.path();
     }, function(value) {
       zendesk.forceCloseAll();
-
-      if (value.indexOf('PRESENTATIONS') > -1 || value.indexOf('PRESENTATION_MANAGE') > -1) {  
-        $scope.navSelected = 'root.common.presentations';
-      }
-      else if (value.indexOf('GADGETS') > -1 || value.indexOf('GADGET_MANAGE') > -1) {  
-        $scope.navSelected = 'root.common.gadgets';
-      }
-      // else if (value.indexOf('DISPLAYS') > -1 || value.indexOf('DISPLAY_MANAGE') > -1) {  
-      //   $scope.navSelected = 'root.common.displays';
-      // }
-      else if (value.indexOf('SCHEDULES') > -1 || value.indexOf('SCHEDULE_MANAGE') > -1) {  
-        $scope.navSelected = 'root.common.schedules';
-      }
-      else if (value.indexOf('COMPANY_MANAGE') > -1) {  
-        $scope.navSelected = 'root.common.settings';
-      }
-      else if (value.indexOf('MANAGE_PORTAL') > -1) {  
-        $scope.navSelected = 'root.common.network';
-      }
-      else {  
-        $scope.navSelected = 'root.common.start';
-      }
     });
 
     // RVA calls this:
@@ -162,6 +297,9 @@ angular.module('risevision.rva', [
     
   }
 ]) //ctr
+angular.module('risevision.rva.services', [
+  'risevision.common.header'
+]);
 angular.module("risevision.common.i18n.config", [])
   .constant("LOCALES_PREFIX", "ch/locales/translation_")
   .constant("LOCALES_SUFIX", ".json")
