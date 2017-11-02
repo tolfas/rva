@@ -100,12 +100,14 @@
 	
 	<!-- Common Header -->
 	<div id="commonHeaderContainer">
-    	<common-header nav-options="navOptions" nav-selected="navSelected" ng-controller="AppCtrl"></common-header>
-    </div>
+  	<common-header nav-options="navOptions" nav-selected="navSelected" ng-controller="AppCtrl" ng-hide="hideCH"></common-header>
+  </div>
 	
 	<div id="main" style="display: none">
 	</div>
 	
+  <div ui-view></div>
+
 	<script src="ch/common-header.min.js"></script>
 	<script src="ch/rva.js"></script>
 	
