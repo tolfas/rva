@@ -12,6 +12,7 @@ angular.module('risevision.rva', [
     $locationProvider) {
 
     $locationProvider.html5Mode(false);
+    $locationProvider.hashPrefix("");
 
     $urlRouterProvider.otherwise("/");
 

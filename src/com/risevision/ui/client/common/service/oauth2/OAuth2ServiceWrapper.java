@@ -82,6 +82,7 @@ public class OAuth2ServiceWrapper {
 	}
 	
 	public static native String getAccessToken() /*-{
-		return $wnd.gapi ? $wnd.gapi.auth.getToken().access_token : null;
+		var token = $wnd.gapi && $wnd.gapi.auth ? $wnd.gapi.auth.getToken() : null; 
+		return token ? token.access_token : null;
 	}-*/;	
 }
