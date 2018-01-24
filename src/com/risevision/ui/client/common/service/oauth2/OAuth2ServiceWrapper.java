@@ -82,7 +82,18 @@ public class OAuth2ServiceWrapper {
 	}
 	
 	public static native String getAccessToken() /*-{
-		var token = $wnd.gapi && $wnd.gapi.auth ? $wnd.gapi.auth.getToken() : null; 
-		return token ? token.access_token : null;
+		var authInstance = $wnd.gapi.auth2.getAuthInstance();
+		if (authInstance) {
+			var currentUser = authInstance.currentUser.get();
+			if (currentUser) {
+				var token = currentUser.getAuthResponse(true).access_token;
+				
+				return token ? token : "";
+			}
+		}
+
+		$wnd.console.error("Access Token Not Available");
+		
+		return "";
 	}-*/;	
 }
