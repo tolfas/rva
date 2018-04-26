@@ -6,7 +6,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-dnd-3.3.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/com.risevision.core.api.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jetty-util-6.1.19.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/com.risevision.common.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang-2.5.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/google-http-client-1.18.0-rc.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/google-oauth-client-servlet-1.18.0-rc.jar"/>
