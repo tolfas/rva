@@ -198,11 +198,11 @@ angular.module('risevision.rva', [
     $scope.navOptions = [];
     $scope.navSelected = 'rva.start';
     
-    $scope.hideCH = false;
+    $scope.hideCommonHeader = false;
 
     $rootScope.$on('$stateChangeSuccess', function () {
       $scope.navSelected = $state.current.name;
-      $scope.hideCH = $state.current.name.indexOf('common.auth') !== -1;
+      $scope.hideCommonHeader = $state.current.name.indexOf('common.auth') !== -1;
     });
     
     $rootScope.$on('risevision.user.signedOut', function () {
