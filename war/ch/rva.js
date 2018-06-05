@@ -244,8 +244,6 @@ angular.module('risevision.rva', [
         $window.rva__reportUserLoggedOut();
         
         $scope.navOptions = [];
-        
-        $location.path('');
       }
     });
     
@@ -274,12 +272,6 @@ angular.module('risevision.rva', [
         //   $window.rva__resetCompany();
         // }
       }
-    });
-    
-    $scope.$watch(function () {
-      return $location.path();
-    }, function(value) {
-      zendesk.forceCloseAll();
     });
 
     // RVA calls this:
