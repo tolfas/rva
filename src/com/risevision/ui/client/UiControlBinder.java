@@ -62,7 +62,7 @@ public class UiControlBinder extends Composite implements ClickHandler {
 	
 	private String companyAuthKey;
 	
-	private Anchor termsLink = new Anchor("Terms of Service and Privacy");
+//	private Anchor termsLink = new Anchor("Terms of Service and Privacy");
 	
 	private Anchor logoLink = new Anchor();
 	private Anchor bannerLink = new Anchor();
@@ -93,7 +93,7 @@ public class UiControlBinder extends Composite implements ClickHandler {
 	@UiField Frame startFrame;
 	@UiField SimplePanel contentContainer;
 
-	@UiField TableCellElement termsContainer; 
+//	@UiField TableCellElement termsContainer; 
 
 	public static UiControlBinder getInstance() {
 //		try {
@@ -146,7 +146,7 @@ public class UiControlBinder extends Composite implements ClickHandler {
 	}
 	
 	public void initHandlers() {
-		termsLink.addClickHandler(this);
+//		termsLink.addClickHandler(this);
 		logoLink.addClickHandler(this);
 		bannerLink.addClickHandler(this);
 		newsLink.addClickHandler(this);
@@ -204,7 +204,7 @@ public class UiControlBinder extends Composite implements ClickHandler {
 			initWidgets();
 			
 			addLinksPanel();
-			addTermsLink();
+//			addTermsLink();
 			addImages();
 		
 			// set Google Analytics url
@@ -280,7 +280,7 @@ public class UiControlBinder extends Composite implements ClickHandler {
 	private void initWidgets(){
 		logoLink.setTarget(blankTarget);
 		bannerLink.setTarget(blankTarget);
-		termsLink.setTarget(blankTarget);
+//		termsLink.setTarget(blankTarget);
 		newsLink.setTarget(blankTarget);
 		helpLink.setTarget(blankTarget);
 		supportLink.setTarget(blankTarget);
@@ -288,7 +288,7 @@ public class UiControlBinder extends Composite implements ClickHandler {
 
 		logoLink.setTabIndex(-1);
 		bannerLink.setTabIndex(-1);
-		termsLink.setTabIndex(-1);
+//		termsLink.setTabIndex(-1);
 		newsLink.setTabIndex(-1);
 		helpLink.setTabIndex(-1);
 		supportLink.setTabIndex(-1);
@@ -363,14 +363,10 @@ public class UiControlBinder extends Composite implements ClickHandler {
 		}
 	}
 	
-	private void addTermsLink() {	
-		termsContainer.appendChild(termsLink.getElement());
-		termsLink.setHref(ConfigurationController.getInstance().getConfiguration().getTermsURL());
-		//termsLink.setHref(Globals.TERMS_URL);
-		
-//		if (!getValue(currentSettings, ManageSettingsInfo.COMPANY_REGISTRATION_TERMS).isEmpty())
-//			termsLink.setHref(getValue(currentSettings, ManageSettingsInfo.COMPANY_REGISTRATION_TERMS));
-	}
+//	private void addTermsLink() {	
+//		termsContainer.appendChild(termsLink.getElement());
+//		termsLink.setHref(ConfigurationController.getInstance().getConfiguration().getTermsURL());
+//	}
 	
 	private void addFeedbackLink() {
 //		feedbackLink.getElement().setAttribute("onclick", "feedback_widget.show();");

@@ -73,7 +73,9 @@
 		<div>
 			<table cellspacing="0" cellpadding="0" style="width:100%; background:white; border:1px solid #e5e5e5; border-width: 1px 0 0 0;">
 				<tr>
-					<td align="left" valign="top" ui:field="termsContainer" style="padding-left:20px;"></td>
+					<td align="left" valign="top" style="padding-left:20px;">
+						Terms of <a href="https://help.risevision.com/hc/en-us/articles/360000924446-Terms-of-Service" target="_blank" tabindex="-1">Service</a> and <a href="https://help.risevision.com/hc/en-us/articles/360000915023-Privacy-Policy" target="_blank" tabindex="-1">Privacy</a>
+					</td>
 					<td align="middle" valign="top">Platform by <a href="http://www.risevision.com" target="_blank" tabIndex="-1">Rise Vision</a>
 					</td>
 					<td align="right" style="padding-right:20px;">
